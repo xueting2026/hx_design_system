@@ -5,24 +5,19 @@
   "platform": "微信小程序（移动端 375px）",
   "readingOrder": [
     {
-      "file": "SKILL.md",
+      "file": "../../AGENTS.md",
       "priority": 1,
-      "purpose": "Skill 入口——品牌速览、核心约束、色彩/字体/尺寸速查表（先读）"
-    },
-    {
-      "file": "AGENTS.md",
-      "priority": 2,
-      "purpose": "AI 消费指引——消费顺序、按任务模板、产出前自查清单"
+      "purpose": "跨所有设计系统的统一执行铁律（工程根，先读）——值取自 token、组件复用、消费顺序、demo/交付分支、产物落位、通用自查"
     },
     {
       "file": "tokens.json",
-      "priority": 3,
+      "priority": 2,
       "purpose": "单一事实源——所有设计 Token 的机读 JSON（颜色/字体/间距/圆角/组件尺寸/页型）"
     },
     {
-      "file": "xinxiaodi-Design.md",
-      "priority": 4,
-      "purpose": "完整设计规范——概述/颜色/排版/布局/组件/按钮组/图标/分割线/导航/页型/该做与不该做"
+      "file": "Design.md",
+      "priority": 3,
+      "purpose": "完整设计规范 + 品牌速览 + 速查表 + Agent 消费落地细则（概述/颜色/排版/布局/组件/按钮组/图标/页型/该做与不该做/常见错误）"
     },
     {
       "file": "examples/demo-home.html",
@@ -42,7 +37,7 @@
   ],
   "tokenSource": {
     "singleSourceOfTruth": "tokens.json",
-    "humanReadable": "信小递Design.md",
+    "humanReadable": "Design.md",
     "visualPreview": "preview/"
   },
   "assetPaths": {

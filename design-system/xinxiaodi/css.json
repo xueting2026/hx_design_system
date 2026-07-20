@@ -1,5 +1,5 @@
 {
-  "$description": "信小递 CSS Token 结构化表示，用于程序化消费。与 xinxiaodi-ui.css 中的 CSS 变量一一对应。",
+  "$description": "信小递 CSS Token 结构化表示，用于程序化消费。与 ui.css 中的 CSS 变量一一对应。",
   "version": "1.0.0",
   "variables": {
     "color": {

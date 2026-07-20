@@ -1,1 +1,10 @@
 .DS_Store
+
+# 内部工程优化 / 规划 / 上下文台账类文档，不作为最终产物上传 git
+_planning/
+
+# 交付产物不入库：忽略产物内容，仅保留目录骨架（.gitkeep 占位）
+prototypes/*
+!prototypes/.gitkeep
+docs/*
+!docs/.gitkeep

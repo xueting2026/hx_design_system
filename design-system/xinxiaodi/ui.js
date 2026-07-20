@@ -2,8 +2,8 @@
  * 信小递司机端 UI 交互库
  * 版本: 1.0.0
  *
- * 使用方式: <script src="xinxiaodi-ui.js"></script>
- * 依赖: xinxiaodi-ui.css
+ * 使用方式: <script src="ui.js"></script>
+ * 依赖: ui.css
  *
  * 提供组件的交互行为：
  * - Tab 切换
