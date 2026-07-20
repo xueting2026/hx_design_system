@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>信小递 - 首页</title>
+<link rel="stylesheet" href="../xinxiaodi-ui.css">
 <style>
 * {
   margin: 0;
@@ -37,24 +38,10 @@ body > * {
   z-index: 1;
 }
 
-.status-bar {
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-.status-bar .time { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-.status-bar .icons { display: flex; gap: 6px; align-items: center; }
-.status-bar .icons span { font-size: 12px; color: #FFFFFF; }
-
-.nav-bar {
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.nav-bar .title { font-size: 17px; font-weight: 600; color: #FFFFFF; }
+/* Override statusbar/titlebar positioning for gradient page */
+.demo-topbar { position: relative; z-index: 1; }
+.statusbar { position: relative; z-index: 1; }
+.titlebar { position: relative; z-index: 1; }
 
 .header {
   padding: 16px 16px 60px;
@@ -106,26 +93,27 @@ body > * {
   box-shadow: 0px 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px; overflow: hidden;
 }
 
-.floating-btn {
-  position: fixed; bottom: 80px; right: 16px;
-  width: 60px; height: 60px; border-radius: 50%;
-  background: linear-gradient(135deg, #57E8DF, #00AAA6);
-  box-shadow: 0px 4px 12px rgba(0,170,166,0.3);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  cursor: pointer; z-index: 100;
-}
-.floating-btn svg { width: 20px; height: 20px; fill: #FFFFFF; }
-.floating-btn span { font-size: 8px; color: #FFFFFF; }
+/* 浮动按钮使用组件库 .fab 类（返回顶部），样式见 xinxiaodi-ui.css */
 </style>
 </head>
 <body>
 
-<div class="status-bar">
-  <span class="time">9:41</span>
-  <div class="icons"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+<!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+<div class="demo-topbar">
+  <div class="statusbar statusbar--light">
+    <span class="statusbar__time">9:41</span>
+    <div class="statusbar__icons">
+      <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+    </div>
+  </div>
+  <!-- 一级页面（首页）：无返回按钮 + 标题「首页」+ 胶囊 -->
+  <div class="titlebar titlebar--transparent">
+    <span class="titlebar__title">首页</span>
+    <span class="titlebar__right titlebar__capsule">
+      <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+    </span>
+  </div>
 </div>
-
-<div class="nav-bar"><span class="title">信小递</span></div>
 
 <div class="header">
   <div class="user-info">
@@ -160,7 +148,7 @@ body > * {
         </div>
       </div>
       <div style="width: 1px; height: 24px; background: #E5E6EB; flex-shrink: 0; align-self: center;"></div>
-      <div class="action-item" style="flex-direction: row; gap: 8px; align-items: center; justify-content: flex-start; padding-left: 16px;">
+      <div class="action-item" onclick="navigateToList()" style="flex-direction: row; gap: 8px; align-items: center; justify-content: flex-start; padding-left: 16px; cursor: pointer;">
         <div class="icon" style="width: 40px; height: 40px; border-radius: 0; background: none; flex-shrink: 0;">
           <img src="../assets/icons/todo_center.svg" style="width: 40px; height: 40px;" />
         </div>
@@ -175,14 +163,14 @@ body > * {
   <!-- Function Grid -->
   <div class="function-grid">
     <div class="grid-row">
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daoku.svg" /></div><span class="grid-label">待到库</span></div>
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/tihuo.svg" /></div><span class="grid-label">待提货</span></div>
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daka.svg" /></div><span class="grid-label">待打卡</span></div>
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/paisong.svg" /></div><span class="grid-label">待派送</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daoku.svg" /></div><span class="grid-label">待到库</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/tihuo.svg" /></div><span class="grid-label">待提货</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daka.svg" /></div><span class="grid-label">待打卡</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/paisong.svg" /></div><span class="grid-label">待派送</span></div>
     </div>
     <div class="grid-row">
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/yundi.svg" /></div><span class="grid-label">待运抵</span></div>
-      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/qianshou.svg" /></div><span class="grid-label">待签收</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/yundi.svg" /></div><span class="grid-label">待运抵</span></div>
+      <div class="grid-item" onclick="navigateToList()" style="cursor: pointer;"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/qianshou.svg" /></div><span class="grid-label">待签收</span></div>
       <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/huidan.svg" /></div><span class="grid-label">回单上传</span></div>
       <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/jiaojie.svg" /></div><span class="grid-label">送货交接</span></div>
     </div>
@@ -247,10 +235,25 @@ body > * {
 
 </div>
 
-<div class="floating-btn">
-  <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
-  <span>顶部</span>
+<!-- 返回顶部浮动按钮：查看待办任务后点击返回首页第一屏 -->
+<div class="fab fab--lg" style="bottom: 24px;" onclick="backToTop()">
+  <img class="fab__icon" src="../assets/icons/back_top.svg" width="20" height="20" alt="返回顶部" />
+  <span class="fab__label">返回顶部</span>
 </div>
+
+<script>
+// 发送导航消息给父页面（用于交互演示）
+function navigateToList() {
+  if (window.parent !== window) {
+    window.parent.postMessage({ action: 'navigate', target: 'page-list' }, '*');
+  }
+}
+
+// 返回首页第一屏（平滑滚动到顶部）
+function backToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 
 </body>
 </html>

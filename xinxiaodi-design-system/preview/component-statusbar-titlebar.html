@@ -5,10 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>信小递组件 - 状态栏 & 标题栏</title>
 <link rel="stylesheet" href="../xinxiaodi-ui.css">
+<script>
+/* 嵌入模式：被 index.html 以 iframe 引用(?embed=1)时隐藏侧边栏并自适应高度，保证组件只维护一份 */
+(function () {
+  if (new URLSearchParams(location.search).get('embed') !== '1') return;
+  var s = document.createElement('style');
+  s.textContent = '.sidebar{display:none!important}.preview-page{padding-left:24px!important;max-width:none!important}body{background:#fff!important}';
+  (document.head || document.documentElement).appendChild(s);
+  function measure() { return Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0, document.body ? document.body.offsetHeight : 0); }
+  function post() { parent.postMessage({ type: 'previewHeight', height: measure() }, '*'); }
+  function start() {
+    post();
+    if (window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+    [100, 300, 600, 1200].forEach(function (t) { setTimeout(post, t); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(post);
+    Array.prototype.forEach.call(document.images, function (img) { if (!img.complete) img.addEventListener('load', post); });
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+  window.addEventListener('resize', post);
+  // 鼠标在 iframe 空白处滚动时，把滚动转发给父页面（否则外层页面无法继续滚动）
+  window.addEventListener('wheel', function (e) {
+    parent.postMessage({ type: 'previewWheel', deltaY: e.deltaY, deltaX: e.deltaX }, '*');
+  }, { passive: true });
+})();
+</script>
 <style>
   body { background: #F3F5F7; margin: 0; }
-  .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
-  .preview-section { background: #FFFFFF; border-radius: 10px; padding: 24px; margin-bottom: 16px; max-width: 415px; }
+  .preview-page { max-width: 600px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
+  .preview-section { background: #FFFFFF; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .demo-frame { border-radius: 8px; overflow: hidden; border: 1px solid #E5E6EB; margin-bottom: 8px; width: 375px; }
   .preview-title { font-size: 18px; font-weight: 600; color: #1D2129; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
   .preview-title::before { content: ''; width: 4px; height: 18px; background: #00AAA6; border-radius: 2px; }
   .preview-desc { font-size: 12px; color: #7C8492; margin-bottom: 20px; }
@@ -22,8 +48,14 @@
   .sidebar__title { font-size: 12px; font-weight: 600; color: #1D2129; padding: 8px 16px; }
   .sidebar__link { display: block; font-size: 11px; color: #7C8492; padding: 6px 16px; text-decoration: none; transition: all 0.15s; }
   .sidebar__link:hover { color: #00AAA6; background: #E6F7F6; }
-  .demo-frame { border-radius: 8px; overflow: hidden; border: 1px solid #E5E6EB; margin-bottom: 8px; }
   .demo-frame--gradient { background: linear-gradient(180deg, #00B7AC 0%, #009B97 100%); }
+  .rule-box { background: #F7F8FA; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
+  .rule-box__head { font-size: 13px; font-weight: 600; color: #1D2129; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .rule-box__head .badge { font-size: 10px; font-weight: 500; color: #00AAA6; background: #E6F7F6; border-radius: 4px; padding: 1px 6px; }
+  .rule-box ul { margin: 0; padding-left: 18px; }
+  .rule-box li { font-size: 12px; color: #4E5969; line-height: 1.9; }
+  .rule-box code { background: #EBEDF0; border-radius: 3px; padding: 0 4px; font-size: 11px; color: #1D2129; }
+  .rule-box__note { font-size: 11px; color: #86909C; margin-top: 8px; line-height: 1.7; }
 </style>
 </head>
 <body>
@@ -33,14 +65,49 @@
     返回目录
   </a>
   <div class="sidebar__title">状态栏 & 标题栏</div>
+  <a class="sidebar__link" href="#sec-rules">使用规则</a>
   <a class="sidebar__link" href="#sec-statusbar-dark">状态栏 反黑</a>
   <a class="sidebar__link" href="#sec-statusbar-light">状态栏 反白</a>
   <a class="sidebar__link" href="#sec-titlebar-solid">标题栏 黑色</a>
   <a class="sidebar__link" href="#sec-titlebar-transparent">标题栏 透明</a>
+  <a class="sidebar__link" href="#sec-page-type">按页面类型</a>
   <a class="sidebar__link" href="#sec-combination">组合示例</a>
 </nav>
 
 <div class="preview-page">
+  <!-- 使用规则 -->
+  <section class="preview-section" id="sec-rules">
+    <div class="preview-title">使用规则</div>
+    <div class="preview-desc">状态栏 + 标题栏的组合与显示规则</div>
+
+    <div class="rule-box">
+      <div class="rule-box__head">1. 分组：状态栏 + 标题栏 打包为一组 <span class="badge">仅 demo 用</span></div>
+      <ul>
+        <li>两者用 <code>&lt;div class="demo-topbar"&gt;</code> 容器包裹为一组</li>
+        <li>该组仅用于 demo / 原型预览，还原真机顶部效果</li>
+        <li>开发时系统（小程序 / App）自带顶部，<strong>无需实现</strong></li>
+      </ul>
+      <div class="rule-box__note">开发隐藏方式：<code>.demo-topbar { display:none }</code>，或加 <code>.demo-topbar--hidden</code>，或直接删除整个 <code>.demo-topbar</code> 容器。</div>
+    </div>
+
+    <div class="rule-box">
+      <div class="rule-box__head">2. 状态栏：始终存在</div>
+      <ul>
+        <li>demo 中状态栏一直显示（9:41 + 系统图标）</li>
+        <li>配色跟随页面：白底页用 <code>statusbar--dark</code>，渐变头部页用 <code>statusbar--light</code></li>
+      </ul>
+    </div>
+
+    <div class="rule-box">
+      <div class="rule-box__head">3. 标题栏：按当前页面决定，由三部分组成</div>
+      <ul>
+        <li><strong>返回按钮</strong>：仅二级及以下页面有，点击返回上一级；一级页面（首页、登录页）无返回按钮</li>
+        <li><strong>标题</strong>：始终存在，按当前页面命名（如「首页」「待到库」）；登录页标题为「信小递」。<strong>标题始终相对整栏居中</strong>，不管左右两侧按钮功能增减都保持居中</li>
+        <li><strong>胶囊按钮</strong>：小程序平台始终提供，固定在右侧，距右 6px，宽度自适应（87×32）</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- 状态栏 反黑 -->
   <section class="preview-section" id="sec-statusbar-dark">
     <div class="preview-title">状态栏 反黑</div>
@@ -105,7 +172,7 @@
             </svg>
           </button>
           <span class="titlebar__title">待办中心</span>
-          <span class="titlebar__right">
+          <span class="titlebar__right titlebar__capsule">
             <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
           </span>
         </div>
@@ -123,7 +190,7 @@
             </svg>
           </button>
           <span class="titlebar__title"></span>
-          <span class="titlebar__right">
+          <span class="titlebar__right titlebar__capsule">
             <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
           </span>
         </div>
@@ -132,7 +199,7 @@
     </div>
 
     <div class="preview-group">
-      <div class="preview-group-title">Title Bar Solid（右侧带操作）</div>
+      <div class="preview-group-title">Title Bar Solid（右侧带操作图标）</div>
       <div class="demo-frame">
         <div class="titlebar titlebar--solid">
           <button class="titlebar__back">
@@ -141,7 +208,7 @@
             </svg>
           </button>
           <span class="titlebar__title">订单管理</span>
-          <span class="titlebar__right">
+          <span class="titlebar__right titlebar__capsule">
             <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
           </span>
         </div>
@@ -154,7 +221,7 @@
       标题: 16px Medium #000000 · 居中<br>
       返回图标: 24×24 stroke #1D2129 stroke-width 1.5<br>
       返回热区: 44×44px (padding: 0 6px)<br>
-      右侧占位: 44×44px（保持标题居中）<br>
+      标题: 绝对定位居中，始终相对整栏 375px 居中（不受左右按钮增减影响）<br>
       class: titlebar titlebar--solid
     </div>
   </section>
@@ -174,7 +241,7 @@
             </svg>
           </button>
           <span class="titlebar__title">运单详情</span>
-          <span class="titlebar__right">
+          <span class="titlebar__right titlebar__capsule">
             <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
           </span>
         </div>
@@ -192,7 +259,7 @@
             </svg>
           </button>
           <span class="titlebar__title"></span>
-          <span class="titlebar__right">
+          <span class="titlebar__right titlebar__capsule">
             <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
           </span>
         </div>
@@ -209,30 +276,106 @@
     </div>
   </section>
 
+  <!-- 按页面类型 -->
+  <section class="preview-section" id="sec-page-type">
+    <div class="preview-title">按页面类型</div>
+    <div class="preview-desc">状态栏始终存在；标题始终存在（按页命名 + 胶囊）；返回按钮只在二级及以下页面出现。整组用 <code>.demo-topbar</code> 包裹，开发时可整体隐藏。</div>
+
+    <div class="preview-group">
+      <div class="preview-group-title">一级页面 · 首页（无返回 + 标题「首页」+ 胶囊）</div>
+      <div class="demo-frame demo-frame--gradient" style="padding-bottom: 20px;">
+        <div class="demo-topbar">
+          <div class="statusbar statusbar--light">
+            <span class="statusbar__time">9:41</span>
+            <div class="statusbar__icons">
+              <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+            </div>
+          </div>
+          <div class="titlebar titlebar--transparent">
+            <span class="titlebar__title">首页</span>
+            <span class="titlebar__right titlebar__capsule">
+              <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">一级页面无返回按钮 · statusbar--light + titlebar--transparent</div>
+    </div>
+
+    <div class="preview-group">
+      <div class="preview-group-title">一级页面 · 登录页（无返回 + 标题「信小递」+ 胶囊）</div>
+      <div class="demo-frame">
+        <div class="demo-topbar">
+          <div class="statusbar statusbar--dark">
+            <span class="statusbar__time">9:41</span>
+            <div class="statusbar__icons">
+              <img src="../assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+            </div>
+          </div>
+          <div class="titlebar titlebar--solid">
+            <span class="titlebar__title">信小递</span>
+            <span class="titlebar__right titlebar__capsule">
+              <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">登录页标题固定为「信小递」，一级页面无返回按钮</div>
+    </div>
+
+    <div class="preview-group">
+      <div class="preview-group-title">二级及以下页面 · 待到库（返回 + 标题「待到库」+ 胶囊）</div>
+      <div class="demo-frame">
+        <div class="demo-topbar">
+          <div class="statusbar statusbar--dark">
+            <span class="statusbar__time">9:41</span>
+            <div class="statusbar__icons">
+              <img src="../assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+            </div>
+          </div>
+          <div class="titlebar titlebar--solid">
+            <button class="titlebar__back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="titlebar__title">待到库</span>
+            <span class="titlebar__right titlebar__capsule">
+              <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">二级及以下页面带返回按钮，点击返回上一级</div>
+    </div>
+  </section>
+
   <!-- 组合示例 -->
   <section class="preview-section" id="sec-combination">
     <div class="preview-title">组合示例</div>
-    <div class="preview-desc">状态栏 + 标题栏的常见组合方式</div>
+    <div class="preview-desc">状态栏 + 标题栏的常见配色组合（含小程序胶囊按钮，距右侧 6px）</div>
 
     <div class="preview-group">
       <div class="preview-group-title">常规内页：反黑状态栏 + 黑色标题栏</div>
       <div class="demo-frame">
-        <div class="statusbar statusbar--dark">
-          <span class="statusbar__time">9:41</span>
-          <div class="statusbar__icons">
-            <img src="../assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+        <div class="demo-topbar">
+          <div class="statusbar statusbar--dark">
+            <span class="statusbar__time">9:41</span>
+            <div class="statusbar__icons">
+              <img src="../assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+            </div>
           </div>
-        </div>
-        <div class="titlebar titlebar--solid">
-          <button class="titlebar__back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <span class="titlebar__title">待到库</span>
-          <span class="titlebar__right">
-            <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
-          </span>
+          <div class="titlebar titlebar--solid">
+            <button class="titlebar__back">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <span class="titlebar__title">待到库</span>
+            <span class="titlebar__right titlebar__capsule">
+              <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+            </span>
+          </div>
         </div>
       </div>
       <div class="preview-label">statusbar--dark + titlebar--solid · 总高度 88px</div>
@@ -241,22 +384,19 @@
     <div class="preview-group">
       <div class="preview-group-title">渐变头部页：反白状态栏 + 透明标题栏</div>
       <div class="demo-frame demo-frame--gradient" style="padding-bottom: 20px;">
-        <div class="statusbar statusbar--light">
-          <span class="statusbar__time">9:41</span>
-          <div class="statusbar__icons">
-            <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+        <div class="demo-topbar">
+          <div class="statusbar statusbar--light">
+            <span class="statusbar__time">9:41</span>
+            <div class="statusbar__icons">
+              <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+            </div>
           </div>
-        </div>
-        <div class="titlebar titlebar--transparent">
-          <button class="titlebar__back">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 6L9 12L15 18" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <span class="titlebar__title">信小递</span>
-          <span class="titlebar__right">
-            <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
-          </span>
+          <div class="titlebar titlebar--transparent">
+            <span class="titlebar__title">首页</span>
+            <span class="titlebar__right titlebar__capsule">
+              <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+            </span>
+          </div>
         </div>
       </div>
       <div class="preview-label">statusbar--light + titlebar--transparent · 用于首页/详情渐变头部</div>

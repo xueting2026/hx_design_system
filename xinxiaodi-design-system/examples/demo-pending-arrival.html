@@ -10,7 +10,6 @@ body { width: 375px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; }
 
 /* 页面特有样式 */
 .page-sticky { position: sticky; top: 0; z-index: 50; }
-.page-sticky--nav { position: sticky; top: 44px; z-index: 49; }
 
 /* 运单卡片（列表页特有结构） */
 .waybill-card {
@@ -234,23 +233,25 @@ body { width: 375px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; }
 </head>
 <body>
 
-<!-- 状态栏 -->
-<div class="statusbar statusbar--dark page-sticky">
-  <span class="statusbar__time">9:41</span>
-  <div class="statusbar__icons">
-    <img src="../assets/icons/bar_status_black.svg" height="12" alt="status" />
+<!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+<div class="demo-topbar page-sticky">
+  <!-- 状态栏 -->
+  <div class="statusbar statusbar--dark">
+    <span class="statusbar__time">9:41</span>
+    <div class="statusbar__icons">
+      <img src="../assets/icons/bar_status_black.svg" height="12" alt="status" />
+    </div>
   </div>
-</div>
-
-<!-- 标题栏 -->
-<div class="titlebar titlebar--solid page-sticky--nav">
-  <button class="titlebar__back">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <span class="titlebar__title">待到库</span>
-  <span class="titlebar__right">
-    <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp" />
-  </span>
+  <!-- 二级页面（待到库）：返回按钮 + 标题「待到库」+ 胶囊 -->
+  <div class="titlebar titlebar--solid">
+    <button class="titlebar__back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="titlebar__title">待到库</span>
+    <span class="titlebar__right titlebar__capsule">
+      <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp" />
+    </span>
+  </div>
 </div>
 
 <!-- 定位栏 -->

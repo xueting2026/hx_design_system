@@ -29,18 +29,22 @@
   <!-- Background gradient -->
   <div style="position: absolute; top: 0; left: 0; right: 0; height: 250px; background: linear-gradient(90deg, #00B7AC 0%, #009B97 100%); z-index: 0;"></div>
 
-  <!-- Status Bar -->
-  <div style="height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: relative; z-index: 1;">
-    <span style="font-size: 14px; font-weight: 600; color: #FFFFFF;">9:41</span>
-    <div style="display: flex; gap: 4px; align-items: center;">
-      <span style="font-size: 12px; color: #FFFFFF;">●●●●</span>
-      <span style="font-size: 12px; color: #FFFFFF;">WiFi</span>
-      <span style="font-size: 12px; color: #FFFFFF;">🔋</span>
+  <!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+  <div class="demo-topbar" style="position: relative; z-index: 1;">
+    <div class="statusbar statusbar--light">
+      <span class="statusbar__time">9:41</span>
+      <div class="statusbar__icons">
+        <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+      </div>
+    </div>
+    <!-- 一级页面（登录页）：无返回 + 标题「信小递」+ 胶囊 -->
+    <div class="titlebar titlebar--transparent">
+      <span class="titlebar__title">信小递</span>
+      <span class="titlebar__right titlebar__capsule">
+        <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+      </span>
     </div>
   </div>
-
-  <!-- Nav Bar spacer -->
-  <div style="height: 44px; position: relative; z-index: 1;"></div>
 
   <!-- Logo Area -->
   <div style="height: 138px; display: flex; align-items: flex-end; justify-content: center; position: relative; z-index: 1;">

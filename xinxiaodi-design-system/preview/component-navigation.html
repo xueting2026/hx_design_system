@@ -5,6 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>信小递组件 - 导航 Navigation</title>
 <link rel="stylesheet" href="../xinxiaodi-ui.css">
+<script>
+/* 嵌入模式：被 index.html 以 iframe 引用(?embed=1)时隐藏侧边栏并自适应高度，保证组件只维护一份 */
+(function () {
+  if (new URLSearchParams(location.search).get('embed') !== '1') return;
+  var s = document.createElement('style');
+  s.textContent = '.sidebar{display:none!important}.preview-page{padding-left:24px!important;max-width:none!important}body{background:#fff!important}';
+  (document.head || document.documentElement).appendChild(s);
+  function measure() { return Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0, document.body ? document.body.offsetHeight : 0); }
+  function post() { parent.postMessage({ type: 'previewHeight', height: measure() }, '*'); }
+  function start() {
+    post();
+    if (window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+    [100, 300, 600, 1200].forEach(function (t) { setTimeout(post, t); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(post);
+    Array.prototype.forEach.call(document.images, function (img) { if (!img.complete) img.addEventListener('load', post); });
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+  window.addEventListener('resize', post);
+  // 鼠标在 iframe 空白处滚动时，把滚动转发给父页面（否则外层页面无法继续滚动）
+  window.addEventListener('wheel', function (e) {
+    parent.postMessage({ type: 'previewWheel', deltaY: e.deltaY, deltaX: e.deltaX }, '*');
+  }, { passive: true });
+})();
+</script>
 <style>
   body { background: #F3F5F7; margin: 0; }
   .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
@@ -45,7 +70,6 @@
   <a class="sidebar__link" href="#sec-location">定位栏</a>
   <a class="sidebar__link" href="#sec-tabs">Tab 切换</a>
   <a class="sidebar__link" href="#sec-scan">扫码接单入口</a>
-  <a class="sidebar__link" href="#sec-expand">展开/收起按钮</a>
   <a class="sidebar__link" href="#sec-divider">分割线</a>
   <a class="sidebar__link" href="#sec-fab">浮动按钮</a>
   <a class="sidebar__link" href="#sec-selector">选择器</a>
@@ -133,25 +157,29 @@
     <div class="preview-desc">水平滚动 Tab 列表，点击切换选中态</div>
     <div class="preview-group">
       <div class="preview-group-title">基础 Tab</div>
-      <div class="tabs">
-        <div class="tab-item tab-item--active">全部</div>
-        <div class="tab-item">待取件</div>
-        <div class="tab-item">配送中</div>
-        <div class="tab-item">已签收</div>
-        <div class="tab-item">异常件</div>
+      <div style="background: #F3F5F7; border-radius: 8px; padding: 8px;">
+        <div class="tabs">
+          <div class="tab-item tab-item--active">全部</div>
+          <div class="tab-item">待取件</div>
+          <div class="tab-item">配送中</div>
+          <div class="tab-item">已签收</div>
+          <div class="tab-item">异常件</div>
+        </div>
       </div>
-      <div class="preview-label">点击切换选中态 | active: bg #00AAA6, color #FFF</div>
+      <div class="preview-label">未选中态白底，需置于灰底(#F3F5F7)页面上 | active: bg #00AAA6, color #FFF</div>
     </div>
     <div class="preview-group">
       <div class="preview-group-title">多项 Tab（可滚动）</div>
-      <div class="tabs">
-        <div class="tab-item tab-item--active">今日任务</div>
-        <div class="tab-item">明日预约</div>
-        <div class="tab-item">超时件</div>
-        <div class="tab-item">退回件</div>
-        <div class="tab-item">转交件</div>
-        <div class="tab-item">历史记录</div>
-        <div class="tab-item">统计分析</div>
+      <div style="background: #F3F5F7; border-radius: 8px; padding: 8px;">
+        <div class="tabs">
+          <div class="tab-item tab-item--active">今日任务</div>
+          <div class="tab-item">明日预约</div>
+          <div class="tab-item">超时件</div>
+          <div class="tab-item">退回件</div>
+          <div class="tab-item">转交件</div>
+          <div class="tab-item">历史记录</div>
+          <div class="tab-item">统计分析</div>
+        </div>
       </div>
     </div>
   </section>
@@ -159,16 +187,14 @@
   <!-- 扫码接单入口 -->
   <section class="preview-section" id="sec-scan">
     <div class="preview-title">扫码接单入口</div>
-    <div class="preview-desc">大尺寸入口按钮，绿色/橙色两种配色</div>
+    <div class="preview-desc">大尺寸入口按钮：绿色=扫码接单，橙色=退出扫码</div>
     <div class="preview-group">
-      <div class="preview-group-title">绿色 (取件)</div>
+      <div class="preview-group-title">绿色（扫码接单）</div>
       <div class="scan-entry scan-entry--green">
-        <div class="scan-entry__icon scan-entry__icon--green">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><rect x="11" y="2" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><rect x="2" y="11" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><path d="M12 12h4v4h-4z" stroke="#FFF" stroke-width="1.5"/></svg>
-        </div>
+        <img class="scan-entry__icon" src="../assets/icons/scan_receive_green.svg" width="32" height="32" alt="扫码接单" />
         <div class="scan-entry__content">
-          <div class="scan-entry__title">扫码取件</div>
-          <div class="scan-entry__subtitle">扫描面单快速取件</div>
+          <div class="scan-entry__title">扫码接单</div>
+          <div class="scan-entry__subtitle">扫码领取配送任务</div>
         </div>
         <div class="scan-entry__arrow">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="#C9CDD4" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -176,37 +202,16 @@
       </div>
     </div>
     <div class="preview-group">
-      <div class="preview-group-title">橙色 (派件)</div>
+      <div class="preview-group-title">橙色（退出扫码）</div>
       <div class="scan-entry scan-entry--orange">
-        <div class="scan-entry__icon scan-entry__icon--orange">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><rect x="11" y="2" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><rect x="2" y="11" width="5" height="5" rx="1" stroke="#FFF" stroke-width="1.5"/><path d="M12 12h4v4h-4z" stroke="#FFF" stroke-width="1.5"/></svg>
-        </div>
+        <img class="scan-entry__icon" src="../assets/icons/scan_receive_orange.svg" width="32" height="32" alt="退出扫码" />
         <div class="scan-entry__content">
-          <div class="scan-entry__title">扫码派件</div>
-          <div class="scan-entry__subtitle" style="color: #FF7D00;">扫描快递码确认派送</div>
+          <div class="scan-entry__title">退出扫码</div>
         </div>
         <div class="scan-entry__arrow">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="#C9CDD4" stroke-width="1.5" stroke-linecap="round"/></svg>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 展开/收起按钮 -->
-  <section class="preview-section" id="sec-expand">
-    <div class="preview-title">展开/收起按钮</div>
-    <div class="preview-desc">位于卡片底部灰色条中的胶囊形按钮</div>
-    <div class="preview-group">
-      <div style="background: #F3F5F7; height: 30px; border-radius: 0 0 4px 4px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;">
-        <div class="card__expand-pill" data-expand-target="expandDemo">
-          <span data-expand-text>展开</span>
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4L5 7L8 4" stroke="#7C8492" stroke-width="1" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-      <div id="expandDemo" style="display: none; padding: 12px; background: #F7F8FA; border-radius: 4px; margin-top: 8px;">
-        <div style="font-size: 12px; color: #7C8492;">这是展开后显示的内容区域。点击「收起」可以折叠。</div>
-      </div>
-      <div class="preview-label">点击展开/收起切换内容显隐，箭头旋转 180°</div>
     </div>
   </section>
 
@@ -261,24 +266,18 @@
   <!-- 浮动按钮 -->
   <section class="preview-section" id="sec-fab">
     <div class="preview-title">浮动按钮 FAB</div>
-    <div class="preview-desc">悬浮在页面右下角，大/小两种尺寸</div>
+    <div class="preview-desc">悬浮在页面右下角，返回顶部</div>
     <div class="preview-group">
       <div class="preview-row" style="gap: 24px;">
         <div class="preview-item">
           <div class="fab fab--lg fab-demo">
-            <svg class="fab__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 4V18M4 11H18" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg>
-            <span class="fab__label">接单</span>
+            <img class="fab__icon" src="../assets/icons/back_top.svg" width="20" height="20" alt="返回顶部" />
+            <span class="fab__label">返回顶部</span>
           </div>
           <span class="preview-label">大 60×60px</span>
         </div>
-        <div class="preview-item">
-          <div class="fab fab--sm fab-demo">
-            <svg class="fab__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3V15M3 9H15" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <span class="preview-label">小 40×40px</span>
-        </div>
       </div>
-      <div class="preview-label">渐变: linear-gradient(135deg, #00AAA6, #009B97) | hover: scale 1.05 | active: scale 0.95</div>
+      <div class="preview-label">渐变: linear-gradient(135deg, #00AAA6, #009B97) | icon: back_top | 文字 12px | hover: scale 1.05</div>
     </div>
   </section>
 

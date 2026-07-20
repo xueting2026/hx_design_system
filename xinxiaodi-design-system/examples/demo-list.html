@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>信小递 - 待到库列表页</title>
+<link rel="stylesheet" href="../xinxiaodi-ui.css">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -15,29 +16,7 @@ body {
   overflow-x: hidden;
 }
 
-.status-bar {
-  height: 44px; background: #FFFFFF;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 16px; position: sticky; top: 0; z-index: 50;
-}
-.status-bar .time { font-size: 14px; font-weight: 600; color: #1D2129; }
-.status-bar .icons { display: flex; gap: 6px; align-items: center; }
-.status-bar .icons span { font-size: 12px; color: #1D2129; }
-
-.nav-bar {
-  height: 44px; background: #FFFFFF;
-  display: flex; align-items: center; padding: 0 6px;
-  position: sticky; top: 44px; z-index: 50;
-}
-.nav-bar .back-btn {
-  width: 44px; height: 44px;
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-}
-.nav-bar .title {
-  flex: 1; text-align: center;
-  font-size: 16px; font-weight: 500; color: #000000;
-}
-.nav-bar .right-area { width: 44px; height: 44px; flex-shrink: 0; }
+.demo-topbar { position: sticky; top: 0; z-index: 50; }
 
 .location-bar {
   height: 48px; background: #F3F5F7;
@@ -143,17 +122,27 @@ body {
 </head>
 <body>
 
-<!-- 状态栏 -->
-<div class="status-bar">
-  <span class="time">9:41</span>
-  <div class="icons"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
-</div>
-
-<!-- 标题栏 -->
-<div class="nav-bar">
-  <div class="back-btn"><svg width="9" height="17" viewBox="0 0 9 17" fill="none"><path d="M8 1L1.5 8.5L8 16" stroke="#1D2129" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-  <span class="title">待到库</span>
-  <div class="right-area"></div>
+<!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+<div class="demo-topbar">
+  <!-- 状态栏 -->
+  <div class="statusbar statusbar--dark">
+    <span class="statusbar__time">9:41</span>
+    <div class="statusbar__icons">
+      <img src="../assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+    </div>
+  </div>
+  <!-- 二级页面（待到库）：返回按钮 + 标题「待到库」+ 胶囊 -->
+  <div class="titlebar titlebar--solid">
+    <button class="titlebar__back" onclick="navigateToHome()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <span class="titlebar__title">待到库</span>
+    <span class="titlebar__right titlebar__capsule">
+      <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+    </span>
+  </div>
 </div>
 
 <!-- 定位 -->
@@ -259,6 +248,15 @@ body {
 
 <!-- 底部加载提示 -->
 <div class="load-hint"><div class="line"></div><span>已加载90天内全部</span><div class="line"></div></div>
+
+<script>
+// 发送导航消息给父页面（用于交互演示）
+function navigateToHome() {
+  if (window.parent !== window) {
+    window.parent.postMessage({ action: 'navigate', target: 'page-home' }, '*');
+  }
+}
+</script>
 
 </body>
 </html>

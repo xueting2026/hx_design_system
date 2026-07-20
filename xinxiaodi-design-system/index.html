@@ -288,13 +288,16 @@
       gap: 12px;
     }
     .page-type-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
       border: 1px solid #E5E6EB;
       border-radius: 8px;
       padding: 12px;
       text-align: center;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
     }
-    .page-type-card:hover { border-color: #00AAA6; }
+    .page-type-card:hover { border-color: #00AAA6; box-shadow: 0 4px 12px rgba(0,170,166,.08); transform: translateY(-2px); }
     .page-type-card__name {
       font-size: 13px;
       font-weight: 500;
@@ -435,7 +438,20 @@
       color: #7C8492;
       margin-top: 4px;
     }
-  </style>
+  
+    /* ===== 组件目录卡片（缩略图 → 点击跳转组件预览页）===== */
+    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+    .catalog-card { display: block; text-decoration: none; border: 1px solid #E5E6EB; border-radius: 10px; overflow: hidden; background: #fff; transition: border-color .2s, box-shadow .2s, transform .2s; }
+    .catalog-card:hover { border-color: #00AAA6; box-shadow: 0 6px 16px rgba(0,170,166,.1); transform: translateY(-2px); }
+    .catalog-thumb { height: 116px; background: #F3F5F7; display: flex; align-items: center; justify-content: center; padding: 12px; overflow: hidden; }
+    .catalog-thumb > * { pointer-events: none; }
+    .catalog-card__body { padding: 12px 16px; border-top: 1px solid #F2F3F5; }
+    .catalog-card__name { font-size: 14px; font-weight: 600; color: #1D2129; display: flex; align-items: center; justify-content: space-between; }
+    .catalog-card__name span.arr { color: #00AAA6; font-weight: 400; }
+    .catalog-card__desc { font-size: 11px; color: #7C8492; line-height: 1.5; margin-top: 4px; }
+    /* 迷你缩略图内部 */
+    .mini-frame { width: 190px; background: #fff; border-radius: 6px; box-shadow: 0 1px 6px rgba(0,0,0,.08); overflow: hidden; }
+</style>
 </head>
 <body>
 
@@ -452,19 +468,7 @@
     <li><a href="#colors">色彩 Color</a></li>
     <li><a href="#typography">字体 Typography</a></li>
     <li><a href="#spacing">间距与圆角</a></li>
-    <li><a href="#buttons">按钮 Button</a></li>
-    <li><a href="#inputs">输入框 Input</a></li>
-    <li><a href="#searchbox">搜索框 Search</a></li>
-    <li><a href="#selectors">选择器 Selector</a></li>
-    <li><a href="#tags">标签 Tag</a></li>
-    <li><a href="#cards">卡片 Card</a></li>
-    <li><a href="#tabs">Tab 切换</a></li>
-    <li><a href="#dialogs">弹窗 Dialog</a></li>
-    <li><a href="#statusbar">状态栏 StatusBar</a></li>
-    <li><a href="#titlebar">标题栏 TitleBar</a></li>
-    <li><a href="#navigation">导航 Navigation</a></li>
-    <li><a href="#dividers">分割线 Divider</a></li>
-    <li><a href="#fab">浮动按钮 FAB</a></li>
+    <li><a href="#components">组件 Components</a></li>
     <li><a href="#button-group">按钮组规范</a></li>
     <li><a href="#icons">图标 Icons</a></li>
     <li><a href="#page-types">页型 Page Types</a></li>
@@ -604,423 +608,101 @@
     </div>
   </section>
 
-  <!-- ===== Buttons ===== -->
-  <section class="section" id="buttons">
-    <h2 class="section__title">按钮 Button</h2>
+  <!-- ===== 组件目录 Components（缩略图卡片 → 跳转各组件预览页）===== -->
+  <section class="section" id="components">
+    <h2 class="section__title">组件 Components</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:16px;">组件在各自的预览页中维护（单一来源）。点击缩略图进入完整预览。</p>
+    <div class="catalog-grid">
 
-    <p class="section__subtitle">大按钮 40px（宽 303px）</p>
-    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
-      <button class="btn btn--lg btn--primary">主色按钮 Primary</button>
-      <button class="btn btn--lg btn--light">浅色按钮 Light</button>
-      <button class="btn btn--lg btn--clear">清除按钮 Clear</button>
-      <button class="btn btn--lg btn--primary btn--disabled"><span>禁用态 Disabled</span></button>
-    </div>
-
-    <p class="section__subtitle">小按钮 32px（宽度自适应）</p>
-    <div class="btn-grid">
-      <button class="btn btn--sm btn--primary">主色小按钮</button>
-      <button class="btn btn--sm btn--light-solid">浅色小按钮</button>
-      <button class="btn btn--sm btn--text">文字按钮</button>
-      <button class="btn btn--sm btn--primary btn--disabled"><span>禁用</span></button>
-    </div>
-
-    <p class="note" style="margin-top:12px">规则：按钮文字统一 Regular 字重，禁用态 = 背景不变 + 内容 opacity 40%</p>
-  </section>
-
-  <!-- ===== Inputs ===== -->
-  <section class="section" id="inputs">
-    <h2 class="section__title">输入框 Input</h2>
-
-    <p class="section__subtitle">基础输入框（48px 高）</p>
-    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
-      <input class="input" placeholder="请输入手机号">
-      <div class="input-group">
-        <span class="input-group__prefix">+86</span>
-        <input class="input" placeholder="请输入手机号">
-      </div>
-      <div class="input-group">
-        <input class="input" placeholder="请输入验证码" style="border-radius:var(--radius-sm) 0 0 var(--radius-sm);">
-        <span class="input-group__suffix">获取验证码</span>
-      </div>
-    </div>
-
-    <p class="section__subtitle">输入框状态</p>
-    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;">
-      <input class="input" value="已输入内容">
-      <div>
-        <input class="input input--error" value="错误输入">
-        <div class="input-error-msg">请输入正确的手机号</div>
-      </div>
-      <input class="input input--disabled" value="禁用态" disabled>
-    </div>
-  </section>
-
-  <!-- ===== Search Box ===== -->
-  <section class="section" id="searchbox">
-    <h2 class="section__title">搜索框 Search Box</h2>
-
-    <p class="section__subtitle">类型一：带查询按钮</p>
-    <div class="mobile-frame" style="padding:12px 16px;">
-      <div class="searchbox">
-        <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input class="searchbox__input" placeholder="输入运单号查询">
-        <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
-      </div>
-    </div>
-
-    <p class="section__subtitle">类型二：带筛选下拉</p>
-    <div class="mobile-frame" style="padding:12px 16px;">
-      <div class="searchbox">
-        <div class="searchbox__filter">
-          <div class="searchbox__filter-trigger">
-            <span class="searchbox__filter-label">运单号</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="#00AAA6" stroke-width="1.5"/></svg>
-          </div>
-          <div class="searchbox__filter-divider"></div>
+      <a class="catalog-card" href="preview/component-button.html">
+        <div class="catalog-thumb" style="flex-direction:column;gap:8px;">
+          <button class="btn btn--sm btn--primary">主色按钮</button>
+          <button class="btn btn--sm btn--light-solid">浅色按钮</button>
         </div>
-        <input class="searchbox__input" placeholder="请输入">
-        <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
-      </div>
-    </div>
-
-    <p class="section__subtitle">类型三：带排序/筛选按钮</p>
-    <div class="mobile-frame" style="padding:12px 16px;">
-      <div style="display:flex; gap:8px; align-items:center;">
-        <div class="searchbox" style="flex:1;">
-          <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input class="searchbox__input" placeholder="搜索运单号/收货人">
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">按钮 Button <span class="arr">→</span></div>
+          <div class="catalog-card__desc">大/小 × 深色/浅色/清除/文字 × 正常/hover/禁用</div>
         </div>
-        <div class="searchbox__action">
-          <svg class="searchbox__action-icon" viewBox="0 0 20 20" fill="none" stroke="#00AAA6" stroke-width="1.5"><path d="M3 5h14M5 10h10M7 15h6"/></svg>
-          <span class="searchbox__action-label">排序</span>
+      </a>
+
+      <a class="catalog-card" href="preview/component-input.html">
+        <div class="catalog-thumb">
+          <input class="input" style="width:170px;height:40px;" placeholder="请输入内容" readonly>
         </div>
-        <div class="searchbox__action">
-          <svg class="searchbox__action-icon" viewBox="0 0 20 20" fill="none" stroke="#00AAA6" stroke-width="1.5"><path d="M3 4h14M3 10h8M3 16h4"/><circle cx="15" cy="10" r="2"/><circle cx="11" cy="16" r="2"/></svg>
-          <span class="searchbox__action-label">筛选</span>
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">输入框 Input <span class="arr">→</span></div>
+          <div class="catalog-card__desc">基础/前缀/验证码/密码 × 5 种状态</div>
         </div>
-      </div>
-    </div>
-  </section>
+      </a>
 
-  <!-- ===== Selectors ===== -->
-  <section class="section" id="selectors">
-    <h2 class="section__title">选择器 Selector</h2>
-
-    <p class="section__subtitle">Checkbox（16×16px，圆角 2px）</p>
-    <div class="demo-row" style="gap:24px;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="checkbox"></div><span class="text-body">未选中</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="checkbox checkbox--checked">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div><span class="text-body">已选中</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="checkbox checkbox--indeterminate">
-          <div style="width:8px;height:2px;background:#fff;border-radius:1px;"></div>
-        </div><span class="text-body">半选</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="checkbox checkbox--disabled"></div><span class="text-body" style="opacity:0.4;">禁用</span>
-      </div>
-    </div>
-
-    <p class="section__subtitle">Radio（16×16px，圆形）</p>
-    <div class="demo-row" style="gap:24px;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="radio"></div><span class="text-body">未选中</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div class="radio radio--checked">
-          <div style="width:6px;height:6px;background:#fff;border-radius:50%;"></div>
-        </div><span class="text-body">已选中</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Tags ===== -->
-  <section class="section" id="tags">
-    <h2 class="section__title">标签 Tag</h2>
-    <div class="demo-row" style="gap:12px;">
-      <span class="tag tag--blue">提货点</span>
-      <span class="tag tag--orange">2C收货</span>
-      <span class="tag tag--purple">电商补货</span>
-      <span class="tag tag--green">整单</span>
-      <span class="tag tag--red">异常</span>
-    </div>
-    <p class="note">标签颜色承载业务含义：蓝=运单状态/提货点，橙=2C/收货点，紫=电商补货，绿=整单甩单，红=异常</p>
-  </section>
-
-  <!-- ===== Cards ===== -->
-  <section class="section" id="cards">
-    <h2 class="section__title">卡片 Card</h2>
-    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">卡片是信小递最核心的信息容器（343px 宽，10px 圆角，白底 + 微阴影）</p>
-
-    <div class="mobile-frame" style="padding:16px;">
-      <div class="card">
-        <div class="card__top">
-          <span class="tag tag--blue">提货点</span>
-          <span style="font-size:14px;font-weight:600;color:#1D2129;">YD2024061200001</span>
-        </div>
-        <div class="card__body" style="display:flex;flex-direction:column;gap:6px;">
-          <div style="display:flex;justify-content:space-between;">
-            <span class="text-secondary">收货人</span>
-            <span class="text-body">张三</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span class="text-secondary">地址</span>
-            <span class="text-body" style="max-width:200px;text-align:right;">青岛市崂山区科苑纬四路</span>
+      <a class="catalog-card" href="preview/component-searchbox.html">
+        <div class="catalog-thumb">
+          <div class="searchbox" style="width:180px;">
+            <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="searchbox__input" placeholder="搜索运单号" readonly>
+            <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
           </div>
         </div>
-        <div class="card__divider"></div>
-        <div class="card__footer">
-          <button class="btn btn--sm btn--light-solid">拒绝</button>
-          <button class="btn btn--sm btn--primary">确认提货</button>
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">搜索框 SearchBox <span class="arr">→</span></div>
+          <div class="catalog-card__desc">默认/有筛选/多项筛选 + 清除/下拉交互</div>
         </div>
-      </div>
-    </div>
+      </a>
 
-    <p style="margin-top:12px;"><a href="preview/component-card.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整卡片系统（component-card.html）</a></p>
-  </section>
-
-  <!-- ===== Tabs ===== -->
-  <section class="section" id="tabs">
-    <h2 class="section__title">Tab 切换</h2>
-    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">高度 30px，圆角 4px，间距 8px</p>
-
-    <div class="mobile-frame" style="padding:12px 16px;">
-      <div class="tabs">
-        <div class="tab-item tab-item--active">全部</div>
-        <div class="tab-item">待提货</div>
-        <div class="tab-item">待发运</div>
-        <div class="tab-item">待签收</div>
-        <div class="tab-item">已完成</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Dialogs ===== -->
-  <section class="section" id="dialogs">
-    <h2 class="section__title">弹窗 Dialog</h2>
-    <p style="font-size:12px;color:#7C8492;margin-bottom:16px;">宽 320px，圆角 8px，内边距 24px，4 种类型</p>
-
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
-      <!-- 确认弹窗 -->
-      <div class="dialog-preview">
-        <div class="dialog-static">
-          <div class="dialog-static__title">确认提交？</div>
-          <div class="dialog-static__desc">提交后不可修改，请确认信息无误</div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn--sm btn--light" style="flex:1;height:36px;">取消</button>
-            <button class="btn btn--sm btn--primary" style="flex:1;height:36px;">确认</button>
+      <a class="catalog-card" href="preview/component-card.html">
+        <div class="catalog-thumb">
+          <div class="mini-frame">
+            <div style="background:rgba(0,170,166,.1);padding:6px 8px;display:flex;gap:6px;align-items:center;"><span class="tag tag--blue">提货点</span><span style="font-size:11px;font-weight:600;color:#1D2129;">YD24061200001</span></div>
+            <div style="padding:8px;"><div style="height:6px;background:#F2F3F5;border-radius:3px;margin-bottom:6px;"></div><div style="height:6px;width:70%;background:#F2F3F5;border-radius:3px;"></div></div>
           </div>
-          <p class="note" style="margin-top:8px;">确认型</p>
         </div>
-      </div>
-      <!-- 提示弹窗 -->
-      <div class="dialog-preview">
-        <div class="dialog-static">
-          <div class="dialog-static__title">提交成功</div>
-          <div class="dialog-static__desc">运单已确认，请等待调度安排</div>
-          <button class="btn btn--sm btn--primary" style="width:100%;height:36px;">我知道了</button>
-          <p class="note" style="margin-top:8px;">提示型</p>
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">卡片 Card <span class="arr">→</span></div>
+          <div class="catalog-card__desc">运单/签收/物流/按钮组卡片</div>
         </div>
-      </div>
-      <!-- 表单弹窗 -->
-      <div class="dialog-preview">
-        <div class="dialog-static" style="text-align:left;">
-          <div class="dialog-static__title" style="text-align:center;">选择拒收原因</div>
-          <div style="margin-bottom:12px;">
-            <div style="font-size:12px;color:#1D2129;margin-bottom:4px;">拒收原因 <span style="color:#EE0A24;">*</span></div>
-            <div style="height:32px;border:1px solid #BFC5CC;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:12px;color:#BFC5CC;">请选择</div>
+      </a>
+
+      <a class="catalog-card" href="preview/component-dialog.html">
+        <div class="catalog-thumb">
+          <div class="mini-frame" style="width:150px;padding:12px;text-align:center;">
+            <div style="font-size:12px;font-weight:500;color:#000;margin-bottom:8px;">确认提交？</div>
+            <div style="display:flex;gap:6px;"><span class="btn btn--sm btn--light" style="flex:1;height:26px;">取消</span><span class="btn btn--sm btn--primary" style="flex:1;height:26px;">确认</span></div>
           </div>
-          <div style="display:flex;gap:8px;">
-            <button class="btn btn--sm btn--light" style="flex:1;height:36px;">取消</button>
-            <button class="btn btn--sm btn--primary" style="flex:1;height:36px;">提交</button>
+        </div>
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">弹窗 Dialog <span class="arr">→</span></div>
+          <div class="catalog-card__desc">双按钮/单按钮/仅标题/表单</div>
+        </div>
+      </a>
+
+      <a class="catalog-card" href="preview/component-statusbar-titlebar.html">
+        <div class="catalog-thumb">
+          <div class="mini-frame">
+            <div style="height:16px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:9px;color:#1D2129;"><span>9:41</span><span>●●●</span></div>
+            <div style="height:34px;display:flex;align-items:center;justify-content:center;position:relative;border-top:.5px solid #E5E6EB;font-size:12px;font-weight:500;color:#000;"><span style="position:absolute;left:8px;color:#1D2129;">‹</span>待到库<span style="position:absolute;right:8px;font-size:10px;color:#7C8492;">●●</span></div>
           </div>
-          <p class="note" style="margin-top:8px;text-align:center;">表单型</p>
         </div>
-      </div>
-      <!-- 列表弹窗 -->
-      <div class="dialog-preview">
-        <div class="dialog-static" style="text-align:left;">
-          <div class="dialog-static__title" style="text-align:center;">选择操作</div>
-          <div style="border-top:1px solid #E5E6EB;margin:0 -20px;padding:0 20px;">
-            <div style="padding:10px 0;border-bottom:1px solid #F3F5F7;font-size:13px;">拍照上传</div>
-            <div style="padding:10px 0;border-bottom:1px solid #F3F5F7;font-size:13px;">从相册选择</div>
-            <div style="padding:10px 0;font-size:13px;color:#EE0A24;">取消</div>
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">状态栏 &amp; 标题栏 <span class="arr">→</span></div>
+          <div class="catalog-card__desc">反黑/反白状态栏 + 黑色/透明标题栏 + 组合</div>
+        </div>
+      </a>
+
+      <a class="catalog-card" href="preview/component-navigation.html">
+        <div class="catalog-thumb">
+          <div class="tabs" style="flex-wrap:wrap;gap:6px;justify-content:center;max-width:180px;">
+            <div class="tab-item tab-item--active">全部</div>
+            <div class="tab-item">待提货</div>
+            <div class="tab-item">待签收</div>
           </div>
-          <p class="note" style="margin-top:8px;text-align:center;">列表型</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== StatusBar ===== -->
-  <section class="section" id="statusbar">
-    <h2 class="section__title">状态栏 StatusBar</h2>
-    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">44px 高 iOS 系统状态栏，两种配色变体（Figma node: 4-470 / 4-444）</p>
-
-    <p class="section__subtitle">反黑（白底 + 深色文字/图标）</p>
-    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
-      <div class="statusbar statusbar--dark">
-        <span class="statusbar__time">9:41</span>
-        <div class="statusbar__icons">
-          <img src="assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+        <div class="catalog-card__body">
+          <div class="catalog-card__name">导航组件 Navigation <span class="arr">→</span></div>
+          <div class="catalog-card__desc">定位栏/Tab/扫码入口/分割线/浮动按钮/选择器/标签</div>
         </div>
-      </div>
+      </a>
+
     </div>
-    <p class="note">class: <span class="inline-code">statusbar statusbar--dark</span> · 用于常规白底页面</p>
-
-    <p class="section__subtitle">反白（透明背景 + 白色文字/图标）</p>
-    <div style="width:375px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:linear-gradient(180deg,#00B7AC,#009B97);">
-      <div class="statusbar statusbar--light">
-        <span class="statusbar__time">9:41</span>
-        <div class="statusbar__icons">
-          <img src="assets/icons/bar_status_white.svg" height="12" alt="status icons" />
-        </div>
-      </div>
-    </div>
-    <p class="note">class: <span class="inline-code">statusbar statusbar--light</span> · 用于渐变头部页面（首页等）</p>
-
-    <p style="margin-top:12px;"><a href="preview/component-statusbar-titlebar.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整状态栏 & 标题栏系统</a></p>
-  </section>
-
-  <!-- ===== TitleBar ===== -->
-  <section class="section" id="titlebar">
-    <h2 class="section__title">标题栏 TitleBar</h2>
-    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">44px 高标题栏（导航栏），含返回箭头 + 标题 + 右侧操作（Figma node: 11-1095 / 11-1165）</p>
-
-    <p class="section__subtitle">黑色标题栏（白底实底 + 深色文字）</p>
-    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
-      <div class="titlebar titlebar--solid">
-        <button class="titlebar__back">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <span class="titlebar__title">待办中心</span>
-        <span class="titlebar__right">
-          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
-        </span>
-      </div>
-    </div>
-    <p class="note">class: <span class="inline-code">titlebar titlebar--solid</span> · 白底 + 0.5px 下边线 · 标题居中</p>
-
-    <p class="section__subtitle">透明标题栏（透明背景 + 白色文字/图标）</p>
-    <div style="width:375px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:linear-gradient(180deg,#00B7AC,#009B97);">
-      <div class="titlebar titlebar--transparent">
-        <button class="titlebar__back">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <span class="titlebar__title">运单详情</span>
-        <span class="titlebar__right">
-          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
-        </span>
-      </div>
-    </div>
-    <p class="note">class: <span class="inline-code">titlebar titlebar--transparent</span> · 用于渐变头部页面</p>
-
-    <p class="section__subtitle">组合：反黑状态栏 + 黑色标题栏</p>
-    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
-      <div class="statusbar statusbar--dark">
-        <span class="statusbar__time">9:41</span>
-        <div class="statusbar__icons">
-          <img src="assets/icons/bar_status_black.svg" height="12" alt="status icons" />
-        </div>
-      </div>
-      <div class="titlebar titlebar--solid">
-        <button class="titlebar__back">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <span class="titlebar__title">待到库</span>
-        <span class="titlebar__right">
-          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
-        </span>
-      </div>
-    </div>
-    <p class="note">常规内页组合 · 总高度 88px（44 + 44）</p>
-
-    <p style="margin-top:12px;"><a href="preview/component-statusbar-titlebar.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整状态栏 & 标题栏系统</a></p>
-  </section>
-
-  <!-- ===== Navigation ===== -->
-  <section class="section" id="navigation">
-    <h2 class="section__title">导航组件 Navigation</h2>
-
-    <p class="section__subtitle">定位栏（48px 高）</p>
-    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
-      <div class="location-bar">
-        <svg class="location-bar__icon" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.24 1 3 3.24 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#00AAA6"/><circle cx="8" cy="6" r="2" fill="#fff"/></svg>
-        <span class="location-bar__address" style="flex:1;">青岛市崂山区科苑纬四路 18 号海信研发中心</span>
-        <div class="location-bar__action">
-          <span class="location-bar__action-text">切换</span>
-        </div>
-      </div>
-    </div>
-
-    <p class="section__subtitle">扫码接单入口（48px 高）</p>
-    <div class="mobile-frame" style="padding:12px 16px;">
-      <div class="scan-entry scan-entry--green">
-        <div class="scan-entry__icon scan-entry__icon--green">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><rect x="11" y="2" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><rect x="2" y="11" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><path d="M12 12h4M14 12v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <div class="scan-entry__content">
-          <span class="scan-entry__title">扫码接单</span>
-          <span class="scan-entry__subtitle">扫描运单码快速接单</span>
-        </div>
-        <svg class="scan-entry__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Dividers ===== -->
-  <section class="section" id="dividers">
-    <h2 class="section__title">分割线 Divider</h2>
-
-    <div style="display:flex;flex-direction:column;gap:20px;padding:16px;background:#fff;border:1px solid #E5E6EB;border-radius:8px;">
-      <div>
-        <p class="note" style="margin-bottom:8px;">全宽分割线 divider--full</p>
-        <div class="divider divider--full"></div>
-      </div>
-      <div>
-        <p class="note" style="margin-bottom:8px;">居中缩进 divider--center（左右各 16px）</p>
-        <div class="divider divider--center"></div>
-      </div>
-      <div>
-        <p class="note" style="margin-bottom:8px;">左缩进 divider--left（左 16px）</p>
-        <div class="divider divider--left"></div>
-      </div>
-      <div>
-        <p class="note" style="margin-bottom:8px;">带文字分割线</p>
-        <div class="divider-text">
-          <div class="divider-text__line"></div>
-          <span class="divider-text__label">以下为历史记录</span>
-          <div class="divider-text__line"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAB ===== -->
-  <section class="section" id="fab">
-    <h2 class="section__title">浮动按钮 Floating Button</h2>
-
-    <div class="demo-row" style="gap:24px;">
-      <div style="text-align:center;">
-        <div style="position:relative;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#00AAA6,#009B97);box-shadow:0px 4px 12px rgba(0,170,166,0.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 4v14M4 11h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-          <span style="font-size:8px;color:#fff;">新建</span>
-        </div>
-        <p class="note" style="margin-top:8px;">大 60×60</p>
-      </div>
-      <div style="text-align:center;">
-        <div style="position:relative;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00AAA6,#009B97);box-shadow:0px 4px 12px rgba(0,170,166,0.3);display:flex;align-items:center;justify-content:center;">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <p class="note" style="margin-top:8px;">小 40×40</p>
-      </div>
-    </div>
-    <p class="note">渐变: linear-gradient(135deg, #00AAA6, #009B97) · 阴影: 0px 4px 12px rgba(0,170,166,0.3)</p>
   </section>
 
   <!-- ===== Button Group ===== -->
@@ -1098,30 +780,30 @@
     <h2 class="section__title">页型 Page Types</h2>
 
     <div class="page-types" style="margin-bottom:16px;">
-      <div class="page-type-card">
+      <a class="page-type-card" href="examples/login.html">
         <div class="page-type-card__name">🔐 登录页</div>
         <div class="page-type-card__desc">身份认证，不承载业务信息</div>
-      </div>
-      <div class="page-type-card">
+      </a>
+      <a class="page-type-card" href="examples/home.html">
         <div class="page-type-card__name">🏠 首页</div>
         <div class="page-type-card__desc">概览待办任务，快速跳转各业务模块</div>
-      </div>
-      <div class="page-type-card">
+      </a>
+      <a class="page-type-card" href="examples/patterns.html">
         <div class="page-type-card__name">🧩 功能选择页</div>
         <div class="page-type-card__desc">子功能≥3个时作为二级入口集合</div>
-      </div>
-      <div class="page-type-card">
+      </a>
+      <a class="page-type-card" href="examples/list.html">
         <div class="page-type-card__name">📋 列表页</div>
         <div class="page-type-card__desc">同类任务集合，筛选/搜索/批量操作（最核心）</div>
-      </div>
-      <div class="page-type-card">
+      </a>
+      <a class="page-type-card" href="examples/patterns.html">
         <div class="page-type-card__name">✏️ 操作页</div>
         <div class="page-type-card__desc">针对特定对象录入信息并确认提交</div>
-      </div>
-      <div class="page-type-card">
+      </a>
+      <a class="page-type-card" href="preview/component-dialog.html">
         <div class="page-type-card__name">💬 弹窗/面板</div>
         <div class="page-type-card__desc">轻量级操作（≤2步），不需要独立页面</div>
-      </div>
+      </a>
     </div>
 
     <p class="section__subtitle">决策树</p>
@@ -1192,54 +874,6 @@
         xinxiaodi-Design.md
         <div class="resource-link__desc">完整设计规范（八大章节）</div>
       </a>
-      <a href="preview/component-button.html" class="resource-link">
-        按钮预览
-        <div class="resource-link__desc">preview/component-button.html</div>
-      </a>
-      <a href="preview/component-card.html" class="resource-link">
-        卡片预览
-        <div class="resource-link__desc">preview/component-card.html</div>
-      </a>
-      <a href="preview/component-dialog.html" class="resource-link">
-        弹窗预览
-        <div class="resource-link__desc">preview/component-dialog.html</div>
-      </a>
-      <a href="preview/component-input.html" class="resource-link">
-        输入框预览
-        <div class="resource-link__desc">preview/component-input.html</div>
-      </a>
-      <a href="preview/component-searchbox.html" class="resource-link">
-        搜索框预览
-        <div class="resource-link__desc">preview/component-searchbox.html</div>
-      </a>
-      <a href="preview/component-navigation.html" class="resource-link">
-        导航组件预览
-        <div class="resource-link__desc">preview/component-navigation.html</div>
-      </a>
-      <a href="preview/component-statusbar-titlebar.html" class="resource-link">
-        状态栏&标题栏预览
-        <div class="resource-link__desc">preview/component-statusbar-titlebar.html</div>
-      </a>
-      <a href="examples/home.html" class="resource-link">
-        首页示例
-        <div class="resource-link__desc">examples/home.html</div>
-      </a>
-      <a href="examples/list.html" class="resource-link">
-        列表页示例
-        <div class="resource-link__desc">examples/list.html</div>
-      </a>
-      <a href="examples/login.html" class="resource-link">
-        登录页示例
-        <div class="resource-link__desc">examples/login.html</div>
-      </a>
-      <a href="examples/function-hub.html" class="resource-link">
-        功能选择页
-        <div class="resource-link__desc">examples/function-hub.html</div>
-      </a>
-      <a href="examples/patterns.html" class="resource-link">
-        交互模式
-        <div class="resource-link__desc">examples/patterns.html</div>
-      </a>
     </div>
   </section>
 
@@ -1249,6 +883,5 @@
   </footer>
 
 </div><!-- /.main -->
-
 </body>
 </html>

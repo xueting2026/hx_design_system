@@ -5,6 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>信小递组件 - 按钮 Button</title>
 <link rel="stylesheet" href="../xinxiaodi-ui.css">
+<script>
+/* 嵌入模式：被 index.html 以 iframe 引用(?embed=1)时隐藏侧边栏并自适应高度，保证组件只维护一份 */
+(function () {
+  if (new URLSearchParams(location.search).get('embed') !== '1') return;
+  var s = document.createElement('style');
+  s.textContent = '.sidebar{display:none!important}.preview-page{padding-left:24px!important;max-width:none!important}body{background:#fff!important}';
+  (document.head || document.documentElement).appendChild(s);
+  function measure() { return Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0, document.body ? document.body.offsetHeight : 0); }
+  function post() { parent.postMessage({ type: 'previewHeight', height: measure() }, '*'); }
+  function start() {
+    post();
+    if (window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+    [100, 300, 600, 1200].forEach(function (t) { setTimeout(post, t); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(post);
+    Array.prototype.forEach.call(document.images, function (img) { if (!img.complete) img.addEventListener('load', post); });
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+  window.addEventListener('resize', post);
+  // 鼠标在 iframe 空白处滚动时，把滚动转发给父页面（否则外层页面无法继续滚动）
+  window.addEventListener('wheel', function (e) {
+    parent.postMessage({ type: 'previewWheel', deltaY: e.deltaY, deltaX: e.deltaX }, '*');
+  }, { passive: true });
+})();
+</script>
 <style>
   body { background: #F3F5F7; margin: 0; }
   .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }

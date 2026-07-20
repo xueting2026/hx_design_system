@@ -98,12 +98,15 @@
           "fontWeight": 500,
           "lineHeight": "22px",
           "textAlign": "center",
-          "flex": 1
+          "position": "absolute",
+          "centering": "绝对定位居中（left:50% + translateX(-50%)），始终相对整栏 375px 水平居中，不受左右按钮功能增减影响",
+          "maxWidth": "calc(100% - 192px)，预留左右控件空间避免重叠，超出省略号"
         },
         "right-area": {
           "width": "44px",
           "height": "44px",
-          "purpose": "保持标题居中的占位/右侧操作图标区域"
+          "marginLeft": "auto（始终贴右，无论左侧有无返回按钮）",
+          "purpose": "右侧操作/小程序胶囊区域"
         },
         "variants": {
           "solid": {
@@ -140,13 +143,52 @@
       "description": "透明状态栏 + 透明标题栏，叠加在品牌色渐变背景上"
     }
   },
+  "usageRules": {
+    "grouping": {
+      "title": "分组：状态栏 + 标题栏 打包为一组（Demo Top Bar）",
+      "wrapperClass": "demo-topbar",
+      "purpose": "仅用于 demo / 原型预览，还原真机顶部效果",
+      "devNote": "开发时系统（小程序/App）会自带顶部，无需实现。可通过 .demo-topbar { display:none } 或加 .demo-topbar--hidden 一次性整体隐藏，或直接删除整个 .demo-topbar 容器",
+      "structure": "<div class=\"demo-topbar\">{statusbar}{titlebar}</div>"
+    },
+    "statusbar": {
+      "rule": "demo 中状态栏始终存在",
+      "theme": "配色跟随页面：白底页用 dark，渐变头部页用 light"
+    },
+    "titlebar": {
+      "rule": "标题栏是否显示由当前页面决定；显示时由三部分组成",
+      "parts": {
+        "capsule": {
+          "name": "胶囊按钮",
+          "rule": "小程序平台始终存在，固定在右侧",
+          "class": "titlebar__capsule",
+          "note": "由平台自动提供，宽度自适应（87×32），距右侧 6px"
+        },
+        "title": {
+          "name": "标题",
+          "rule": "始终存在，按当前页面命名",
+          "examples": ["首页", "待到库", "订单管理", "运单详情"],
+          "loginPage": "登录页标题为「信小递」",
+          "centering": "标题始终相对整栏水平居中，不管左右两侧按钮功能增减都保持居中"
+        },
+        "back": {
+          "name": "返回按钮",
+          "rule": "仅二级及以下页面有，点击返回上一级",
+          "note": "一级页面（首页、登录页）无返回按钮"
+        }
+      }
+    }
+  },
   "usageHints": [
+    "状态栏和标题栏用 .demo-topbar 容器打包，开发时可一次性隐藏",
     "状态栏和标题栏始终为 375px 满屏宽度",
     "两者组合总高度 88px（44+44），内容区从 88px 开始",
     "常规内页使用 dark + solid 组合",
     "首页/渐变头部页使用 light + transparent 组合",
     "标题栏返回按钮热区为 44×44px，确保可点击范围足够",
-    "标题居中需要右侧有等宽占位元素（即使为空）"
+    "标题绝对定位居中，始终相对整栏 375px 居中，不受左右按钮增减影响",
+    "小程序胶囊按钮固定在标题栏右侧，距右 6px",
+    "登录页/首页为一级页面，无返回按钮；二级及以下页面有返回按钮"
   ],
   "doNotInvent": [
     "中间放搜索框的标题栏（搜索框在标题栏下方独立区域）",

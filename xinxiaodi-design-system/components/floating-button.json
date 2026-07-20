@@ -2,7 +2,8 @@
   "slug": "floating-button",
   "name": "浮动按钮 Floating Button",
   "schemaVersion": 1,
-  "description": "固定定位在右下角的圆形品牌绿渐变浮动按钮，分大(60px)小(40px)两档",
+  "description": "固定定位在右下角的圆形渐变浮动按钮（返回顶部），60px 大号带文字标签",
+  "figmaNode": "2402:43687 (返回顶部)",
   "variantDimensions": [
     {
       "axis": "size",
@@ -10,8 +11,7 @@
     }
   ],
   "representativeVariants": [
-    "large-扫码",
-    "large-待办中心",
+    "large-返回顶部",
     "small"
   ],
   "anatomy": {
@@ -22,12 +22,16 @@
     "large": {
       "size": "60px",
       "radius": "50%",
-      "background": "linear-gradient(135deg, #00AAA6, #009B97)",
-      "shadow": "0px 4px 12px rgba(0,170,166,0.3)",
-      "iconSize": "22px",
+      "background": "linear-gradient(180deg, #7FDCDA 0%, #00AAA6 100%)",
+      "shadow": "阴影/shadow-3: 0px 2px 4px -1px rgba(0,0,0,0.12), 0px 4px 5px rgba(0,0,0,0.08), 0px 1px 10px rgba(0,0,0,0.05)",
+      "icon": "assets/icons/back_top.svg",
+      "iconSize": "20px",
       "iconColor": "#FFFFFF",
       "label": {
-        "fontSize": "8px",
+        "text": "返回顶部",
+        "fontSize": "12px",
+        "fontWeight": 500,
+        "lineHeight": "18px",
         "color": "#FFFFFF"
       },
       "gap": "2px"
@@ -35,8 +39,8 @@
     "small": {
       "size": "40px",
       "radius": "50%",
-      "background": "linear-gradient(135deg, #00AAA6, #009B97)",
-      "shadow": "0px 4px 12px rgba(0,170,166,0.3)",
+      "background": "linear-gradient(180deg, #7FDCDA 0%, #00AAA6 100%)",
+      "shadow": "阴影/shadow-3: 0px 2px 4px -1px rgba(0,0,0,0.12), 0px 4px 5px rgba(0,0,0,0.08), 0px 1px 10px rgba(0,0,0,0.05)",
       "iconSize": "18px",
       "iconColor": "#FFFFFF"
     },
@@ -47,14 +51,15 @@
     }
   },
   "interaction": {
-    "hover": "shadow 加深，轻微 scale(1.05)",
+    "hover": "轻微 scale(1.05)",
     "active": "scale(0.95)",
-    "click": "执行对应操作（打开扫码/跳转待办中心）"
+    "click": "返回顶部——平滑滚动回首页第一屏"
   },
   "usageHints": [
     "只放在右下角固定定位，不用于页面内嵌",
     "一个页面最多一个浮动按钮",
-    "主要用于扫码和待办中心快捷入口",
+    "返回顶部按钮主要用于首页查看待办中心任务后，点击回到首页第一屏",
+    "渐变方向 180deg（上 #7FDCDA → 下 #00AAA6），阴影用中性 shadow-3，非品牌色阴影",
     "大号 60px 用于主要场景，小号 40px 用于辅助"
   ],
   "doNotInvent": [

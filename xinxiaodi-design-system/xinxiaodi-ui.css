@@ -65,7 +65,7 @@
   --shadow-card: 0px 4px 12px rgba(0,0,0,0.05);
   --shadow-popover: 0 4px 16px rgba(0,0,0,0.12);
   --shadow-dialog: 0 4px 24px rgba(0,0,0,0.15);
-  --shadow-float: 0px 4px 12px rgba(0,170,166,0.3);
+  --shadow-float: 0px 2px 4px -1px rgba(0,0,0,0.12), 0px 4px 5px rgba(0,0,0,0.08), 0px 1px 10px rgba(0,0,0,0.05);
 
   /* 布局 Layout */
   --page-width: 375px;
@@ -1036,7 +1036,7 @@ body {
   right: 16px;
   bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
   border-radius: 50%;
-  background: linear-gradient(135deg, #00AAA6, #009B97);
+  background: linear-gradient(180deg, #7FDCDA 0%, #00AAA6 100%);
   box-shadow: var(--shadow-float);
   display: flex;
   flex-direction: column;
@@ -1071,8 +1071,8 @@ body {
 }
 
 .fab--lg .fab__icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .fab--sm .fab__icon {
@@ -1081,7 +1081,9 @@ body {
 }
 
 .fab__label {
-  font-size: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
   color: var(--white);
 }
 
@@ -1237,20 +1239,30 @@ body {
   padding: 0;
 }
 
+/* 标题绝对定位居中：始终相对整栏(375px)水平居中，
+   不受左右按钮功能增减影响。max-width 预留左右控件空间避免重叠。 */
 .titlebar__title {
-  flex: 1;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  height: 44px;
+  line-height: 44px;
+  max-width: calc(100% - 192px);
   text-align: center;
   font-size: 16px;
   font-weight: 500;
-  line-height: 22px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  pointer-events: none;
 }
 
+/* 右侧区域始终贴右（margin-left:auto 保证无论左侧有无返回按钮都靠右） */
 .titlebar__right {
   width: 44px;
   height: 44px;
+  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1283,6 +1295,34 @@ body {
 
 .titlebar--transparent .titlebar__back svg {
   stroke: var(--white);
+}
+
+/* --------------------------------------------------------------------------
+   状态栏 + 标题栏 分组容器 Demo Top Bar
+   说明：状态栏和标题栏合为一组，仅用于 demo / 原型预览还原真机顶部效果。
+   开发时系统/小程序会自带顶部，无需实现——可通过 .demo-topbar { display:none }
+   或加 .demo-topbar--hidden 一次性整体隐藏，或直接删除整个容器。
+   -------------------------------------------------------------------------- */
+.demo-topbar {
+  width: 375px;
+}
+
+.demo-topbar--hidden {
+  display: none;
+}
+
+/* 标题栏右侧小程序胶囊按钮（平台自动提供，宽度自适应，距右 6px） */
+.titlebar__capsule {
+  width: auto;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.titlebar__capsule img {
+  height: 32px;
+  display: block;
 }
 
 /* ==========================================================================
