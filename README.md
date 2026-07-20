@@ -1,6 +1,6 @@
 # HX Design System
 
-海信物流各系统 Design System 集合。
+hx系统 Design System 集合。
 
 ## 目录结构
 
