@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "brand": "信小递",
+  "brandSlug": "xinxiaodi",
+  "platform": "微信小程序（移动端 375px）",
+  "readingOrder": [
+    {
+      "file": "SKILL.md",
+      "priority": 1,
+      "purpose": "Skill 入口——品牌速览、核心约束、色彩/字体/尺寸速查表（先读）"
+    },
+    {
+      "file": "AGENTS.md",
+      "priority": 2,
+      "purpose": "AI 消费指引——消费顺序、按任务模板、产出前自查清单"
+    },
+    {
+      "file": "tokens.json",
+      "priority": 3,
+      "purpose": "单一事实源——所有设计 Token 的机读 JSON（颜色/字体/间距/圆角/组件尺寸/页型）"
+    },
+    {
+      "file": "xinxiaodi-Design.md",
+      "priority": 4,
+      "purpose": "完整设计规范——概述/颜色/排版/布局/组件/按钮组/图标/分割线/导航/页型/该做与不该做"
+    },
+    {
+      "file": "examples/demo-home.html",
+      "priority": 6,
+      "purpose": "首页成品——金刚区、渐变头部、浮动按钮的实际实现"
+    },
+    {
+      "file": "examples/demo-list.html",
+      "priority": 6,
+      "purpose": "列表页成品——搜索/Tab/卡片/按钮组的实际实现（信小递最核心页型）"
+    },
+    {
+      "file": "examples/demo-interaction.html",
+      "priority": 6,
+      "purpose": "交互演示——组件的动态行为参考"
+    }
+  ],
+  "tokenSource": {
+    "singleSourceOfTruth": "tokens.json",
+    "humanReadable": "信小递Design.md",
+    "visualPreview": "preview/"
+  },
+  "assetPaths": {
+    "icons": "assets/icons/",
+    "logo": "assets/logo/",
+    "jingang": "assets/shortcuts/"
+  },
+  "constraints": {
+    "designWidth": "375px",
+    "contentWidth": "343px",
+    "fontFamily": "PingFang SC",
+    "brandColor": "#00AAA6",
+    "spacingBase": "4px",
+    "radiusSet": ["2px", "4px", "10px", "12px", "50%"]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "$description": "信小递 CSS Token 结构化表示，用于程序化消费。与 xinxiaodi-ui.css 中的 CSS 变量一一对应。",
+  "version": "1.0.0",
+  "variables": {
+    "color": {
+      "--vi-1": { "value": "#E6F7F6", "description": "浅色按钮背景" },
+      "--vi-2": { "value": "#00AAA6", "description": "品牌主色" },
+      "--vi-3": { "value": "#009093", "description": "hover/active 态" },
+      "--text-1": { "value": "#BFC5CC", "description": "placeholder" },
+      "--text-2": { "value": "#7C8492", "description": "辅助文字" },
+      "--text-3": { "value": "#1D2129", "description": "主文字" },
+      "--border-1": { "value": "#E5E6EB", "description": "分割线" },
+      "--border-2": { "value": "#BFC5CC", "description": "辅助线条" },
+      "--bg-1": { "value": "#F3F5F7", "description": "页面背景" },
+      "--bg-2": { "value": "#EBEDF0", "description": "特定区域背景" },
+      "--white": { "value": "#FFFFFF", "description": "卡片背景" },
+      "--blue": { "value": "#3491FA", "description": "蓝色标签" },
+      "--orange": { "value": "#FF7D00", "description": "橙色标签" },
+      "--purple": { "value": "#722ED1", "description": "紫色标签" },
+      "--danger-1": { "value": "#EE0A24", "description": "错误/告警" },
+      "--danger-bg": { "value": "#FDE7E9", "description": "告警背景" },
+      "--gray-4": { "value": "#C9CDD4", "description": "清除按钮" },
+      "--gray-5": { "value": "#C8C9CC", "description": "选择器边框" }
+    },
+    "spacing": {
+      "--space-1": { "value": "4px", "description": "紧凑" },
+      "--space-2": { "value": "8px", "description": "标准" },
+      "--space-3": { "value": "12px", "description": "卡片间距" },
+      "--space-4": { "value": "16px", "description": "页面边距" },
+      "--space-6": { "value": "24px", "description": "区块间距" },
+      "--space-8": { "value": "32px", "description": "大区间距" }
+    },
+    "radius": {
+      "--radius-xs": { "value": "2px", "description": "标签" },
+      "--radius-sm": { "value": "4px", "description": "按钮/输入框" },
+      "--radius-md": { "value": "10px", "description": "卡片" },
+      "--radius-lg": { "value": "12px", "description": "图标背景" },
+      "--radius-full": { "value": "50%", "description": "头像/浮窗" },
+      "--radius-pill": { "value": "58px", "description": "pill 按钮" }
+    },
+    "shadow": {
+      "--shadow-card": { "value": "0px 4px 12px rgba(0,0,0,0.05)", "description": "卡片" },
+      "--shadow-popover": { "value": "0 4px 16px rgba(0,0,0,0.12)", "description": "浮窗" },
+      "--shadow-dialog": { "value": "0 4px 24px rgba(0,0,0,0.15)", "description": "弹窗" },
+      "--shadow-float": { "value": "0px 4px 12px rgba(0,170,166,0.3)", "description": "浮动按钮" }
+    },
+    "layout": {
+      "--page-width": { "value": "375px", "description": "设计宽度" },
+      "--content-width": { "value": "343px", "description": "内容宽度" },
+      "--page-margin": { "value": "16px", "description": "页面边距" },
+      "--statusbar-h": { "value": "44px", "description": "状态栏高度" },
+      "--navbar-h": { "value": "44px", "description": "导航栏高度" }
+    },
+    "animation": {
+      "--duration-fast": { "value": "0.15s", "description": "快速交互" },
+      "--duration-base": { "value": "0.2s", "description": "标准过渡" },
+      "--duration-slow": { "value": "0.25s", "description": "入场/出场" },
+      "--easing": { "value": "ease", "description": "默认缓动" }
+    }
+  },
+  "textStyles": {
+    ".text-page-title": { "fontSize": "16px", "fontWeight": 500, "lineHeight": "22px", "color": "var(--text-3)" },
+    ".text-card-title": { "fontSize": "14px", "fontWeight": 600, "lineHeight": "20px", "color": "var(--text-3)" },
+    ".text-body-emphasis": { "fontSize": "14px", "fontWeight": 500, "lineHeight": "20px", "color": "var(--text-3)" },
+    ".text-body": { "fontSize": "12px", "fontWeight": 500, "lineHeight": "18px", "color": "var(--text-3)" },
+    ".text-secondary": { "fontSize": "12px", "fontWeight": 400, "lineHeight": "18px", "color": "var(--text-2)" },
+    ".text-caption": { "fontSize": "10px", "fontWeight": 400, "lineHeight": "14px", "color": "var(--text-2)" },
+    ".text-button-lg": { "fontSize": "16px", "fontWeight": 400, "lineHeight": "22px" },
+    ".text-button-sm": { "fontSize": "14px", "fontWeight": 400, "lineHeight": "20px" },
+    ".text-tag": { "fontSize": "10px", "fontWeight": 400, "lineHeight": "14px" }
+  },
+  "components": {
+    ".btn": "按钮基础类",
+    ".btn--lg": "大按钮 40px",
+    ".btn--sm": "小按钮 32px",
+    ".btn--primary": "深色按钮",
+    ".btn--light": "浅色半透明按钮",
+    ".btn--light-solid": "浅色实底按钮(vi-1)",
+    ".btn--clear": "清除按钮",
+    ".btn--text": "文字按钮",
+    ".btn--disabled": "禁用态",
+    ".btn--block": "全宽按钮",
+    ".input": "输入框",
+    ".input-group": "输入框组",
+    ".searchbox": "搜索框",
+    ".checkbox": "多选框",
+    ".radio": "单选框",
+    ".tag": "标签",
+    ".card": "卡片",
+    ".tabs": "Tab 容器",
+    ".tab-item": "Tab 项",
+    ".dialog-overlay": "弹窗蒙层",
+    ".dialog": "弹窗容器",
+    ".location-bar": "定位栏",
+    ".scan-entry": "扫码接单入口",
+    ".divider": "分割线",
+    ".fab": "浮动按钮",
+    ".btn-group": "按钮组",
+    ".page": "页面容器"
+  }
+}

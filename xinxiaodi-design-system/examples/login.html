@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信小递页型模板 - 登录页</title>
+<link rel="stylesheet" href="../xinxiaodi-ui.css">
+<style>
+  body { background: #F3F5F7; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: #FFFFFF; border-bottom: 1px solid #E5E6EB; display: flex; align-items: center; padding: 0 16px; gap: 12px; z-index: 1000; }
+  .back-bar__btn { display: flex; align-items: center; gap: 4px; font-size: 14px; color: #00AAA6; text-decoration: none; cursor: pointer; transition: opacity 0.2s; }
+  .back-bar__btn:hover { opacity: 0.7; }
+  .back-bar__title { font-size: 14px; font-weight: 500; color: #1D2129; }
+  .back-bar__tag { font-size: 10px; color: #7C8492; background: #F3F5F7; padding: 2px 6px; border-radius: 3px; }
+  .phone-frame { width: 375px; height: 812px; background: #FFFFFF; position: relative; overflow: hidden; border: 1px solid #E5E6EB; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); margin-top: 72px; }
+  .phone-frame input::placeholder { color: #BFC5CC; }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-bar__btn" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="#00AAA6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    返回目录
+  </a>
+  <div class="back-bar__title">登录页 (Auth)</div>
+  <span class="back-bar__tag">375×812</span>
+</div>
+<div class="phone-frame">
+  <!-- Background gradient -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; height: 250px; background: linear-gradient(90deg, #00B7AC 0%, #009B97 100%); z-index: 0;"></div>
+
+  <!-- Status Bar -->
+  <div style="height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; position: relative; z-index: 1;">
+    <span style="font-size: 14px; font-weight: 600; color: #FFFFFF;">9:41</span>
+    <div style="display: flex; gap: 4px; align-items: center;">
+      <span style="font-size: 12px; color: #FFFFFF;">●●●●</span>
+      <span style="font-size: 12px; color: #FFFFFF;">WiFi</span>
+      <span style="font-size: 12px; color: #FFFFFF;">🔋</span>
+    </div>
+  </div>
+
+  <!-- Nav Bar spacer -->
+  <div style="height: 44px; position: relative; z-index: 1;"></div>
+
+  <!-- Logo Area -->
+  <div style="height: 138px; display: flex; align-items: flex-end; justify-content: center; position: relative; z-index: 1;">
+    <img src="../assets/logo/xinxiaodi_driver_logo_full_white.svg" style="width: 240px; height: 60px;" onerror="this.style.display='none'" />
+  </div>
+
+  <!-- Tab Switch -->
+  <div style="display: flex; align-items: center; justify-content: center; padding: 40px 0 24px; gap: 12px; position: relative; z-index: 1;">
+    <span id="login-tab-driver" onclick="switchLoginTab('driver')" style="font-size: 16px; font-weight: 500; color: #1D2129; line-height: 22px; height: 40px; display: flex; align-items: center; cursor: pointer;">驾驶员</span>
+    <div style="width: 1px; height: 12px; background: #E5E6EB;"></div>
+    <span id="login-tab-tms" onclick="switchLoginTab('tms')" style="font-size: 16px; font-weight: 400; color: #BFC5CC; line-height: 22px; height: 40px; display: flex; align-items: center; cursor: pointer;">TMS账号</span>
+  </div>
+
+  <!-- 驾驶员 Content -->
+  <div id="login-content-driver" style="padding: 0 36px;">
+    <div style="height: 40px; background: #00AAA6; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s;" onmouseenter="this.style.background='#009093'" onmouseleave="this.style.background='#00AAA6'">
+      <span style="font-size: 16px; color: #FFFFFF; line-height: 22px;">微信一键登录</span>
+    </div>
+  </div>
+
+  <!-- TMS Content -->
+  <div id="login-content-tms" style="display: none; padding: 0 36px;">
+    <div style="height: 48px; border-bottom: 1px solid #E5E6EB; display: flex; align-items: center; margin-bottom: 16px;">
+      <input type="text" placeholder="请输入TMS账号" style="border: none; outline: none; font-size: 14px; color: #1D2129; line-height: 22px; width: 100%; background: transparent; font-family: 'PingFang SC', sans-serif;" />
+    </div>
+    <div style="height: 48px; border-bottom: 1px solid #E5E6EB; display: flex; align-items: center;">
+      <input type="password" placeholder="请输入密码" style="border: none; outline: none; font-size: 14px; color: #1D2129; line-height: 22px; flex: 1; background: transparent; font-family: 'PingFang SC', sans-serif;" />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="cursor: pointer; flex-shrink: 0;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#7C8492" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="#7C8492" stroke-width="1.5"/><path d="M4 20L20 4" stroke="#7C8492" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div style="margin-top: 48px;">
+      <div style="height: 40px; background: #00AAA6; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s;" onmouseenter="this.style.background='#009093'" onmouseleave="this.style.background='#00AAA6'">
+        <span style="font-size: 16px; color: #FFFFFF; line-height: 22px;">登录</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy -->
+  <div style="padding: 16px 36px 0; display: flex; align-items: flex-start; gap: 8px;">
+    <div id="login-privacy-cb" onclick="toggleLoginPrivacy()" style="width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #C8C9CC; background: #FFFFFF; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 3px; transition: all 0.15s;"></div>
+    <span style="font-size: 12px; color: #7C8492; line-height: 22px;">已阅读并同意<span style="color: #00AAA6; cursor: pointer;">《用户信息隐私政策须知》</span></span>
+  </div>
+
+  <!-- ICP -->
+  <div style="position: absolute; bottom: 60px; left: 0; right: 0; text-align: center;">
+    <span style="font-size: 10px; color: #7C8492;">ICP备案号信息 鲁ICP备2021046572号-2X</span>
+  </div>
+  <!-- Home Indicator -->
+  <div style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; background: #1D2129; border-radius: 3px;"></div>
+</div>
+
+<script>
+function switchLoginTab(tab) {
+  const driverTab = document.getElementById('login-tab-driver');
+  const tmsTab = document.getElementById('login-tab-tms');
+  const driverContent = document.getElementById('login-content-driver');
+  const tmsContent = document.getElementById('login-content-tms');
+
+  if (tab === 'driver') {
+    driverTab.style.color = '#1D2129';
+    driverTab.style.fontWeight = '500';
+    tmsTab.style.color = '#BFC5CC';
+    tmsTab.style.fontWeight = '400';
+    driverContent.style.display = 'block';
+    tmsContent.style.display = 'none';
+  } else {
+    tmsTab.style.color = '#1D2129';
+    tmsTab.style.fontWeight = '500';
+    driverTab.style.color = '#BFC5CC';
+    driverTab.style.fontWeight = '400';
+    driverContent.style.display = 'none';
+    tmsContent.style.display = 'block';
+  }
+}
+
+function toggleLoginPrivacy() {
+  const cb = document.getElementById('login-privacy-cb');
+  const isChecked = cb.getAttribute('data-checked') === '1';
+  if (isChecked) {
+    cb.setAttribute('data-checked', '0');
+    cb.style.background = '#FFFFFF';
+    cb.style.borderColor = '#C8C9CC';
+    cb.innerHTML = '';
+  } else {
+    cb.setAttribute('data-checked', '1');
+    cb.style.background = '#00AAA6';
+    cb.style.borderColor = '#00AAA6';
+    cb.innerHTML = '<div style="width: 6px; height: 6px; border-radius: 50%; background: #FFFFFF;"></div>';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信小递设计系统 v1.0</title>
+  <link rel="stylesheet" href="xinxiaodi-ui.css">
+  <style>
+    /* ===== Page Layout ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'PingFang SC', -apple-system, sans-serif;
+      background: #F3F5F7;
+      color: #1D2129;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background: #fff;
+      border-right: 1px solid #E5E6EB;
+      overflow-y: auto;
+      z-index: 100;
+      padding: 16px 0;
+      transition: transform 0.25s ease;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #E5E6EB; border-radius: 2px; }
+    .sidebar__brand {
+      padding: 8px 16px 16px;
+      border-bottom: 1px solid #E5E6EB;
+      margin-bottom: 8px;
+    }
+    .sidebar__brand-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #00AAA6;
+      line-height: 20px;
+    }
+    .sidebar__brand-ver {
+      font-size: 10px;
+      color: #7C8492;
+      line-height: 14px;
+    }
+    .sidebar__nav { list-style: none; }
+    .sidebar__nav li a {
+      display: block;
+      padding: 6px 16px;
+      font-size: 12px;
+      color: #1D2129;
+      text-decoration: none;
+      line-height: 20px;
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar__nav li a:hover {
+      background: #E6F7F6;
+      color: #00AAA6;
+      border-left-color: #00AAA6;
+    }
+
+    /* ===== Main Content ===== */
+    .main {
+      margin-left: 200px;
+      padding: 32px 40px;
+      max-width: 1040px;
+    }
+    .main__header {
+      background: linear-gradient(135deg, #00AAA6, #009093);
+      border-radius: 10px;
+      padding: 32px;
+      margin-bottom: 32px;
+      color: #fff;
+    }
+    .main__header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 32px;
+      margin-bottom: 4px;
+    }
+    .main__header p {
+      font-size: 14px;
+      opacity: 0.85;
+      line-height: 20px;
+    }
+
+    /* ===== Section ===== */
+    .section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    }
+    .section__title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1D2129;
+      line-height: 22px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #E5E6EB;
+    }
+    .section__subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: #7C8492;
+      margin-bottom: 12px;
+      margin-top: 16px;
+    }
+
+    /* ===== Color Swatches ===== */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .swatch {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #E5E6EB;
+    }
+    .swatch__color {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .swatch__info {
+      padding: 6px 8px;
+      background: #fff;
+    }
+    .swatch__name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #1D2129;
+      line-height: 16px;
+    }
+    .swatch__hex {
+      font-size: 10px;
+      color: #7C8492;
+      line-height: 14px;
+      font-family: monospace;
+    }
+
+    /* ===== Typography Demo ===== */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid #F3F5F7;
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-row__label {
+      width: 100px;
+      flex-shrink: 0;
+      font-size: 10px;
+      color: #7C8492;
+      font-family: monospace;
+    }
+    .type-row__sample { flex: 1; }
+    .type-row__meta {
+      font-size: 10px;
+      color: #BFC5CC;
+      font-family: monospace;
+      white-space: nowrap;
+    }
+
+    /* ===== Spacing Demo ===== */
+    .spacing-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+    .spacing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .spacing-item__bar {
+      background: #00AAA6;
+      border-radius: 2px;
+      width: 32px;
+    }
+    .spacing-item__label {
+      font-size: 10px;
+      color: #7C8492;
+      font-family: monospace;
+    }
+
+    /* ===== Radius Demo ===== */
+    .radius-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .radius-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .radius-item__box {
+      width: 48px;
+      height: 48px;
+      background: #E6F7F6;
+      border: 2px solid #00AAA6;
+    }
+    .radius-item__label {
+      font-size: 10px;
+      color: #7C8492;
+      font-family: monospace;
+    }
+
+    /* ===== Button Grid ===== */
+    .btn-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* ===== Component Demo Rows ===== */
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .demo-row--col {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* ===== Mobile Frame ===== */
+    .mobile-frame {
+      width: 375px;
+      background: #F3F5F7;
+      border-radius: 10px;
+      border: 1px solid #E5E6EB;
+      overflow: hidden;
+      margin: 8px 0;
+    }
+    .mobile-frame--white { background: #fff; }
+
+    /* ===== Icon Grid ===== */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+    }
+    .icon-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 4px;
+      border-radius: 4px;
+      border: 1px solid #E5E6EB;
+      transition: background 0.15s;
+    }
+    .icon-cell:hover { background: #E6F7F6; }
+    .icon-cell img { width: 24px; height: 24px; }
+    .icon-cell__name {
+      font-size: 9px;
+      color: #7C8492;
+      text-align: center;
+      line-height: 12px;
+      word-break: break-all;
+    }
+
+    /* ===== Page Type Cards ===== */
+    .page-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .page-type-card {
+      border: 1px solid #E5E6EB;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      transition: border-color 0.15s;
+    }
+    .page-type-card:hover { border-color: #00AAA6; }
+    .page-type-card__name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #1D2129;
+      margin-bottom: 4px;
+    }
+    .page-type-card__desc {
+      font-size: 10px;
+      color: #7C8492;
+      line-height: 14px;
+    }
+
+    /* ===== Table ===== */
+    .ds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .ds-table th, .ds-table td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid #E5E6EB;
+    }
+    .ds-table th {
+      background: #F3F5F7;
+      font-weight: 500;
+      color: #7C8492;
+      font-size: 11px;
+    }
+    .ds-table td { color: #1D2129; }
+
+    /* ===== Decision Tree ===== */
+    .decision-tree {
+      background: #F3F5F7;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 12px;
+      line-height: 20px;
+      font-family: monospace;
+      white-space: pre-line;
+      color: #1D2129;
+    }
+
+    /* ===== Resources ===== */
+    .resources {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 8px;
+    }
+    .resource-link {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid #E5E6EB;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 12px;
+      color: #00AAA6;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .resource-link:hover {
+      background: #E6F7F6;
+      border-color: #00AAA6;
+    }
+    .resource-link__desc {
+      font-size: 10px;
+      color: #7C8492;
+      margin-top: 2px;
+    }
+
+    /* ===== Dialog Static Preview ===== */
+    .dialog-preview {
+      background: rgba(0,0,0,0.03);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    .dialog-static {
+      width: 280px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .dialog-static__title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      margin-bottom: 8px;
+    }
+    .dialog-static__desc {
+      font-size: 12px;
+      color: #7C8492;
+      margin-bottom: 16px;
+      line-height: 18px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 860px) {
+      .sidebar { transform: translateX(-200px); }
+      .main { margin-left: 0; padding: 24px 16px; }
+      .sidebar--open { transform: translateX(0); }
+      .hamburger { display: flex; }
+    }
+    @media (min-width: 861px) {
+      .hamburger { display: none; }
+    }
+
+    .hamburger {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 200;
+      width: 36px;
+      height: 36px;
+      background: #00AAA6;
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+    }
+
+    /* ===== inline helpers ===== */
+    .inline-code {
+      background: #F3F5F7;
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-family: monospace;
+      color: #00AAA6;
+    }
+    .note {
+      font-size: 11px;
+      color: #7C8492;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hamburger for mobile -->
+<button class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('sidebar--open')">☰</button>
+
+<!-- Sidebar Navigation -->
+<aside class="sidebar">
+  <div class="sidebar__brand">
+    <div class="sidebar__brand-name">信小递设计系统</div>
+    <div class="sidebar__brand-ver">v1.0.0 · 司机端</div>
+  </div>
+  <ul class="sidebar__nav">
+    <li><a href="#colors">色彩 Color</a></li>
+    <li><a href="#typography">字体 Typography</a></li>
+    <li><a href="#spacing">间距与圆角</a></li>
+    <li><a href="#buttons">按钮 Button</a></li>
+    <li><a href="#inputs">输入框 Input</a></li>
+    <li><a href="#searchbox">搜索框 Search</a></li>
+    <li><a href="#selectors">选择器 Selector</a></li>
+    <li><a href="#tags">标签 Tag</a></li>
+    <li><a href="#cards">卡片 Card</a></li>
+    <li><a href="#tabs">Tab 切换</a></li>
+    <li><a href="#dialogs">弹窗 Dialog</a></li>
+    <li><a href="#statusbar">状态栏 StatusBar</a></li>
+    <li><a href="#titlebar">标题栏 TitleBar</a></li>
+    <li><a href="#navigation">导航 Navigation</a></li>
+    <li><a href="#dividers">分割线 Divider</a></li>
+    <li><a href="#fab">浮动按钮 FAB</a></li>
+    <li><a href="#button-group">按钮组规范</a></li>
+    <li><a href="#icons">图标 Icons</a></li>
+    <li><a href="#page-types">页型 Page Types</a></li>
+    <li><a href="#card-mapping">卡片模块映射</a></li>
+    <li><a href="#resources">资源链接</a></li>
+  </ul>
+</aside>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- Header -->
+  <header class="main__header">
+    <h1>信小递司机端设计系统</h1>
+    <p>海信集团物流司机端微信小程序 · 版本 1.0 · 设计宽度 375px · PingFang SC</p>
+  </header>
+
+  <!-- ===== Colors ===== -->
+  <section class="section" id="colors">
+    <h2 class="section__title">色彩 Color Palette</h2>
+
+    <p class="section__subtitle">主色 Primary</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#E6F7F6;"></div><div class="swatch__info"><div class="swatch__name">vi-1</div><div class="swatch__hex">#E6F7F6</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#00AAA6;"></div><div class="swatch__info"><div class="swatch__name">vi-2 品牌主色</div><div class="swatch__hex">#00AAA6</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#009093;"></div><div class="swatch__info"><div class="swatch__name">vi-3 hover/active</div><div class="swatch__hex">#009093</div></div></div>
+    </div>
+
+    <p class="section__subtitle">文字 Text</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#BFC5CC;"></div><div class="swatch__info"><div class="swatch__name">text-1 placeholder</div><div class="swatch__hex">#BFC5CC</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#7C8492;"></div><div class="swatch__info"><div class="swatch__name">text-2 辅助文字</div><div class="swatch__hex">#7C8492</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#1D2129;"></div><div class="swatch__info"><div class="swatch__name">text-3 主文字</div><div class="swatch__hex">#1D2129</div></div></div>
+    </div>
+
+    <p class="section__subtitle">线条 Border</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">border-1</div><div class="swatch__hex">#E5E6EB</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#BFC5CC;"></div><div class="swatch__info"><div class="swatch__name">border-2</div><div class="swatch__hex">#BFC5CC</div></div></div>
+    </div>
+
+    <p class="section__subtitle">背景色 Background</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#F3F5F7;"></div><div class="swatch__info"><div class="swatch__name">bg-1 页面背景</div><div class="swatch__hex">#F3F5F7</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#EBEDF0;"></div><div class="swatch__info"><div class="swatch__name">bg-2</div><div class="swatch__hex">#EBEDF0</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FFFFFF; border: 1px solid #E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">white 卡片背景</div><div class="swatch__hex">#FFFFFF</div></div></div>
+    </div>
+
+    <p class="section__subtitle">辅助色 Subcolor（承载业务含义）</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#3491FA;"></div><div class="swatch__info"><div class="swatch__name">blue 运单/提货</div><div class="swatch__hex">#3491FA</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FF7D00;"></div><div class="swatch__info"><div class="swatch__name">orange 2C/收货</div><div class="swatch__hex">#FF7D00</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#722ED1;"></div><div class="swatch__info"><div class="swatch__name">purple 电商补货</div><div class="swatch__hex">#722ED1</div></div></div>
+    </div>
+
+    <p class="section__subtitle">警告色 Danger</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#EE0A24;"></div><div class="swatch__info"><div class="swatch__name">danger-1</div><div class="swatch__hex">#EE0A24</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FDE7E9;"></div><div class="swatch__info"><div class="swatch__name">danger-bg</div><div class="swatch__hex">#FDE7E9</div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== Typography ===== -->
+  <section class="section" id="typography">
+    <h2 class="section__title">字体 Typography</h2>
+    <p class="note" style="margin-bottom:12px">字族: PingFang SC · 唯一字体家族，禁用衬线体</p>
+
+    <div class="type-row">
+      <span class="type-row__label">page-title</span>
+      <span class="type-row__sample text-page-title">页面标题 16px Medium</span>
+      <span class="type-row__meta">16/22 w500</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">card-title</span>
+      <span class="type-row__sample text-card-title">卡片标题 14px Semibold</span>
+      <span class="type-row__meta">14/20 w600</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">body-emphasis</span>
+      <span class="type-row__sample text-body-emphasis">正文强调 14px Medium</span>
+      <span class="type-row__meta">14/20 w500</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">body</span>
+      <span class="type-row__sample text-body">正文内容 12px Medium</span>
+      <span class="type-row__meta">12/18 w500</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">secondary</span>
+      <span class="type-row__sample text-secondary">辅助说明 12px Regular</span>
+      <span class="type-row__meta">12/18 w400</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">caption</span>
+      <span class="type-row__sample text-caption">次要信息 10px Regular</span>
+      <span class="type-row__meta">10/14 w400</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">button-large</span>
+      <span class="type-row__sample text-button-lg">大按钮文字 16px Regular</span>
+      <span class="type-row__meta">16/22 w400</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">button-small</span>
+      <span class="type-row__sample text-button-sm">小按钮文字 14px Regular</span>
+      <span class="type-row__meta">14/20 w400</span>
+    </div>
+    <div class="type-row">
+      <span class="type-row__label">tag</span>
+      <span class="type-row__sample text-tag">标签文字 10px Regular</span>
+      <span class="type-row__meta">10/14 w400</span>
+    </div>
+  </section>
+
+  <!-- ===== Spacing & Radius ===== -->
+  <section class="section" id="spacing">
+    <h2 class="section__title">间距与圆角 Spacing & Radius</h2>
+
+    <p class="section__subtitle">间距 Spacing（4px 基础刻度）</p>
+    <div class="spacing-demo">
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:4px;"></div><div class="spacing-item__label">4px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:8px;"></div><div class="spacing-item__label">8px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:12px;"></div><div class="spacing-item__label">12px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:16px;"></div><div class="spacing-item__label">16px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:24px;"></div><div class="spacing-item__label">24px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:32px;"></div><div class="spacing-item__label">32px</div></div>
+    </div>
+
+    <p class="section__subtitle">圆角 Radius</p>
+    <div class="radius-demo">
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:2px;"></div><div class="radius-item__label">2px 标签</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:4px;"></div><div class="radius-item__label">4px 按钮/输入</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:10px;"></div><div class="radius-item__label">10px 卡片</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:12px;"></div><div class="radius-item__label">12px 图标背景</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:50%;"></div><div class="radius-item__label">50% 头像/浮窗</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:58px; width:80px;"></div><div class="radius-item__label">58px pill</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Buttons ===== -->
+  <section class="section" id="buttons">
+    <h2 class="section__title">按钮 Button</h2>
+
+    <p class="section__subtitle">大按钮 40px（宽 303px）</p>
+    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+      <button class="btn btn--lg btn--primary">主色按钮 Primary</button>
+      <button class="btn btn--lg btn--light">浅色按钮 Light</button>
+      <button class="btn btn--lg btn--clear">清除按钮 Clear</button>
+      <button class="btn btn--lg btn--primary btn--disabled"><span>禁用态 Disabled</span></button>
+    </div>
+
+    <p class="section__subtitle">小按钮 32px（宽度自适应）</p>
+    <div class="btn-grid">
+      <button class="btn btn--sm btn--primary">主色小按钮</button>
+      <button class="btn btn--sm btn--light-solid">浅色小按钮</button>
+      <button class="btn btn--sm btn--text">文字按钮</button>
+      <button class="btn btn--sm btn--primary btn--disabled"><span>禁用</span></button>
+    </div>
+
+    <p class="note" style="margin-top:12px">规则：按钮文字统一 Regular 字重，禁用态 = 背景不变 + 内容 opacity 40%</p>
+  </section>
+
+  <!-- ===== Inputs ===== -->
+  <section class="section" id="inputs">
+    <h2 class="section__title">输入框 Input</h2>
+
+    <p class="section__subtitle">基础输入框（48px 高）</p>
+    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+      <input class="input" placeholder="请输入手机号">
+      <div class="input-group">
+        <span class="input-group__prefix">+86</span>
+        <input class="input" placeholder="请输入手机号">
+      </div>
+      <div class="input-group">
+        <input class="input" placeholder="请输入验证码" style="border-radius:var(--radius-sm) 0 0 var(--radius-sm);">
+        <span class="input-group__suffix">获取验证码</span>
+      </div>
+    </div>
+
+    <p class="section__subtitle">输入框状态</p>
+    <div class="demo-row--col" style="display:flex;flex-direction:column;gap:12px;">
+      <input class="input" value="已输入内容">
+      <div>
+        <input class="input input--error" value="错误输入">
+        <div class="input-error-msg">请输入正确的手机号</div>
+      </div>
+      <input class="input input--disabled" value="禁用态" disabled>
+    </div>
+  </section>
+
+  <!-- ===== Search Box ===== -->
+  <section class="section" id="searchbox">
+    <h2 class="section__title">搜索框 Search Box</h2>
+
+    <p class="section__subtitle">类型一：带查询按钮</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="searchbox">
+        <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input class="searchbox__input" placeholder="输入运单号查询">
+        <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
+      </div>
+    </div>
+
+    <p class="section__subtitle">类型二：带筛选下拉</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="searchbox">
+        <div class="searchbox__filter">
+          <div class="searchbox__filter-trigger">
+            <span class="searchbox__filter-label">运单号</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="#00AAA6" stroke-width="1.5"/></svg>
+          </div>
+          <div class="searchbox__filter-divider"></div>
+        </div>
+        <input class="searchbox__input" placeholder="请输入">
+        <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
+      </div>
+    </div>
+
+    <p class="section__subtitle">类型三：带排序/筛选按钮</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <div class="searchbox" style="flex:1;">
+          <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input class="searchbox__input" placeholder="搜索运单号/收货人">
+        </div>
+        <div class="searchbox__action">
+          <svg class="searchbox__action-icon" viewBox="0 0 20 20" fill="none" stroke="#00AAA6" stroke-width="1.5"><path d="M3 5h14M5 10h10M7 15h6"/></svg>
+          <span class="searchbox__action-label">排序</span>
+        </div>
+        <div class="searchbox__action">
+          <svg class="searchbox__action-icon" viewBox="0 0 20 20" fill="none" stroke="#00AAA6" stroke-width="1.5"><path d="M3 4h14M3 10h8M3 16h4"/><circle cx="15" cy="10" r="2"/><circle cx="11" cy="16" r="2"/></svg>
+          <span class="searchbox__action-label">筛选</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Selectors ===== -->
+  <section class="section" id="selectors">
+    <h2 class="section__title">选择器 Selector</h2>
+
+    <p class="section__subtitle">Checkbox（16×16px，圆角 2px）</p>
+    <div class="demo-row" style="gap:24px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="checkbox"></div><span class="text-body">未选中</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="checkbox checkbox--checked">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4.5 7.5L8 3" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div><span class="text-body">已选中</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="checkbox checkbox--indeterminate">
+          <div style="width:8px;height:2px;background:#fff;border-radius:1px;"></div>
+        </div><span class="text-body">半选</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="checkbox checkbox--disabled"></div><span class="text-body" style="opacity:0.4;">禁用</span>
+      </div>
+    </div>
+
+    <p class="section__subtitle">Radio（16×16px，圆形）</p>
+    <div class="demo-row" style="gap:24px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="radio"></div><span class="text-body">未选中</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="radio radio--checked">
+          <div style="width:6px;height:6px;background:#fff;border-radius:50%;"></div>
+        </div><span class="text-body">已选中</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tags ===== -->
+  <section class="section" id="tags">
+    <h2 class="section__title">标签 Tag</h2>
+    <div class="demo-row" style="gap:12px;">
+      <span class="tag tag--blue">提货点</span>
+      <span class="tag tag--orange">2C收货</span>
+      <span class="tag tag--purple">电商补货</span>
+      <span class="tag tag--green">整单</span>
+      <span class="tag tag--red">异常</span>
+    </div>
+    <p class="note">标签颜色承载业务含义：蓝=运单状态/提货点，橙=2C/收货点，紫=电商补货，绿=整单甩单，红=异常</p>
+  </section>
+
+  <!-- ===== Cards ===== -->
+  <section class="section" id="cards">
+    <h2 class="section__title">卡片 Card</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">卡片是信小递最核心的信息容器（343px 宽，10px 圆角，白底 + 微阴影）</p>
+
+    <div class="mobile-frame" style="padding:16px;">
+      <div class="card">
+        <div class="card__top">
+          <span class="tag tag--blue">提货点</span>
+          <span style="font-size:14px;font-weight:600;color:#1D2129;">YD2024061200001</span>
+        </div>
+        <div class="card__body" style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;">
+            <span class="text-secondary">收货人</span>
+            <span class="text-body">张三</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <span class="text-secondary">地址</span>
+            <span class="text-body" style="max-width:200px;text-align:right;">青岛市崂山区科苑纬四路</span>
+          </div>
+        </div>
+        <div class="card__divider"></div>
+        <div class="card__footer">
+          <button class="btn btn--sm btn--light-solid">拒绝</button>
+          <button class="btn btn--sm btn--primary">确认提货</button>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:12px;"><a href="preview/component-card.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整卡片系统（component-card.html）</a></p>
+  </section>
+
+  <!-- ===== Tabs ===== -->
+  <section class="section" id="tabs">
+    <h2 class="section__title">Tab 切换</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">高度 30px，圆角 4px，间距 8px</p>
+
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="tabs">
+        <div class="tab-item tab-item--active">全部</div>
+        <div class="tab-item">待提货</div>
+        <div class="tab-item">待发运</div>
+        <div class="tab-item">待签收</div>
+        <div class="tab-item">已完成</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Dialogs ===== -->
+  <section class="section" id="dialogs">
+    <h2 class="section__title">弹窗 Dialog</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:16px;">宽 320px，圆角 8px，内边距 24px，4 种类型</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+      <!-- 确认弹窗 -->
+      <div class="dialog-preview">
+        <div class="dialog-static">
+          <div class="dialog-static__title">确认提交？</div>
+          <div class="dialog-static__desc">提交后不可修改，请确认信息无误</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn--sm btn--light" style="flex:1;height:36px;">取消</button>
+            <button class="btn btn--sm btn--primary" style="flex:1;height:36px;">确认</button>
+          </div>
+          <p class="note" style="margin-top:8px;">确认型</p>
+        </div>
+      </div>
+      <!-- 提示弹窗 -->
+      <div class="dialog-preview">
+        <div class="dialog-static">
+          <div class="dialog-static__title">提交成功</div>
+          <div class="dialog-static__desc">运单已确认，请等待调度安排</div>
+          <button class="btn btn--sm btn--primary" style="width:100%;height:36px;">我知道了</button>
+          <p class="note" style="margin-top:8px;">提示型</p>
+        </div>
+      </div>
+      <!-- 表单弹窗 -->
+      <div class="dialog-preview">
+        <div class="dialog-static" style="text-align:left;">
+          <div class="dialog-static__title" style="text-align:center;">选择拒收原因</div>
+          <div style="margin-bottom:12px;">
+            <div style="font-size:12px;color:#1D2129;margin-bottom:4px;">拒收原因 <span style="color:#EE0A24;">*</span></div>
+            <div style="height:32px;border:1px solid #BFC5CC;border-radius:4px;display:flex;align-items:center;padding:0 8px;font-size:12px;color:#BFC5CC;">请选择</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn--sm btn--light" style="flex:1;height:36px;">取消</button>
+            <button class="btn btn--sm btn--primary" style="flex:1;height:36px;">提交</button>
+          </div>
+          <p class="note" style="margin-top:8px;text-align:center;">表单型</p>
+        </div>
+      </div>
+      <!-- 列表弹窗 -->
+      <div class="dialog-preview">
+        <div class="dialog-static" style="text-align:left;">
+          <div class="dialog-static__title" style="text-align:center;">选择操作</div>
+          <div style="border-top:1px solid #E5E6EB;margin:0 -20px;padding:0 20px;">
+            <div style="padding:10px 0;border-bottom:1px solid #F3F5F7;font-size:13px;">拍照上传</div>
+            <div style="padding:10px 0;border-bottom:1px solid #F3F5F7;font-size:13px;">从相册选择</div>
+            <div style="padding:10px 0;font-size:13px;color:#EE0A24;">取消</div>
+          </div>
+          <p class="note" style="margin-top:8px;text-align:center;">列表型</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== StatusBar ===== -->
+  <section class="section" id="statusbar">
+    <h2 class="section__title">状态栏 StatusBar</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">44px 高 iOS 系统状态栏，两种配色变体（Figma node: 4-470 / 4-444）</p>
+
+    <p class="section__subtitle">反黑（白底 + 深色文字/图标）</p>
+    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div class="statusbar statusbar--dark">
+        <span class="statusbar__time">9:41</span>
+        <div class="statusbar__icons">
+          <img src="assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+        </div>
+      </div>
+    </div>
+    <p class="note">class: <span class="inline-code">statusbar statusbar--dark</span> · 用于常规白底页面</p>
+
+    <p class="section__subtitle">反白（透明背景 + 白色文字/图标）</p>
+    <div style="width:375px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:linear-gradient(180deg,#00B7AC,#009B97);">
+      <div class="statusbar statusbar--light">
+        <span class="statusbar__time">9:41</span>
+        <div class="statusbar__icons">
+          <img src="assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+        </div>
+      </div>
+    </div>
+    <p class="note">class: <span class="inline-code">statusbar statusbar--light</span> · 用于渐变头部页面（首页等）</p>
+
+    <p style="margin-top:12px;"><a href="preview/component-statusbar-titlebar.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整状态栏 & 标题栏系统</a></p>
+  </section>
+
+  <!-- ===== TitleBar ===== -->
+  <section class="section" id="titlebar">
+    <h2 class="section__title">标题栏 TitleBar</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">44px 高标题栏（导航栏），含返回箭头 + 标题 + 右侧操作（Figma node: 11-1095 / 11-1165）</p>
+
+    <p class="section__subtitle">黑色标题栏（白底实底 + 深色文字）</p>
+    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div class="titlebar titlebar--solid">
+        <button class="titlebar__back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="titlebar__title">待办中心</span>
+        <span class="titlebar__right">
+          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+        </span>
+      </div>
+    </div>
+    <p class="note">class: <span class="inline-code">titlebar titlebar--solid</span> · 白底 + 0.5px 下边线 · 标题居中</p>
+
+    <p class="section__subtitle">透明标题栏（透明背景 + 白色文字/图标）</p>
+    <div style="width:375px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:linear-gradient(180deg,#00B7AC,#009B97);">
+      <div class="titlebar titlebar--transparent">
+        <button class="titlebar__back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="titlebar__title">运单详情</span>
+        <span class="titlebar__right">
+          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+        </span>
+      </div>
+    </div>
+    <p class="note">class: <span class="inline-code">titlebar titlebar--transparent</span> · 用于渐变头部页面</p>
+
+    <p class="section__subtitle">组合：反黑状态栏 + 黑色标题栏</p>
+    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div class="statusbar statusbar--dark">
+        <span class="statusbar__time">9:41</span>
+        <div class="statusbar__icons">
+          <img src="assets/icons/bar_status_black.svg" height="12" alt="status icons" />
+        </div>
+      </div>
+      <div class="titlebar titlebar--solid">
+        <button class="titlebar__back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="titlebar__title">待到库</span>
+        <span class="titlebar__right">
+          <img src="assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp capsule" />
+        </span>
+      </div>
+    </div>
+    <p class="note">常规内页组合 · 总高度 88px（44 + 44）</p>
+
+    <p style="margin-top:12px;"><a href="preview/component-statusbar-titlebar.html" style="color:#00AAA6;font-size:12px;text-decoration:none;">→ 查看完整状态栏 & 标题栏系统</a></p>
+  </section>
+
+  <!-- ===== Navigation ===== -->
+  <section class="section" id="navigation">
+    <h2 class="section__title">导航组件 Navigation</h2>
+
+    <p class="section__subtitle">定位栏（48px 高）</p>
+    <div class="mobile-frame--white" style="width:375px;border:1px solid #E5E6EB;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div class="location-bar">
+        <svg class="location-bar__icon" viewBox="0 0 16 16" fill="none"><path d="M8 1C5.24 1 3 3.24 3 6c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#00AAA6"/><circle cx="8" cy="6" r="2" fill="#fff"/></svg>
+        <span class="location-bar__address" style="flex:1;">青岛市崂山区科苑纬四路 18 号海信研发中心</span>
+        <div class="location-bar__action">
+          <span class="location-bar__action-text">切换</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="section__subtitle">扫码接单入口（48px 高）</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="scan-entry scan-entry--green">
+        <div class="scan-entry__icon scan-entry__icon--green">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><rect x="11" y="2" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><rect x="2" y="11" width="5" height="5" rx="1" stroke="#fff" stroke-width="1.5"/><path d="M12 12h4M14 12v4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="scan-entry__content">
+          <span class="scan-entry__title">扫码接单</span>
+          <span class="scan-entry__subtitle">扫描运单码快速接单</span>
+        </div>
+        <svg class="scan-entry__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Dividers ===== -->
+  <section class="section" id="dividers">
+    <h2 class="section__title">分割线 Divider</h2>
+
+    <div style="display:flex;flex-direction:column;gap:20px;padding:16px;background:#fff;border:1px solid #E5E6EB;border-radius:8px;">
+      <div>
+        <p class="note" style="margin-bottom:8px;">全宽分割线 divider--full</p>
+        <div class="divider divider--full"></div>
+      </div>
+      <div>
+        <p class="note" style="margin-bottom:8px;">居中缩进 divider--center（左右各 16px）</p>
+        <div class="divider divider--center"></div>
+      </div>
+      <div>
+        <p class="note" style="margin-bottom:8px;">左缩进 divider--left（左 16px）</p>
+        <div class="divider divider--left"></div>
+      </div>
+      <div>
+        <p class="note" style="margin-bottom:8px;">带文字分割线</p>
+        <div class="divider-text">
+          <div class="divider-text__line"></div>
+          <span class="divider-text__label">以下为历史记录</span>
+          <div class="divider-text__line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAB ===== -->
+  <section class="section" id="fab">
+    <h2 class="section__title">浮动按钮 Floating Button</h2>
+
+    <div class="demo-row" style="gap:24px;">
+      <div style="text-align:center;">
+        <div style="position:relative;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#00AAA6,#009B97);box-shadow:0px 4px 12px rgba(0,170,166,0.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 4v14M4 11h14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-size:8px;color:#fff;">新建</span>
+        </div>
+        <p class="note" style="margin-top:8px;">大 60×60</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="position:relative;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#00AAA6,#009B97);box-shadow:0px 4px 12px rgba(0,170,166,0.3);display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <p class="note" style="margin-top:8px;">小 40×40</p>
+      </div>
+    </div>
+    <p class="note">渐变: linear-gradient(135deg, #00AAA6, #009B97) · 阴影: 0px 4px 12px rgba(0,170,166,0.3)</p>
+  </section>
+
+  <!-- ===== Button Group ===== -->
+  <section class="section" id="button-group">
+    <h2 class="section__title">按钮组规范 Button Group</h2>
+
+    <p class="section__subtitle">规则</p>
+    <table class="ds-table">
+      <thead><tr><th>场景</th><th>最多按钮数</th><th>超出处理</th></tr></thead>
+      <tbody>
+        <tr><td>有统计文字（如"3单5件"）</td><td>≤ 3 个</td><td>显示「更多」</td></tr>
+        <tr><td>无统计文字</td><td>≤ 5 个</td><td>显示「更多」</td></tr>
+      </tbody>
+    </table>
+
+    <p class="section__subtitle">示例：有统计 + 3 按钮</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="btn-group btn-group--between">
+        <span class="btn-group__stats">3单 5件</span>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn--sm btn--text">更多</button>
+          <button class="btn btn--sm btn--light-solid">拒绝</button>
+          <button class="btn btn--sm btn--primary">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="section__subtitle">示例：无统计 + 右对齐</p>
+    <div class="mobile-frame" style="padding:12px 16px;">
+      <div class="btn-group btn-group--end">
+        <button class="btn btn--sm btn--light-solid">取消</button>
+        <button class="btn btn--sm btn--light-solid">修改</button>
+        <button class="btn btn--sm btn--primary">提交</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Icons ===== -->
+  <section class="section" id="icons">
+    <h2 class="section__title">图标 Icons</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:12px;">路径: <span class="inline-code">assets/icons/</span> · 尺寸: 48/24/20/16/12px · 命名: {功能}_{颜色}_{尺寸}px.svg</p>
+
+    <div class="icon-grid">
+      <div class="icon-cell"><img src="assets/icons/search_gray_24px.svg" alt="search"><div class="icon-cell__name">search_gray_24px</div></div>
+      <div class="icon-cell"><img src="assets/icons/close_gray_24px.svg" alt="close"><div class="icon-cell__name">close_gray_24px</div></div>
+      <div class="icon-cell"><img src="assets/icons/close_gray_16px.svg" alt="close_16"><div class="icon-cell__name">close_gray_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/close_gray_full_16px.svg" alt="close_full"><div class="icon-cell__name">close_gray_full_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/copy_16px.svg" alt="copy"><div class="icon-cell__name">copy_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/copy_green__16px.svg" alt="copy_green"><div class="icon-cell__name">copy_green__16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/position_green_16px.svg" alt="position"><div class="icon-cell__name">position_green_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/position_white_16px.svg" alt="position_w"><div class="icon-cell__name">position_white_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/phonecall_green_16px.svg" alt="phone"><div class="icon-cell__name">phonecall_green_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/people_green_16px.svg" alt="people"><div class="icon-cell__name">people_green_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/screen_green_20px.svg" alt="screen"><div class="icon-cell__name">screen_green_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/screen_white_20px.svg" alt="screen_w"><div class="icon-cell__name">screen_white_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/sort_green_20px.svg" alt="sort"><div class="icon-cell__name">sort_green_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/sort_white_20px.svg" alt="sort_w"><div class="icon-cell__name">sort_white_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/time_white_20px.svg" alt="time"><div class="icon-cell__name">time_white_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/new_white_20px.svg" alt="new"><div class="icon-cell__name">new_white_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/pic_gray_24px.svg" alt="pic"><div class="icon-cell__name">pic_gray_24px</div></div>
+      <div class="icon-cell"><img src="assets/icons/navigation.svg" alt="navigation"><div class="icon-cell__name">navigation</div></div>
+      <div class="icon-cell"><img src="assets/icons/search_gray_16px.svg" alt="search_16"><div class="icon-cell__name">search_gray_16px</div></div>
+      <div class="icon-cell"><img src="assets/icons/zuzhi_white_20px.svg" alt="zuzhi"><div class="icon-cell__name">zuzhi_white_20px</div></div>
+      <div class="icon-cell"><img src="assets/icons/scan_receive_green.svg" alt="scan_green"><div class="icon-cell__name">scan_receive_green</div></div>
+      <div class="icon-cell"><img src="assets/icons/scan_receive_orange.svg" alt="scan_orange"><div class="icon-cell__name">scan_receive_orange</div></div>
+      <div class="icon-cell"><img src="assets/icons/scan_warehouse_green.svg" alt="scan_ck"><div class="icon-cell__name">scan_warehouse_green</div></div>
+      <div class="icon-cell"><img src="assets/icons/scan_delivery.svg" alt="scan_ps"><div class="icon-cell__name">scan_delivery</div></div>
+      <div class="icon-cell"><img src="assets/icons/todo_center.svg" alt="todo"><div class="icon-cell__name">todo_center</div></div>
+    </div>
+    <p class="note" style="margin-top:8px;">更多图标请查看 assets/icons/home/ 和 assets/icons/yundan/ 子目录</p>
+  </section>
+
+  <!-- ===== Page Types ===== -->
+  <section class="section" id="page-types">
+    <h2 class="section__title">页型 Page Types</h2>
+
+    <div class="page-types" style="margin-bottom:16px;">
+      <div class="page-type-card">
+        <div class="page-type-card__name">🔐 登录页</div>
+        <div class="page-type-card__desc">身份认证，不承载业务信息</div>
+      </div>
+      <div class="page-type-card">
+        <div class="page-type-card__name">🏠 首页</div>
+        <div class="page-type-card__desc">概览待办任务，快速跳转各业务模块</div>
+      </div>
+      <div class="page-type-card">
+        <div class="page-type-card__name">🧩 功能选择页</div>
+        <div class="page-type-card__desc">子功能≥3个时作为二级入口集合</div>
+      </div>
+      <div class="page-type-card">
+        <div class="page-type-card__name">📋 列表页</div>
+        <div class="page-type-card__desc">同类任务集合，筛选/搜索/批量操作（最核心）</div>
+      </div>
+      <div class="page-type-card">
+        <div class="page-type-card__name">✏️ 操作页</div>
+        <div class="page-type-card__desc">针对特定对象录入信息并确认提交</div>
+      </div>
+      <div class="page-type-card">
+        <div class="page-type-card__name">💬 弹窗/面板</div>
+        <div class="page-type-card__desc">轻量级操作（≤2步），不需要独立页面</div>
+      </div>
+    </div>
+
+    <p class="section__subtitle">决策树</p>
+    <div class="decision-tree">用户要做什么？
+├── 认证身份 → 登录页
+├── 概览全局 → 首页
+├── 选子功能(≥3个) → 功能选择页
+├── 浏览/筛选/操作列表 → 列表页（最常用）
+├── 录入信息并提交
+│   ├── 复杂(多字段/上传) → 操作页
+│   └── 简单(1-2个字段) → 弹窗/面板
+└── 查看详情 → 详情页</div>
+  </section>
+
+  <!-- ===== Card-Module Mapping ===== -->
+  <section class="section" id="card-mapping">
+    <h2 class="section__title">卡片-模块映射表</h2>
+
+    <table class="ds-table">
+      <thead>
+        <tr><th>卡片类型</th><th>使用页型</th><th>适用模块</th><th>备注</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>运单卡片</td>
+          <td>列表页</td>
+          <td>待到库、待提货、待发运、待打卡、待派送、待运抵、待签收</td>
+          <td>各模块字段差异见 card.json</td>
+        </tr>
+        <tr>
+          <td>物流信息卡片</td>
+          <td>列表页</td>
+          <td>订单管理</td>
+          <td>管理端订单管理列表页使用</td>
+        </tr>
+        <tr>
+          <td>签收管理卡片</td>
+          <td>操作页</td>
+          <td>待签收</td>
+          <td>含图片上传和拒收原因选择</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== Resources ===== -->
+  <section class="section" id="resources">
+    <h2 class="section__title">资源链接 Resources</h2>
+
+    <div class="resources">
+      <a href="tokens.json" class="resource-link">
+        tokens.json
+        <div class="resource-link__desc">设计 Token 机读源（颜色/字体/间距/组件）</div>
+      </a>
+      <a href="SKILL.md" class="resource-link">
+        SKILL.md
+        <div class="resource-link__desc">品牌速览 & 核心约束</div>
+      </a>
+      <a href="AGENTS.md" class="resource-link">
+        AGENTS.md
+        <div class="resource-link__desc">Agent 使用指南</div>
+      </a>
+      <a href="xinxiaodi-ui.css" class="resource-link">
+        xinxiaodi-ui.css
+        <div class="resource-link__desc">UI 样式库（CSS 变量 + 组件类）</div>
+      </a>
+      <a href="xinxiaodi-Design.md" class="resource-link">
+        xinxiaodi-Design.md
+        <div class="resource-link__desc">完整设计规范（八大章节）</div>
+      </a>
+      <a href="preview/component-button.html" class="resource-link">
+        按钮预览
+        <div class="resource-link__desc">preview/component-button.html</div>
+      </a>
+      <a href="preview/component-card.html" class="resource-link">
+        卡片预览
+        <div class="resource-link__desc">preview/component-card.html</div>
+      </a>
+      <a href="preview/component-dialog.html" class="resource-link">
+        弹窗预览
+        <div class="resource-link__desc">preview/component-dialog.html</div>
+      </a>
+      <a href="preview/component-input.html" class="resource-link">
+        输入框预览
+        <div class="resource-link__desc">preview/component-input.html</div>
+      </a>
+      <a href="preview/component-searchbox.html" class="resource-link">
+        搜索框预览
+        <div class="resource-link__desc">preview/component-searchbox.html</div>
+      </a>
+      <a href="preview/component-navigation.html" class="resource-link">
+        导航组件预览
+        <div class="resource-link__desc">preview/component-navigation.html</div>
+      </a>
+      <a href="preview/component-statusbar-titlebar.html" class="resource-link">
+        状态栏&标题栏预览
+        <div class="resource-link__desc">preview/component-statusbar-titlebar.html</div>
+      </a>
+      <a href="examples/home.html" class="resource-link">
+        首页示例
+        <div class="resource-link__desc">examples/home.html</div>
+      </a>
+      <a href="examples/list.html" class="resource-link">
+        列表页示例
+        <div class="resource-link__desc">examples/list.html</div>
+      </a>
+      <a href="examples/login.html" class="resource-link">
+        登录页示例
+        <div class="resource-link__desc">examples/login.html</div>
+      </a>
+      <a href="examples/function-hub.html" class="resource-link">
+        功能选择页
+        <div class="resource-link__desc">examples/function-hub.html</div>
+      </a>
+      <a href="examples/patterns.html" class="resource-link">
+        交互模式
+        <div class="resource-link__desc">examples/patterns.html</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align:center;padding:24px 0;font-size:11px;color:#7C8492;">
+    信小递司机端设计系统 v1.0 · 海信集团物流 · 品牌色 #00AAA6 · PingFang SC · 375px 移动端
+  </footer>
+
+</div><!-- /.main -->
+
+</body>
+</html>

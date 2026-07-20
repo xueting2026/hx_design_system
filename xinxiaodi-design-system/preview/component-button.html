@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信小递组件 - 按钮 Button</title>
+<link rel="stylesheet" href="../xinxiaodi-ui.css">
+<style>
+  body { background: #F3F5F7; margin: 0; }
+  .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
+  .preview-section { background: #FFFFFF; border-radius: 10px; padding: 24px; margin-bottom: 16px; max-width: 415px; }
+  .preview-title { font-size: 18px; font-weight: 600; color: #1D2129; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .preview-title::before { content: ''; width: 4px; height: 18px; background: #00AAA6; border-radius: 2px; }
+  .preview-desc { font-size: 12px; color: #7C8492; margin-bottom: 20px; }
+  .preview-group { margin-bottom: 24px; }
+  .preview-group-title { font-size: 14px; font-weight: 500; color: #1D2129; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #E5E6EB; }
+  .preview-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; }
+  .preview-label { font-size: 11px; color: #7C8492; margin-top: 6px; }
+  .preview-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .preview-spec { font-size: 11px; color: #86909C; background: #F7F8FA; padding: 8px 12px; border-radius: 6px; line-height: 1.8; margin-top: 8px; }
+  /* Sidebar */
+  .sidebar { position: fixed; left: 0; top: 0; width: 130px; height: 100vh; background: #FFFFFF; border-right: 1px solid #E5E6EB; padding: 16px 0; overflow-y: auto; z-index: 50; }
+  .sidebar__back { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #00AAA6; padding: 6px 16px; margin-bottom: 8px; text-decoration: none; border-bottom: 1px solid #E5E6EB; padding-bottom: 12px; }
+  .sidebar__back:hover { opacity: 0.7; }
+  .sidebar__title { font-size: 12px; font-weight: 600; color: #1D2129; padding: 8px 16px; }
+  .sidebar__link { display: block; font-size: 11px; color: #7C8492; padding: 6px 16px; text-decoration: none; transition: all 0.15s; }
+  .sidebar__link:hover, .sidebar__link--active { color: #00AAA6; background: #E6F7F6; }
+  /* Demo row */
+  .demo-col { display: flex; flex-direction: column; gap: 12px; }
+  .btn--lg { width: 220px; }
+</style>
+</head>
+<body>
+<!-- Sidebar Nav -->
+<nav class="sidebar">
+  <a class="sidebar__back" href="../examples/index.html">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="#00AAA6" stroke-width="1.5" stroke-linecap="round"/></svg>
+    返回目录
+  </a>
+  <div class="sidebar__title">按钮 Button</div>
+  <a class="sidebar__link" href="#sec-lg-primary">大按钮 · 深色</a>
+  <a class="sidebar__link" href="#sec-lg-light">大按钮 · 次要按钮1</a>
+  <a class="sidebar__link" href="#sec-lg-clear">大按钮 · 次要按钮</a>
+  <a class="sidebar__link" href="#sec-sm-primary">小按钮 · 深色</a>
+  <a class="sidebar__link" href="#sec-sm-light">小按钮 · 浅色</a>
+  <a class="sidebar__link" href="#sec-sm-text">小按钮 · 文字</a>
+  <a class="sidebar__link" href="#sec-hover">交互演示</a>
+  <a class="sidebar__link" href="#sec-spec">规格汇总</a>
+</nav>
+
+<div class="preview-page">
+  <!-- 大按钮 深色 -->
+  <section class="preview-section" id="sec-lg-primary">
+    <div class="preview-title">大按钮 · 深色 Primary</div>
+    <div class="preview-desc">高度 40px，宽度 303px，圆角 4px，品牌色背景</div>
+    <div class="preview-group">
+      <div class="preview-group-title">正常态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--primary">确认提交</button>
+      </div>
+      <div class="preview-label">class: btn btn--lg btn--primary</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">Hover 态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--primary" style="background: var(--vi-3);">确认提交 (hover)</button>
+      </div>
+      <div class="preview-label">hover 时 background → #009093</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">禁用态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--primary btn--disabled" disabled><span>确认提交</span></button>
+      </div>
+      <div class="preview-label">class: btn btn--lg btn--primary btn--disabled</div>
+    </div>
+  </section>
+
+  <!-- 大按钮 浅色 -->
+  <section class="preview-section" id="sec-lg-light">
+    <div class="preview-title">大按钮 · 次要按钮1 (Light)</div>
+    <div class="preview-desc">浅色半透明背景，文字为品牌色</div>
+    <div class="preview-group">
+      <div class="preview-group-title">正常态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--light">取消订单</button>
+      </div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">禁用态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--light btn--disabled" disabled><span>取消订单</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大按钮 清除 -->
+  <section class="preview-section" id="sec-lg-clear">
+    <div class="preview-title">大按钮 · 次要按钮 (Clear)</div>
+    <div class="preview-desc">灰色背景，用于次要操作，hover 时加深</div>
+    <div class="preview-group">
+      <div class="preview-group-title">正常态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--clear">清除筛选</button>
+      </div>
+      <div class="preview-label">class: btn btn--lg btn--clear</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">Hover 态</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--clear" style="background: #E0E2E5;">清除筛选 (hover)</button>
+      </div>
+      <div class="preview-label">hover 时 background → #E0E2E5</div>
+    </div>
+  </section>
+
+  <!-- 小按钮 深色 -->
+  <section class="preview-section" id="sec-sm-primary">
+    <div class="preview-title">小按钮 · 深色 Primary</div>
+    <div class="preview-desc">高度 32px，内边距 6px 8px，圆角 4px</div>
+    <div class="preview-group">
+      <div class="preview-group-title">正常态</div>
+      <div class="preview-row">
+        <div class="preview-item">
+          <button class="btn btn--sm btn--primary">签收</button>
+          <span class="preview-label">正常</span>
+        </div>
+        <div class="preview-item">
+          <button class="btn btn--sm btn--primary" style="background: var(--vi-3);">签收</button>
+          <span class="preview-label">Hover</span>
+        </div>
+        <div class="preview-item">
+          <button class="btn btn--sm btn--primary btn--disabled" disabled><span>签收</span></button>
+          <span class="preview-label">禁用</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 小按钮 浅色 -->
+  <section class="preview-section" id="sec-sm-light">
+    <div class="preview-title">小按钮 · 浅色 Light Solid (vi-1)</div>
+    <div class="preview-desc">背景 #E6F7F6 实色浅底，用于卡片内操作按钮</div>
+    <div class="preview-group">
+      <div class="preview-row">
+        <div class="preview-item">
+          <button class="btn btn--sm btn--light-solid">查看详情</button>
+          <span class="preview-label">正常</span>
+        </div>
+        <div class="preview-item">
+          <button class="btn btn--sm btn--light-solid btn--disabled" disabled><span>查看详情</span></button>
+          <span class="preview-label">禁用</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 小按钮 文字 -->
+  <section class="preview-section" id="sec-sm-text">
+    <div class="preview-title">小按钮 · 文字 Text</div>
+    <div class="preview-desc">无背景，仅文字颜色为品牌色</div>
+    <div class="preview-group">
+      <div class="preview-row">
+        <button class="btn btn--sm btn--text">更多操作</button>
+      </div>
+      <div class="preview-label">class: btn btn--sm btn--text</div>
+    </div>
+  </section>
+
+  <!-- 交互演示 -->
+  <section class="preview-section" id="sec-hover">
+    <div class="preview-title">Hover / Active 交互演示</div>
+    <div class="preview-desc">鼠标悬停变色，点击缩放 0.97</div>
+    <div class="preview-group">
+      <div class="preview-group-title">请将鼠标移入按钮体验</div>
+      <div class="demo-col">
+        <button class="btn btn--lg btn--primary">悬停我 → 颜色加深</button>
+        <button class="btn btn--sm btn--light-solid">悬停我 → 背景变深</button>
+        <button class="btn btn--sm btn--primary">按下我 → 缩放动画</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 规格汇总 -->
+  <section class="preview-section" id="sec-spec">
+    <div class="preview-title">按钮规格汇总表</div>
+    <div class="preview-desc">完整按钮系统参数一览</div>
+    <div class="preview-spec">
+      <strong>大按钮 btn--lg</strong><br>
+      尺寸: 303×40px | 圆角: 4px | 字号: 16px/22px<br><br>
+      <strong>小按钮 btn--sm</strong><br>
+      尺寸: auto×32px (padding 6px 8px) | 圆角: 4px | 字号: 14px/20px<br><br>
+      <strong>颜色变体</strong><br>
+      Primary: bg #00AAA6, hover #009093, 文字 #FFF<br>
+      Light: bg rgba(0,170,166,0.1), hover rgba(0,170,166,0.18), 文字 #00AAA6<br>
+      Light-solid: bg #E6F7F6, hover #D4F2F1, 文字 #00AAA6<br>
+      Clear: bg #EBEDF0, 文字 #1D2129<br>
+      Text: bg transparent, 文字 #00AAA6<br><br>
+      <strong>状态</strong><br>
+      Disabled: opacity 0.4 (子元素), cursor not-allowed, 无 active 缩放<br>
+      Active: transform scale(0.97), 过渡 0.1s<br>
+      Block: width 100%
+    </div>
+  </section>
+</div>
+
+<script src="../xinxiaodi-ui.js"></script>
+</body>
+</html>

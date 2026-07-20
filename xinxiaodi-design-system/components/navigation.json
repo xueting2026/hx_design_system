@@ -1,0 +1,147 @@
+{
+  "slug": "navigation",
+  "name": "导航 Navigation",
+  "schemaVersion": 1,
+  "figmaNode": "971:42748 (定位组件)",
+  "description": "导航相关组件集合：定位栏、扫码接单入口、展开收起按钮",
+  "variantDimensions": [
+    {
+      "axis": "component",
+      "values": ["定位栏(location-bar)", "扫码接单入口(scan-entry)", "展开收起(expand-toggle)"]
+    }
+  ],
+  "subComponents": {
+    "location-bar": {
+      "figmaNode": "971:42748",
+      "description": "48px 高定位栏，左侧绿色 pin 图标 + 地址文字 + 右侧操作按钮",
+      "variantDimensions": [
+        {
+          "axis": "type",
+          "values": ["地址", "地址+1(筛选)", "地址+2(最新+筛选)", "地址+3(最新+切换+筛选)"]
+        },
+        {
+          "axis": "state",
+          "values": ["off(未选中)", "on(选中)"]
+        }
+      ],
+      "specs": {
+        "container": {
+          "width": "375px",
+          "height": "48px",
+          "backgroundColor": "#F3F5F7",
+          "padding": "0 16px",
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "2px"
+        },
+        "pin-icon": {
+          "size": "16px",
+          "source": "assets/icons/position_green_16px.svg"
+        },
+        "address": {
+          "fontSize": "12px",
+          "color": "#1D2129",
+          "lineHeight": "20px",
+          "overflow": "ellipsis",
+          "whiteSpace": "nowrap"
+        },
+        "action-button": {
+          "height": "24px",
+          "padding": "0 8px",
+          "radius": "4px",
+          "fontSize": "12px",
+          "color": "#00AAA6",
+          "onBackground": "#FFFFFF"
+        },
+        "arrow-icon": {
+          "size": "12px",
+          "off": "down_surface_green_12px.svg",
+          "on": "up_surface_green_12px.svg"
+        }
+      },
+      "interaction": {
+        "action-click": "切换 on/off 状态，箭头方向翻转",
+        "hover": "按钮出现白底",
+        "筛选按钮": "点击后高亮（白色底），再次点击取消"
+      }
+    },
+    "scan-entry": {
+      "description": "48px 高扫码接单/退出扫码入口，渐变背景",
+      "specs": {
+        "container": {
+          "width": "343px",
+          "height": "48px",
+          "radius": "4px",
+          "padding": "0 12px",
+          "display": "flex",
+          "alignItems": "center"
+        },
+        "variants": {
+          "扫码接单": {
+            "background": "linear-gradient(90deg, #F4FFFD 0%, #FFFFFF 100%)",
+            "iconBackground": "linear-gradient(135deg, #7FDCDA 0%, #00AAA6 100%)",
+            "title": "扫码接单",
+            "titleFont": "16px bold #1D2129",
+            "subtitle": "扫码领取配送任务",
+            "subtitleFont": "12px #00AAA6"
+          },
+          "退出扫码": {
+            "background": "linear-gradient(90deg, #FFF9F4 0%, #FFFFFF 100%)",
+            "iconBackground": "linear-gradient(135deg, #FFC996 0%, #FF7D00 100%)",
+            "title": "退出扫码",
+            "titleFont": "16px bold #1D2129"
+          }
+        },
+        "icon-circle": {
+          "size": "32px",
+          "radius": "50%"
+        },
+        "right-arrow": {
+          "size": "16px",
+          "color": "#C8C9CC",
+          "path": "M6 4l4 4-4 4"
+        }
+      }
+    },
+    "expand-toggle": {
+      "description": "展开/收起切换按钮，pill 形状",
+      "specs": {
+        "container": {
+          "display": "inline-flex",
+          "alignItems": "center",
+          "gap": "2px",
+          "backgroundColor": "#FFFFFF",
+          "radius": "16px",
+          "padding": "2px 8px",
+          "cursor": "pointer"
+        },
+        "text": {
+          "fontSize": "10px",
+          "color": "#7C8492",
+          "lineHeight": "14px"
+        },
+        "arrow": {
+          "size": "12px",
+          "color": "#7C8492",
+          "transition": "transform 0.2s"
+        }
+      },
+      "interaction": {
+        "click": "切换文字（展开↔收起），箭头旋转 180deg",
+        "expandedContent": "显示/隐藏关联内容区"
+      }
+    }
+  },
+  "usageHints": [
+    "定位栏出现在列表页顶部（标题栏下方）",
+    "扫码接单入口仅在待到库/待办中心列表页使用",
+    "展开/收起按钮用于卡片底部或分割线中间",
+    "定位栏宽度始终 375px（满屏），不受内容区 343px 限制"
+  ],
+  "doNotInvent": [
+    "垂直方向的导航组件",
+    "底部 Tab 导航（小程序有自带）",
+    "面包屑导航",
+    "定位栏内添加搜索功能"
+  ]
+}

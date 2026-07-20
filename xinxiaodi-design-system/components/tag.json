@@ -1,0 +1,82 @@
+{
+  "slug": "tag",
+  "name": "标签 Tag",
+  "schemaVersion": 1,
+  "description": "业务状态标签，1px 边框 + 对应色文字，颜色承载固定业务含义",
+  "variantDimensions": [
+    {
+      "axis": "color",
+      "values": ["blue(蓝)", "orange(橙)", "purple(紫)", "green(绿)", "red(红)"]
+    }
+  ],
+  "representativeVariants": [
+    "blue-提货点",
+    "orange-2C",
+    "purple-电商补货",
+    "green-直发",
+    "blue-整单甩单"
+  ],
+  "anatomy": {
+    "parts": ["container", "text"],
+    "required": ["container", "text"]
+  },
+  "specs": {
+    "container": {
+      "height": "20px",
+      "radius": "2px",
+      "borderWidth": "1px",
+      "padding": "0 4px",
+      "display": "inline-flex",
+      "alignItems": "center"
+    },
+    "text": {
+      "fontSize": "10px",
+      "fontWeight": 400,
+      "lineHeight": "14px"
+    },
+    "variants": {
+      "blue": {
+        "borderColor": "#3491FA",
+        "textColor": "#3491FA",
+        "semantics": ["提货点", "运单状态", "整单甩单", "2B"]
+      },
+      "orange": {
+        "borderColor": "#FF7D00",
+        "textColor": "#FF7D00",
+        "semantics": ["2C", "收货点", "约定时间"]
+      },
+      "purple": {
+        "borderColor": "#722ED1",
+        "textColor": "#722ED1",
+        "semantics": ["电商补货"]
+      },
+      "green": {
+        "borderColor": "#00AAA6",
+        "textColor": "#00AAA6",
+        "semantics": ["直发"]
+      },
+      "red": {
+        "borderColor": "#FF4D4F",
+        "textColor": "#FF4D4F",
+        "semantics": ["紧急", "异常"]
+      }
+    }
+  },
+  "usageHints": [
+    "标签颜色有固定业务含义，不可随意替换",
+    "蓝色 = 提货点/运单状态/2B",
+    "橙色 = 2C/收货点",
+    "紫色 = 电商补货",
+    "绿色 = 直发",
+    "标签总是出现在卡片标题行右侧或订单号旁",
+    "同一卡片可并排多个标签，间距 8px"
+  ],
+  "doNotInvent": [
+    "填充色标签（信小递只有描边标签）",
+    "圆角大于 2px 的标签",
+    "pill 形状标签",
+    "自定义颜色标签——必须用预定义的 5 种色",
+    "带图标的标签",
+    "可关闭/可删除标签"
+  ]
+}

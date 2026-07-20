@@ -1,0 +1,67 @@
+{
+  "slug": "floating-button",
+  "name": "浮动按钮 Floating Button",
+  "schemaVersion": 1,
+  "description": "固定定位在右下角的圆形品牌绿渐变浮动按钮，分大(60px)小(40px)两档",
+  "variantDimensions": [
+    {
+      "axis": "size",
+      "values": ["large(60px)", "small(40px)"]
+    }
+  ],
+  "representativeVariants": [
+    "large-扫码",
+    "large-待办中心",
+    "small"
+  ],
+  "anatomy": {
+    "parts": ["container", "icon", "label(仅大号)"],
+    "required": ["container", "icon"]
+  },
+  "specs": {
+    "large": {
+      "size": "60px",
+      "radius": "50%",
+      "background": "linear-gradient(135deg, #00AAA6, #009B97)",
+      "shadow": "0px 4px 12px rgba(0,170,166,0.3)",
+      "iconSize": "22px",
+      "iconColor": "#FFFFFF",
+      "label": {
+        "fontSize": "8px",
+        "color": "#FFFFFF"
+      },
+      "gap": "2px"
+    },
+    "small": {
+      "size": "40px",
+      "radius": "50%",
+      "background": "linear-gradient(135deg, #00AAA6, #009B97)",
+      "shadow": "0px 4px 12px rgba(0,170,166,0.3)",
+      "iconSize": "18px",
+      "iconColor": "#FFFFFF"
+    },
+    "position": {
+      "position": "fixed",
+      "right": "16px",
+      "bottom": "安全区 + 16px"
+    }
+  },
+  "interaction": {
+    "hover": "shadow 加深，轻微 scale(1.05)",
+    "active": "scale(0.95)",
+    "click": "执行对应操作（打开扫码/跳转待办中心）"
+  },
+  "usageHints": [
+    "只放在右下角固定定位，不用于页面内嵌",
+    "一个页面最多一个浮动按钮",
+    "主要用于扫码和待办中心快捷入口",
+    "大号 60px 用于主要场景，小号 40px 用于辅助"
+  ],
+  "doNotInvent": [
+    "非圆形浮动按钮",
+    "左下角或顶部定位的浮动按钮",
+    "非渐变色浮动按钮",
+    "多个浮动按钮同时出现",
+    "浮动按钮上的角标/徽标"
+  ]
+}

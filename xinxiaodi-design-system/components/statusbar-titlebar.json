@@ -1,0 +1,157 @@
+{
+  "slug": "statusbar-titlebar",
+  "name": "状态栏 & 标题栏 StatusBar & TitleBar",
+  "schemaVersion": 1,
+  "figmaNodes": {
+    "statusbar-dark": "4-470",
+    "statusbar-light": "4-444",
+    "titlebar-solid": "11-1095",
+    "titlebar-transparent": "11-1165"
+  },
+  "description": "iOS 系统状态栏与页面标题栏（导航栏）组件，每个都有两种配色变体（深色/浅色），搭配使用覆盖所有页型场景",
+  "subComponents": {
+    "statusbar": {
+      "description": "44px 高系统状态栏，显示时间和系统图标（信号/WiFi/电量）",
+      "figmaNodes": {
+        "dark": "4-470",
+        "light": "4-444"
+      },
+      "variantDimensions": [
+        {
+          "axis": "theme",
+          "values": ["dark(反黑-深色文字)", "light(反白-白色文字)"]
+        }
+      ],
+      "specs": {
+        "container": {
+          "width": "375px",
+          "height": "44px",
+          "display": "flex",
+          "alignItems": "flex-end",
+          "paddingBottom": "10px",
+          "paddingHorizontal": "16px"
+        },
+        "time": {
+          "fontSize": "14px",
+          "fontWeight": 600,
+          "lineHeight": "18px",
+          "position": "left"
+        },
+        "icons": {
+          "position": "right",
+          "gap": "6px",
+          "items": ["signal", "wifi", "battery"]
+        },
+        "variants": {
+          "dark": {
+            "background": "#FFFFFF",
+            "textColor": "#1D2129",
+            "iconColor": "#1D2129",
+            "usage": "常规白底页面（列表页/操作页/功能选择页）",
+            "class": "statusbar statusbar--dark"
+          },
+          "light": {
+            "background": "transparent",
+            "textColor": "#FFFFFF",
+            "iconColor": "#FFFFFF",
+            "usage": "渐变头部页面（首页/详情页带品牌色背景）",
+            "class": "statusbar statusbar--light"
+          }
+        }
+      }
+    },
+    "titlebar": {
+      "description": "44px 高标题栏/导航栏，含左侧返回按钮 + 居中标题 + 右侧操作区",
+      "figmaNodes": {
+        "solid": "11-1095",
+        "transparent": "11-1165"
+      },
+      "variantDimensions": [
+        {
+          "axis": "theme",
+          "values": ["solid(黑色-实底)", "transparent(透明)"]
+        },
+        {
+          "axis": "content",
+          "values": ["有标题", "无标题(仅返回)", "有标题+右侧操作"]
+        }
+      ],
+      "specs": {
+        "container": {
+          "width": "375px",
+          "height": "44px",
+          "display": "flex",
+          "alignItems": "center",
+          "paddingHorizontal": "6px"
+        },
+        "back-button": {
+          "width": "44px",
+          "height": "44px",
+          "iconSize": "24px",
+          "strokeWidth": "1.5px",
+          "linecap": "round",
+          "linejoin": "round",
+          "path": "M15 6L9 12L15 18"
+        },
+        "title": {
+          "fontSize": "16px",
+          "fontWeight": 500,
+          "lineHeight": "22px",
+          "textAlign": "center",
+          "flex": 1
+        },
+        "right-area": {
+          "width": "44px",
+          "height": "44px",
+          "purpose": "保持标题居中的占位/右侧操作图标区域"
+        },
+        "variants": {
+          "solid": {
+            "background": "#FFFFFF",
+            "borderBottom": "0.5px solid #E5E6EB",
+            "titleColor": "#000000",
+            "iconStroke": "#1D2129",
+            "usage": "常规内页（列表页/操作页/功能选择页）",
+            "class": "titlebar titlebar--solid"
+          },
+          "transparent": {
+            "background": "transparent",
+            "borderBottom": "none",
+            "titleColor": "#FFFFFF",
+            "iconStroke": "#FFFFFF",
+            "usage": "渐变头部内页（首页/详情页带品牌色背景）",
+            "class": "titlebar titlebar--transparent"
+          }
+        }
+      }
+    }
+  },
+  "combinationPatterns": {
+    "常规内页": {
+      "statusbar": "dark",
+      "titlebar": "solid",
+      "totalHeight": "88px",
+      "description": "白底状态栏 + 白底标题栏，用于列表页、操作页等大部分页面"
+    },
+    "渐变头部页": {
+      "statusbar": "light",
+      "titlebar": "transparent",
+      "totalHeight": "88px",
+      "description": "透明状态栏 + 透明标题栏，叠加在品牌色渐变背景上"
+    }
+  },
+  "usageHints": [
+    "状态栏和标题栏始终为 375px 满屏宽度",
+    "两者组合总高度 88px（44+44），内容区从 88px 开始",
+    "常规内页使用 dark + solid 组合",
+    "首页/渐变头部页使用 light + transparent 组合",
+    "标题栏返回按钮热区为 44×44px，确保可点击范围足够",
+    "标题居中需要右侧有等宽占位元素（即使为空）"
+  ],
+  "doNotInvent": [
+    "中间放搜索框的标题栏（搜索框在标题栏下方独立区域）",
+    "底色为品牌色的状态栏（状态栏只有白底或透明两种）",
+    "标题栏高度不为 44px 的变体",
+    "状态栏中添加自定义内容（仅系统时间和图标）"
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "slug": "dialog",
+  "name": "弹窗 Dialog",
+  "schemaVersion": 1,
+  "figmaNode": "7622:39167",
+  "description": "320px 宽模态弹窗，白色背景，右上角关闭按钮。四种类型：基础双按钮/单按钮/仅标题/表单",
+  "variantDimensions": [
+    {
+      "axis": "type",
+      "values": ["基础双按钮", "单按钮", "仅标题", "表单对话框"]
+    }
+  ],
+  "representativeVariants": [
+    "基础双按钮-扫码失败",
+    "单按钮-确认返回",
+    "仅标题-确认提交",
+    "表单-运单发运"
+  ],
+  "anatomy": {
+    "parts": [
+      "overlay(蒙层)",
+      "container",
+      "close-button",
+      "title",
+      "description",
+      "form-fields",
+      "button-group"
+    ],
+    "required": ["container", "close-button", "title", "button-group"]
+  },
+  "specs": {
+    "overlay": {
+      "backgroundColor": "rgba(0,0,0,0.5)",
+      "backdropFilter": "blur(2px)"
+    },
+    "container": {
+      "width": "320px",
+      "backgroundColor": "#FFFFFF",
+      "padding": "24px",
+      "shadow": "0 4px 24px rgba(0,0,0,0.15)",
+      "radius": "8px"
+    },
+    "close-button": {
+      "size": "24px",
+      "position": "absolute",
+      "top": "8px",
+      "right": "8px",
+      "icon": "close_gray_24px.svg",
+      "hoverBackground": "#F2F3F5",
+      "hoverRadius": "50%"
+    },
+    "title": {
+      "fontSize": "18px",
+      "fontWeight": 500,
+      "color": "#000000",
+      "lineHeight": "24px",
+      "textAlign": "center",
+      "marginBottom": "8px",
+      "padding": "0 24px"
+    },
+    "description": {
+      "fontSize": "14px",
+      "fontWeight": 400,
+      "color": "#7C8492",
+      "lineHeight": "20px",
+      "textAlign": "center",
+      "marginBottom": "24px",
+      "padding": "0 24px"
+    },
+    "primary-button": {
+      "height": "40px",
+      "backgroundColor": "#00AAA6",
+      "radius": "4px",
+      "fontSize": "16px",
+      "fontWeight": 400,
+      "color": "#FFFFFF",
+      "lineHeight": "22px",
+      "disabledOpacity": 0.4
+    },
+    "secondary-button": {
+      "height": "40px",
+      "backgroundColor": "rgba(0,170,166,0.1)",
+      "radius": "4px",
+      "fontSize": "16px",
+      "fontWeight": 400,
+      "color": "#00AAA6",
+      "lineHeight": "22px"
+    },
+    "form-field": {
+      "label": {
+        "fontSize": "14px",
+        "color": "#1D2129",
+        "marginBottom": "8px",
+        "required-marker": "* #EE0A24"
+      },
+      "select": {
+        "height": "32px",
+        "border": "1px solid #BFC5CC",
+        "radius": "4px",
+        "padding": "0 8px",
+        "fontSize": "12px",
+        "placeholderColor": "#BFC5CC",
+        "selectedColor": "#1D2129",
+        "selectedBorderColor": "#00AAA6",
+        "arrowIcon": "down_line_gray_16px.svg"
+      }
+    },
+    "button-layout": {
+      "双按钮": {
+        "display": "flex",
+        "gap": "8px",
+        "order": "浅色在左(次要) + 深色在右(主操作)"
+      },
+      "单按钮": {
+        "display": "block",
+        "width": "100%"
+      }
+    }
+  },
+  "interaction": {
+    "open": {
+      "overlay": "opacity 0→1, 0.25s",
+      "dialog": "scale(0.9)→scale(1), 0.25s"
+    },
+    "close": {
+      "triggers": ["关闭按钮", "点击蒙层", "Esc 键"],
+      "overlay": "opacity 1→0, 0.25s",
+      "dialog": "scale(1)→scale(0.9), 0.25s"
+    },
+    "form-submit": {
+      "validation": "所有必填字段填写后，提交按钮 opacity 从 0.4 变为 1",
+      "submit-click": "关闭弹窗 + 执行业务操作"
+    },
+    "button-hover": {
+      "primary": "background → #009093",
+      "secondary": "background → rgba(0,170,166,0.18)"
+    }
+  },
+  "usageHints": [
+    "弹窗宽度固定 320px，不可调",
+    "按钮顺序：浅色(次要)在左，深色(主操作)在右",
+    "关闭按钮始终在右上角(top 8, right 8)",
+    "表单弹窗：必填项用红色 * 标记，全部填写后提交按钮激活",
+    "蒙层使用 rgba(0,0,0,0.5) 半透明黑色",
+    "弹窗用于轻量操作（≤2步），复杂操作应用独立页面"
+  ],
+  "doNotInvent": [
+    "全屏弹窗",
+    "底部弹出式面板（信小递弹窗统一居中）",
+    "无关闭按钮的弹窗",
+    "超过 320px 宽的弹窗",
+    "按钮顺序反转（深色在左）"
+  ]
+}

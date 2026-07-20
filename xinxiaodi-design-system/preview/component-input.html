@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信小递组件 - 输入框 Input</title>
+<link rel="stylesheet" href="../xinxiaodi-ui.css">
+<style>
+  body { background: #F3F5F7; margin: 0; }
+  .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
+  .preview-section { background: #FFFFFF; border-radius: 10px; padding: 24px; margin-bottom: 16px; max-width: 415px; }
+  .preview-title { font-size: 18px; font-weight: 600; color: #1D2129; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .preview-title::before { content: ''; width: 4px; height: 18px; background: #00AAA6; border-radius: 2px; }
+  .preview-desc { font-size: 12px; color: #7C8492; margin-bottom: 20px; }
+  .preview-group { margin-bottom: 24px; }
+  .preview-group-title { font-size: 14px; font-weight: 500; color: #1D2129; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #E5E6EB; }
+  .preview-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; margin-bottom: 12px; }
+  .preview-label { font-size: 11px; color: #7C8492; margin-top: 6px; }
+  .preview-item { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .preview-spec { font-size: 11px; color: #86909C; background: #F7F8FA; padding: 8px 12px; border-radius: 6px; line-height: 1.8; margin-top: 8px; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 130px; height: 100vh; background: #FFFFFF; border-right: 1px solid #E5E6EB; padding: 16px 0; overflow-y: auto; z-index: 50; }
+  .sidebar__back { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #00AAA6; padding: 6px 16px; margin-bottom: 8px; text-decoration: none; border-bottom: 1px solid #E5E6EB; padding-bottom: 12px; }
+  .sidebar__back:hover { opacity: 0.7; }
+  .sidebar__title { font-size: 12px; font-weight: 600; color: #1D2129; padding: 8px 16px; }
+  .sidebar__link { display: block; font-size: 11px; color: #7C8492; padding: 6px 16px; text-decoration: none; transition: all 0.15s; }
+  .sidebar__link:hover { color: #00AAA6; background: #E6F7F6; }
+  .demo-col { display: flex; flex-direction: column; gap: 12px; }
+  .error-msg { font-size: 12px; color: #EE0A24; margin-top: 4px; }
+  /* Fix #3: 验证码输入框 focus 时后缀也有绿色边 */
+  .input-group:focus-within .input-group__suffix { border-color: #00AAA6; }
+  .input-group:focus-within .input { border-color: #00AAA6; box-shadow: none; }
+  /* Fix #2: 区号前缀下拉 */
+  .prefix-select { position: relative; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .prefix-select__menu { display: none; position: absolute; top: calc(100% + 4px); left: 0; background: #FFFFFF; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); padding: 8px 0; min-width: 100px; z-index: 10; }
+  .prefix-select__menu--open { display: block; }
+  .prefix-select__item { padding: 8px 16px; font-size: 14px; color: #1D2129; cursor: pointer; }
+  .prefix-select__item:hover { background: #E6F7F6; }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a class="sidebar__back" href="../examples/index.html">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="#00AAA6" stroke-width="1.5" stroke-linecap="round"/></svg>
+    返回目录
+  </a>
+  <div class="sidebar__title">输入框 Input</div>
+  <a class="sidebar__link" href="#sec-basic">基础输入框</a>
+  <a class="sidebar__link" href="#sec-prefix">区号前缀</a>
+  <a class="sidebar__link" href="#sec-code">验证码输入</a>
+  <a class="sidebar__link" href="#sec-password">密码输入</a>
+  <a class="sidebar__link" href="#sec-error">错误态</a>
+  <a class="sidebar__link" href="#sec-spec">规格汇总</a>
+</nav>
+
+<div class="preview-page">
+  <!-- 基础输入框 -->
+  <section class="preview-section" id="sec-basic">
+    <div class="preview-title">基础输入框</div>
+    <div class="preview-desc">高度 48px，宽度 303px，圆角 4px，边框 1px</div>
+    <div class="preview-group">
+      <div class="preview-group-title">未输入 (placeholder)</div>
+      <div class="demo-col">
+        <input class="input" type="text" placeholder="请输入手机号">
+      </div>
+      <div class="preview-label">placeholder 色: #C9CDD4</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">已输入</div>
+      <div class="demo-col">
+        <input class="input" type="text" value="13800138000">
+      </div>
+      <div class="preview-label">文字色: #1D2129</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">Focus 态 (点击体验)</div>
+      <div class="demo-col">
+        <input class="input" type="text" placeholder="点击此处查看focus样式">
+      </div>
+      <div class="preview-label">focus: border #00AAA6 + shadow rgba(0,170,166,0.1)</div>
+    </div>
+  </section>
+
+  <!-- 带区号前缀 -->
+  <section class="preview-section" id="sec-prefix">
+    <div class="preview-title">带区号前缀输入框</div>
+    <div class="preview-desc">左侧前缀区域带下拉选择 + 输入区域组合</div>
+    <div class="preview-group">
+      <div class="demo-col">
+        <div class="input-group">
+          <div class="input-group__prefix prefix-select" onclick="togglePrefixMenu(this)">
+            <span id="prefixLabel">+86</span>
+            <img src="../assets/icons/select/down_line_black_12px.svg" width="12" height="12" style="flex-shrink:0;" />
+            <div class="prefix-select__menu" id="prefixMenu">
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+86')">+86 中国大陆</div>
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+852')">+852 中国香港</div>
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+886')">+886 中国台湾</div>
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+1')">+1 美国/加拿大</div>
+            </div>
+          </div>
+          <input class="input" type="tel" placeholder="请输入手机号">
+        </div>
+      </div>
+      <div class="preview-label">点击区号前缀可下拉选择 | 前缀: bg #F7F8FA</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">已输入态</div>
+      <div class="demo-col">
+        <div class="input-group">
+          <div class="input-group__prefix prefix-select" onclick="togglePrefixMenu(this)">
+            <span>+86</span>
+            <img src="../assets/icons/select/down_line_black_12px.svg" width="12" height="12" style="flex-shrink:0;" />
+            <div class="prefix-select__menu">
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+86')">+86 中国大陆</div>
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+852')">+852 中国香港</div>
+              <div class="prefix-select__item" onclick="selectPrefix(event, '+886')">+886 中国台湾</div>
+            </div>
+          </div>
+          <input class="input" type="tel" value="138 0013 8000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 验证码输入框 -->
+  <section class="preview-section" id="sec-code">
+    <div class="preview-title">验证码输入框</div>
+    <div class="preview-desc">右侧后缀为验证码发送按钮，支持倒计时</div>
+    <div class="preview-group">
+      <div class="preview-group-title">可点击状态</div>
+      <div class="demo-col">
+        <div class="input-group">
+          <input class="input" type="text" placeholder="请输入验证码" style="border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none;">
+          <div class="input-group__suffix" id="codeBtn1" onclick="XUI.startCountdown(this)">发送验证码</div>
+        </div>
+      </div>
+      <div class="preview-label">点击「发送验证码」体验倒计时</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">倒计时中（模拟）</div>
+      <div class="demo-col">
+        <div class="input-group">
+          <input class="input" type="text" placeholder="请输入验证码" style="border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none;">
+          <div class="input-group__suffix input-group__suffix--disabled">58s后重新发送</div>
+        </div>
+      </div>
+      <div class="preview-label">倒计时: 文字色 #7C8492, cursor not-allowed</div>
+    </div>
+  </section>
+
+  <!-- 密码输入框 -->
+  <section class="preview-section" id="sec-password">
+    <div class="preview-title">密码输入框</div>
+    <div class="preview-desc">type=password，配合眼睛图标切换显示/隐藏</div>
+    <div class="preview-group">
+      <div class="demo-col">
+        <div class="input-group">
+          <input class="input" type="password" id="pwdInput" value="mypassword123" style="border-radius: var(--radius-sm) 0 0 var(--radius-sm); border-right: none;">
+          <div class="input-group__suffix" onclick="togglePwd()" style="cursor:pointer;">
+            <!-- 密码隐藏态图标 (带斜线) -->
+            <svg id="eyeIconHide" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display: block;">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#BFC5CC" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="3" stroke="#BFC5CC" stroke-width="1.5"/>
+              <path d="M4 20L20 4" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <!-- 密码显示态图标 (无斜线) -->
+            <svg id="eyeIconShow" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display: none;">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#BFC5CC" stroke-width="1.5"/>
+              <circle cx="12" cy="12" r="3" stroke="#BFC5CC" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">图标: 16×16px | 色: #BFC5CC (text-1) | 点击切换密码可见/不可见</div>
+    </div>
+  </section>
+
+  <!-- 错误态 -->
+  <section class="preview-section" id="sec-error">
+    <div class="preview-title">错误态</div>
+    <div class="preview-desc">边框变为红色 #EE0A24，配合错误提示文字（间距 4px）</div>
+    <div class="preview-group">
+      <div style="display: flex; flex-direction: column;">
+        <input class="input input--error" type="text" value="abc">
+        <div class="error-msg" style="margin-top: 4px;">请输入有效的手机号码</div>
+      </div>
+      <div class="preview-label">class: input input--error | 错误提示距输入框 4px</div>
+    </div>
+    <div class="preview-group">
+      <div class="preview-group-title">带前缀的错误态</div>
+      <div style="display: flex; flex-direction: column;">
+        <div class="input-group">
+          <div class="input-group__prefix prefix-select">
+            <span>+86</span>
+            <img src="../assets/icons/select/down_line_black_12px.svg" width="12" height="12" style="flex-shrink:0;" />
+          </div>
+          <input class="input input--error" type="tel" value="123">
+        </div>
+        <div class="error-msg" style="margin-top: 4px;">手机号格式不正确</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 规格汇总 -->
+  <section class="preview-section" id="sec-spec">
+    <div class="preview-title">Input 规格汇总表</div>
+    <div class="preview-desc">输入框系统参数一览</div>
+    <div class="preview-spec">
+      <strong>基础输入框 .input</strong><br>
+      尺寸: 303×48px | 圆角: 4px | 字号: 14px<br>
+      边框: 1px solid #E5E6EB<br>
+      Focus: border #00AAA6, shadow 0 0 0 2px rgba(0,170,166,0.1)<br><br>
+      <strong>输入框组 .input-group</strong><br>
+      前缀 prefix: bg #F7F8FA, padding 0 12px<br>
+      后缀 suffix: padding 0 12px, 文字色 #00AAA6<br><br>
+      <strong>状态</strong><br>
+      Error: border #EE0A24, focus shadow rgba(238,10,36,0.1)<br>
+      Disabled: bg #F3F5F7, color #7C8492, cursor not-allowed<br>
+      Placeholder: color #C9CDD4<br><br>
+      <strong>验证码倒计时</strong><br>
+      默认 60s | 倒计时文字色 #7C8492 | 激活色 #00AAA6
+    </div>
+  </section>
+</div>
+
+<script src="../xinxiaodi-ui.js"></script>
+<script>
+// Fix #4: 密码切换 — 同时切换图标
+function togglePwd() {
+  const input = document.getElementById('pwdInput');
+  const hideIcon = document.getElementById('eyeIconHide');
+  const showIcon = document.getElementById('eyeIconShow');
+  if (input.type === 'password') {
+    input.type = 'text';
+    hideIcon.style.display = 'none';
+    showIcon.style.display = 'block';
+  } else {
+    input.type = 'password';
+    hideIcon.style.display = 'block';
+    showIcon.style.display = 'none';
+  }
+}
+
+// Fix #2: 区号前缀下拉
+function togglePrefixMenu(el) {
+  const menu = el.querySelector('.prefix-select__menu');
+  if (!menu) return;
+  menu.classList.toggle('prefix-select__menu--open');
+}
+
+function selectPrefix(e, value) {
+  e.stopPropagation();
+  const prefix = e.target.closest('.prefix-select');
+  const label = prefix.querySelector('span');
+  label.textContent = value;
+  prefix.querySelector('.prefix-select__menu').classList.remove('prefix-select__menu--open');
+}
+
+// 全局关闭下拉
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.prefix-select')) {
+    document.querySelectorAll('.prefix-select__menu--open').forEach(m => m.classList.remove('prefix-select__menu--open'));
+  }
+});
+</script>
+</body>
+</html>

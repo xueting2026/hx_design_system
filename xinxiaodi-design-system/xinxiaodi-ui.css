@@ -1,0 +1,1381 @@
+/**
+ * 信小递司机端 UI 样式库
+ * 版本: 1.0.0
+ * 设计宽度: 375px (iPhone X)
+ * 字体: PingFang SC
+ * 品牌色: #00AAA6
+ *
+ * 使用方式: <link rel="stylesheet" href="xinxiaodi-ui.css">
+ */
+
+/* ==========================================================================
+   0. CSS 变量 (Design Tokens)
+   ========================================================================== */
+
+:root {
+  /* 主色 Primary */
+  --vi-1: #E6F7F6;
+  --vi-2: #00AAA6;
+  --vi-3: #009093;
+
+  /* 文字 Text */
+  --text-1: #BFC5CC;
+  --text-2: #7C8492;
+  --text-3: #1D2129;
+
+  /* 线条 Border */
+  --border-1: #E5E6EB;
+  --border-2: #BFC5CC;
+
+  /* 背景色 BG */
+  --bg-1: #F3F5F7;
+  --bg-2: #EBEDF0;
+  --white: #FFFFFF;
+
+  /* 辅助色 Subcolor */
+  --blue: #3491FA;
+  --orange: #FF7D00;
+  --purple: #722ED1;
+
+  /* 警告色 Danger */
+  --danger-1: #EE0A24;
+  --danger-bg: #FDE7E9;
+
+  /* 中性色 Neutral */
+  --gray-4: #C9CDD4;
+  --gray-5: #C8C9CC;
+
+  /* 间距 Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* 圆角 Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-full: 50%;
+  --radius-pill: 58px;
+
+  /* 阴影 Shadow */
+  --shadow-card: 0px 4px 12px rgba(0,0,0,0.05);
+  --shadow-popover: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-dialog: 0 4px 24px rgba(0,0,0,0.15);
+  --shadow-float: 0px 4px 12px rgba(0,170,166,0.3);
+
+  /* 布局 Layout */
+  --page-width: 375px;
+  --content-width: 343px;
+  --page-margin: 16px;
+  --statusbar-h: 44px;
+  --navbar-h: 44px;
+
+  /* 动效 Animation */
+  --duration-fast: 0.15s;
+  --duration-base: 0.2s;
+  --duration-slow: 0.25s;
+  --easing: ease;
+
+  /* 字体 */
+  --font-family: 'PingFang SC', -apple-system, sans-serif;
+}
+
+/* ==========================================================================
+   1. 基础重置
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-1);
+  color: var(--text-3);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. 文本样式 Typography
+   ========================================================================== */
+
+.text-page-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--text-3);
+}
+
+.text-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+.text-body-emphasis {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--text-3);
+}
+
+.text-body {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--text-3);
+}
+
+.text-secondary {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--text-2);
+}
+
+.text-caption {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  color: var(--text-2);
+}
+
+.text-button-lg {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.text-button-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.text-tag {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+/* ==========================================================================
+   3. 按钮 Button
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-weight: 400;
+  white-space: nowrap;
+  transition: background var(--duration-base) var(--easing),
+              transform 0.1s var(--easing);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* 大按钮 40px */
+.btn--lg {
+  height: 40px;
+  width: 303px;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  line-height: 22px;
+}
+
+/* 小按钮 32px */
+.btn--sm {
+  height: 32px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* 深色 primary */
+.btn--primary {
+  background: var(--vi-2);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--vi-3);
+}
+
+/* 浅色 light */
+.btn--light {
+  background: rgba(0,170,166,0.1);
+  color: var(--vi-2);
+}
+
+.btn--light:hover {
+  background: rgba(0,170,166,0.18);
+}
+
+/* vi-1 浅色 */
+.btn--light-solid {
+  background: var(--vi-1);
+  color: var(--vi-2);
+}
+
+.btn--light-solid:hover {
+  background: #D4F2F1;
+}
+
+/* 清除 clear */
+.btn--clear {
+  background: var(--bg-2);
+  color: var(--text-3);
+}
+
+.btn--clear:hover {
+  background: #E0E2E5;
+}
+
+/* 文字 text */
+.btn--text {
+  background: transparent;
+  color: var(--vi-2);
+}
+
+/* 禁用 */
+.btn--disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn--disabled > * {
+  opacity: 0.4;
+}
+
+.btn--disabled:active {
+  transform: none;
+}
+
+/* 全宽 */
+.btn--block {
+  width: 100%;
+}
+
+/* ==========================================================================
+   4. 输入框 Input
+   ========================================================================== */
+
+.input {
+  height: 48px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  color: var(--text-3);
+  background: var(--white);
+  width: 303px;
+  outline: none;
+  transition: border-color var(--duration-base), box-shadow var(--duration-base);
+}
+
+.input::placeholder {
+  color: var(--gray-4);
+}
+
+.input:focus {
+  border-color: var(--vi-2);
+  box-shadow: 0 0 0 2px rgba(0,170,166,0.1);
+}
+
+.input--error {
+  border-color: var(--danger-1);
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 2px rgba(238,10,36,0.1);
+}
+
+.input--disabled {
+  background: var(--bg-1);
+  color: var(--text-2);
+  cursor: not-allowed;
+}
+
+/* 错误提示文字 */
+.input-error-msg {
+  font-size: 12px;
+  color: var(--danger-1);
+  margin-top: 4px;
+  line-height: 18px;
+}
+
+/* 输入框组 */
+.input-group {
+  display: flex;
+  align-items: center;
+  width: 303px;
+}
+
+.input-group .input {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  width: auto;
+  flex: 1;
+}
+
+.input-group__prefix {
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--border-1);
+  border-right: none;
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-3);
+  background: #F7F8FA;
+}
+
+.input-group__suffix {
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--border-1);
+  border-left: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--vi-2);
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color var(--duration-base);
+}
+
+/* 输入框组 focus 联动后缀边框 */
+.input-group:focus-within .input-group__suffix {
+  border-color: var(--vi-2);
+}
+
+.input-group:focus-within .input {
+  border-color: var(--vi-2);
+  box-shadow: none;
+}
+
+.input-group__suffix--disabled {
+  color: var(--text-2);
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   5. 搜索框 Search Box
+   ========================================================================== */
+
+.searchbox {
+  height: 36px;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+  padding-right: 4px;
+  font-family: var(--font-family);
+}
+
+.searchbox__icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.searchbox__input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 22px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  font-family: var(--font-family);
+}
+
+.searchbox__input::placeholder {
+  color: var(--text-1);
+}
+
+.searchbox__clear {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gray-4);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.searchbox__clear--visible {
+  display: flex;
+}
+
+.searchbox__query {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 12px;
+  background: var(--vi-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-base);
+}
+
+.searchbox__query:hover {
+  background: var(--vi-3);
+}
+
+.searchbox__query-text {
+  font-size: 14px;
+  color: var(--white);
+  line-height: 22px;
+}
+
+/* 筛选下拉 */
+.searchbox__filter {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.searchbox__filter-trigger {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.searchbox__filter-label {
+  font-size: 12px;
+  color: var(--vi-2);
+  line-height: 20px;
+}
+
+.searchbox__filter-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-2);
+}
+
+.searchbox__filter-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-popover);
+  padding: 8px 0;
+  min-width: 120px;
+  z-index: 10;
+}
+
+.searchbox__filter-menu--open {
+  display: block;
+}
+
+.searchbox__filter-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 20px;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.searchbox__filter-item:hover {
+  background: #E8F8F7;
+}
+
+/* 排序/筛选按钮 */
+.searchbox__action {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.searchbox__action-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.searchbox__action-label {
+  font-size: 10px;
+  color: var(--vi-2);
+  line-height: 14px;
+}
+
+/* ==========================================================================
+   6. 选择器 Selector (Checkbox / Radio)
+   ========================================================================== */
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 0.8px solid var(--gray-5);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.checkbox--checked {
+  background: var(--vi-2);
+  border: none;
+}
+
+.checkbox--disabled {
+  background: var(--bg-2);
+  border: 0.8px solid var(--gray-5);
+  cursor: not-allowed;
+}
+
+.checkbox--indeterminate {
+  background: var(--vi-2);
+  border: none;
+}
+
+.radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-2);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.radio--checked {
+  background: var(--vi-2);
+  border: none;
+}
+
+/* ==========================================================================
+   7. 标签 Tag
+   ========================================================================== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  height: 20px;
+  border-radius: var(--radius-xs);
+  border-width: 1px;
+  border-style: solid;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+.tag--blue {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.tag--orange {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.tag--purple {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.tag--green {
+  border-color: var(--vi-2);
+  color: var(--vi-2);
+}
+
+.tag--red {
+  border-color: #FF4D4F;
+  color: #FF4D4F;
+}
+
+/* ==========================================================================
+   8. 卡片 Card
+   ========================================================================== */
+
+.card {
+  width: var(--content-width);
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  border: 1px solid #F2F3F5;
+}
+
+.card__top {
+  height: 44px;
+  background: rgba(0,170,166,0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom: 0.5px solid var(--border-1);
+}
+
+.card__alert {
+  background: var(--danger-bg);
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--danger-1);
+  line-height: 14px;
+}
+
+.card__body {
+  padding: 8px 16px;
+}
+
+.card__info-box {
+  margin: 0 16px;
+  background: var(--bg-1);
+  border-radius: var(--radius-sm);
+  padding: 16px 12px;
+}
+
+.card__divider {
+  height: 0.5px;
+  background: var(--border-1);
+  margin: 12px 16px 0;
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 12px 16px;
+  gap: 8px;
+}
+
+.card__expand {
+  background: var(--bg-1);
+  height: 30px;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.card__expand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--text-2);
+  line-height: 14px;
+}
+
+/* ==========================================================================
+   9. Tab 切换
+   ========================================================================== */
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.tab-item--active {
+  background: var(--vi-2);
+  color: var(--white);
+}
+
+/* ==========================================================================
+   10. 弹窗 Dialog
+   ========================================================================== */
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--duration-slow);
+  backdrop-filter: blur(2px);
+}
+
+.dialog-overlay--visible {
+  opacity: 1;
+}
+
+.dialog {
+  width: 320px;
+  background: var(--white);
+  border-radius: 8px;
+  position: relative;
+  padding: 24px;
+  font-family: var(--font-family);
+  transform: scale(0.9);
+  transition: transform var(--duration-slow);
+  box-shadow: var(--shadow-dialog);
+}
+
+.dialog-overlay--visible .dialog {
+  transform: scale(1);
+}
+
+.dialog__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background var(--duration-base);
+}
+
+.dialog__close:hover {
+  background: #F2F3F5;
+}
+
+.dialog__title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 8px;
+  padding: 0 24px;
+}
+
+.dialog__desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-2);
+  line-height: 20px;
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 24px;
+}
+
+.dialog__buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.dialog__buttons .btn {
+  flex: 1;
+  width: auto;
+}
+
+/* 表单弹窗字段 */
+.dialog__field {
+  margin-bottom: 8px;
+}
+
+.dialog__field-label {
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 20px;
+  margin-bottom: 8px;
+}
+
+.dialog__field-required {
+  color: var(--danger-1);
+}
+
+.dialog__field-select {
+  height: 32px;
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-1);
+  transition: border-color var(--duration-base);
+}
+
+.dialog__field-select--filled {
+  color: var(--text-3);
+  border-color: var(--vi-2);
+}
+
+/* ==========================================================================
+   11. 导航组件 Navigation
+   ========================================================================== */
+
+/* 定位栏 */
+.location-bar {
+  width: 375px;
+  height: 48px;
+  background: var(--bg-1);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 2px;
+}
+
+.location-bar__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.location-bar__address {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-bar__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--duration-base);
+}
+
+.location-bar__action:hover,
+.location-bar__action--active {
+  background: var(--white);
+}
+
+.location-bar__action-text {
+  font-size: 12px;
+  color: var(--vi-2);
+  line-height: 20px;
+}
+
+/* 扫码接单入口 */
+.scan-entry {
+  width: var(--content-width);
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-family: var(--font-family);
+}
+
+.scan-entry--green {
+  background: linear-gradient(90deg, #F4FFFD 0%, #FFFFFF 100%);
+}
+
+.scan-entry--orange {
+  background: linear-gradient(90deg, #FFF9F4 0%, #FFFFFF 100%);
+}
+
+.scan-entry__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scan-entry__icon--green {
+  background: linear-gradient(135deg, #7FDCDA 0%, #00AAA6 100%);
+}
+
+.scan-entry__icon--orange {
+  background: linear-gradient(135deg, #FFC996 0%, #FF7D00 100%);
+}
+
+.scan-entry__content {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.scan-entry__title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-3);
+  line-height: 22px;
+}
+
+.scan-entry__subtitle {
+  font-size: 12px;
+  color: var(--vi-2);
+  line-height: 16px;
+}
+
+.scan-entry__arrow {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   12. 分割线 Divider
+   ========================================================================== */
+
+.divider {
+  height: 0.5px;
+  background: var(--border-1);
+}
+
+.divider--full {
+  width: 100%;
+}
+
+.divider--center {
+  width: calc(100% - 32px);
+  margin: 0 auto;
+}
+
+.divider--left {
+  width: calc(100% - 16px);
+  margin-left: 16px;
+}
+
+.divider-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider-text__line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--border-1);
+}
+
+.divider-text__label {
+  font-size: 10px;
+  color: var(--text-2);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   13. 浮动按钮 Floating Button
+   ========================================================================== */
+
+.fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00AAA6, #009B97);
+  box-shadow: var(--shadow-float);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  z-index: 100;
+  transition: transform var(--duration-base), box-shadow var(--duration-base);
+}
+
+.fab:hover {
+  transform: scale(1.05);
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+.fab--lg {
+  width: 60px;
+  height: 60px;
+}
+
+.fab--sm {
+  width: 40px;
+  height: 40px;
+}
+
+.fab__icon {
+  fill: var(--white);
+}
+
+.fab--lg .fab__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.fab--sm .fab__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.fab__label {
+  font-size: 8px;
+  color: var(--white);
+}
+
+/* ==========================================================================
+   14. 按钮组 Button Group
+   ========================================================================== */
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-group--between {
+  justify-content: space-between;
+}
+
+.btn-group--end {
+  justify-content: flex-end;
+}
+
+.btn-group__stats {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  line-height: 20px;
+}
+
+.btn-group__more {
+  font-size: 14px;
+  color: var(--vi-2);
+  line-height: 20px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-family: var(--font-family);
+  position: relative;
+}
+
+.btn-group__popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-popover);
+  padding: 8px 0;
+  min-width: 100px;
+  z-index: 10;
+}
+
+.btn-group__popup--open {
+  display: block;
+}
+
+.btn-group__popup-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--text-3);
+  line-height: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.btn-group__popup-item:hover {
+  background: #E8F8F7;
+}
+
+/* ==========================================================================
+   15. 状态栏 Status Bar
+   ========================================================================== */
+
+.statusbar {
+  width: 375px;
+  height: 44px;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px;
+  padding-bottom: 10px;
+  position: relative;
+  z-index: 100;
+}
+
+.statusbar__time {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.statusbar__icons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusbar__icons svg {
+  display: block;
+}
+
+/* 反黑（深色文字 / 白色背景）- 用于普通白底页面 */
+.statusbar--dark {
+  background: var(--white);
+}
+
+.statusbar--dark .statusbar__time {
+  color: var(--text-3);
+}
+
+.statusbar--dark .statusbar__icons svg {
+  fill: var(--text-3);
+}
+
+/* 反白（白色文字 / 深色或透明背景）- 用于渐变头部 */
+.statusbar--light {
+  background: transparent;
+}
+
+.statusbar--light .statusbar__time {
+  color: var(--white);
+}
+
+.statusbar--light .statusbar__icons svg {
+  fill: var(--white);
+}
+
+/* ==========================================================================
+   16. 标题栏 Title Bar (Navigation Bar)
+   ========================================================================== */
+
+.titlebar {
+  width: 375px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  position: relative;
+  z-index: 99;
+}
+
+.titlebar__back {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.titlebar__title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titlebar__right {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 黑色标题栏（白底 + 深色文字 + 下边线）- 常规内页 */
+.titlebar--solid {
+  background: var(--white);
+  border-bottom: 0.5px solid var(--border-1);
+}
+
+.titlebar--solid .titlebar__title {
+  color: #000000;
+}
+
+.titlebar--solid .titlebar__back svg {
+  stroke: var(--text-3);
+}
+
+/* 透明标题栏（透明背景 + 白色文字/图标）- 用于渐变头部 */
+.titlebar--transparent {
+  background: transparent;
+  border-bottom: none;
+}
+
+.titlebar--transparent .titlebar__title {
+  color: var(--white);
+}
+
+.titlebar--transparent .titlebar__back svg {
+  stroke: var(--white);
+}
+
+/* ==========================================================================
+   17. 页面布局 Page Layout
+   ========================================================================== */
+
+.page {
+  width: var(--page-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--bg-1);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.page__header {
+  height: var(--navbar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--page-margin);
+  background: var(--white);
+}
+
+.page__header-back {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.page__header-title {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-3);
+  line-height: 22px;
+}
+
+.page__content {
+  padding: 0 var(--page-margin);
+}
+
+.page__content--flush {
+  padding: 0;
+}
+
+/* 卡片列表 */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
+
+/* ==========================================================================
+   18. 工具类 Utilities
+   ========================================================================== */
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gap-4 { gap: var(--space-1); }
+.gap-8 { gap: var(--space-2); }
+.gap-12 { gap: var(--space-3); }
+.gap-16 { gap: var(--space-4); }
+
+.mt-4 { margin-top: var(--space-1); }
+.mt-8 { margin-top: var(--space-2); }
+.mt-12 { margin-top: var(--space-3); }
+.mt-16 { margin-top: var(--space-4); }
+.mt-24 { margin-top: var(--space-6); }
+
+.mb-4 { margin-bottom: var(--space-1); }
+.mb-8 { margin-bottom: var(--space-2); }
+.mb-12 { margin-bottom: var(--space-3); }
+.mb-16 { margin-bottom: var(--space-4); }
+.mb-24 { margin-bottom: var(--space-6); }
+
+.p-12 { padding: var(--space-3); }
+.p-16 { padding: var(--space-4); }
+.px-16 { padding-left: var(--space-4); padding-right: var(--space-4); }

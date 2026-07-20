@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>信小递 - 首页</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  background: #F3F5F7;
+  width: 375px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 194px;
+  background: linear-gradient(90deg, #00B7AC 0%, #009B97 100%);
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+.status-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+.status-bar .time { font-size: 14px; font-weight: 600; color: #FFFFFF; }
+.status-bar .icons { display: flex; gap: 6px; align-items: center; }
+.status-bar .icons span { font-size: 12px; color: #FFFFFF; }
+
+.nav-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-bar .title { font-size: 17px; font-weight: 600; color: #FFFFFF; }
+
+.header {
+  padding: 16px 16px 60px;
+}
+.header .user-info { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.header .avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+}
+.header .avatar svg { width: 24px; height: 24px; fill: #FFFFFF; }
+.header .greeting { font-size: 16px; font-weight: 500; color: #FFFFFF; }
+.header .location { display: flex; align-items: center; gap: 4px; padding-left: 0; }
+.header .location .pin-icon { width: 12px; height: 12px; }
+.header .location .address { font-size: 12px; color: rgba(255,255,255,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.content { margin-top: -44px; padding: 0 16px; padding-bottom: 80px; }
+
+.quick-actions {
+  background: #FFFFFF; border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 12px;
+}
+
+.action-items { display: flex; padding: 16px 24px 20px; align-items: center; }
+.action-item { flex: 1; display: flex; align-items: center; gap: 8px; }
+.action-item .icon { width: 40px; height: 40px; flex-shrink: 0; }
+.action-item .icon img { width: 40px; height: 40px; }
+
+.action-item:first-child::after { content: none; }
+
+.function-grid {
+  background: #FFFFFF; border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.05); padding: 16px 0 12px; margin-bottom: 12px;
+}
+.grid-row { display: flex; justify-content: space-around; padding: 0 8px; margin-bottom: 16px; }
+.grid-item { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 64px; }
+.grid-item .grid-icon { width: 44px; height: 44px; }
+.grid-item .grid-icon img { width: 44px; height: 44px; }
+.grid-item .grid-label { font-size: 12px; color: #1D2129; text-align: center; }
+
+.grid-dots { display: flex; justify-content: center; gap: 4px; margin-top: 4px; }
+.grid-dots .dot { width: 4px; height: 4px; border-radius: 50%; background: #E5E6EB; }
+.grid-dots .dot.active { width: 12px; border-radius: 2px; background: #00AAA6; }
+
+.section-title { font-size: 14px; font-weight: 600; color: #1D2129; margin-bottom: 12px; }
+
+.waybill-card {
+  background: #FFFFFF; border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px; overflow: hidden;
+}
+
+.floating-btn {
+  position: fixed; bottom: 80px; right: 16px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, #57E8DF, #00AAA6);
+  box-shadow: 0px 4px 12px rgba(0,170,166,0.3);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  cursor: pointer; z-index: 100;
+}
+.floating-btn svg { width: 20px; height: 20px; fill: #FFFFFF; }
+.floating-btn span { font-size: 8px; color: #FFFFFF; }
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <span class="time">9:41</span>
+  <div class="icons"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+</div>
+
+<div class="nav-bar"><span class="title">信小递</span></div>
+
+<div class="header">
+  <div class="user-info">
+    <div class="avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
+    <span class="greeting">您好，欢迎使用信小递</span>
+  </div>
+  <div class="location">
+    <svg class="pin-icon" viewBox="0 0 12 12" fill="white"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5C2.5 7.25 6 11 6 11s3.5-3.75 3.5-6.5C9.5 2.57 7.93 1 6 1zm0 4.75c-.69 0-1.25-.56-1.25-1.25S5.31 3.25 6 3.25s1.25.56 1.25 1.25S6.69 5.75 6 5.75z"/></svg>
+    <span class="address">青岛市崂山区海信路1号海信信息产业园</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Quick Actions Card -->
+  <div class="quick-actions">
+    <div style="height: 30px; border-radius: 4px; margin: 8px 16px; padding: 0 16px; background: #EBEDF0; display: flex; align-items: center; gap: 8px;">
+      <div style="display: flex; align-items: center; gap: 2px; flex-shrink: 0;">
+        <img src="../assets/logo/xinxiaodi_driver_logo.svg" style="width: 24px; height: 12px;" />
+        <span style="font-family: 'ZhenyanGB', 'PingFang SC', sans-serif; font-size: 12px; color: #1D2129; font-weight: 400;">公告</span>
+      </div>
+      <span style="font-size: 12px; color: #1D2129; line-height: 22px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">【必看】新手必备操作指南手册</span>
+    </div>
+    <div class="action-items">
+      <div class="action-item" style="flex-direction: row; gap: 8px; align-items: center; justify-content: flex-start; padding-left: 0;">
+        <div class="icon" style="width: 40px; height: 40px; border-radius: 0; background: none; flex-shrink: 0;">
+          <img src="../assets/icons/scan_delivery.svg" style="width: 40px; height: 40px;" />
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+          <span style="font-size: 14px; font-weight: 600; color: #1D2129; line-height: normal;">扫码接单</span>
+          <span style="font-size: 10px; color: #7C8492; line-height: normal;">扫码领取配送任务</span>
+        </div>
+      </div>
+      <div style="width: 1px; height: 24px; background: #E5E6EB; flex-shrink: 0; align-self: center;"></div>
+      <div class="action-item" style="flex-direction: row; gap: 8px; align-items: center; justify-content: flex-start; padding-left: 16px;">
+        <div class="icon" style="width: 40px; height: 40px; border-radius: 0; background: none; flex-shrink: 0;">
+          <img src="../assets/icons/todo_center.svg" style="width: 40px; height: 40px;" />
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+          <span style="font-size: 14px; font-weight: 600; color: #1D2129; line-height: normal;">待办中心</span>
+          <span style="font-size: 10px; color: #7C8492; line-height: normal;">我的所有待办任务</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Function Grid -->
+  <div class="function-grid">
+    <div class="grid-row">
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daoku.svg" /></div><span class="grid-label">待到库</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/tihuo.svg" /></div><span class="grid-label">待提货</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/daka.svg" /></div><span class="grid-label">待打卡</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/paisong.svg" /></div><span class="grid-label">待派送</span></div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/yundi.svg" /></div><span class="grid-label">待运抵</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/qianshou.svg" /></div><span class="grid-label">待签收</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/huidan.svg" /></div><span class="grid-label">回单上传</span></div>
+      <div class="grid-item"><div class="grid-icon"><img src="../assets/shortcuts/icon/home/driver/jiaojie.svg" /></div><span class="grid-label">送货交接</span></div>
+    </div>
+    <div class="grid-dots"><span class="dot active"></span><span class="dot"></span></div>
+  </div>
+
+  <!-- Task Section -->
+  <div class="section-title">待办任务</div>
+
+  <!-- 运单卡片 1 -->
+  <div class="waybill-card">
+    <div style="padding: 12px 16px 8px;">
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+        <span style="display: inline-flex; align-items: center; padding: 0 4px; height: 20px; border: 1px solid #3491FA; border-radius: 2px; font-size: 12px; font-weight: 500; color: #3491FA; flex-shrink: 0;">提货点</span>
+        <span style="font-size: 14px; font-weight: 500; color: #1D2129; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">青岛海信胶州互联工厂</span>
+      </div>
+      <div style="font-size: 12px; color: #1D2129; line-height: 18px; margin-bottom: 6px;">[ H2532 ] 智动精工平度仓</div>
+      <div style="display: inline-flex; align-items: center; background: #F3F5F7; border-radius: 4px; padding: 0 4px; height: 18px;"><span style="font-size: 10px; color: #7C8492;">冰箱BCD-500×20，洗衣机×15，空调×10</span></div>
+    </div>
+    <div style="height: 0.5px; background: #E5E6EB;"></div>
+    <div style="padding: 10px 16px 0;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+        <span style="font-size: 12px; font-weight: 500; color: #1D2129;">鲁UN521E [ D22110100291 ]</span>
+        <span style="font-size: 10px; color: #7C8492;">12-08 14:30</span>
+      </div>
+      <div style="display: inline-flex; align-items: center; background: #F3F5F7; border-radius: 4px; padding: 0 4px; height: 18px;"><span style="font-size: 10px; color: #7C8492;">海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; padding: 8px 0;"><div style="display: inline-flex; align-items: center; gap: 4px; background: #F3F5F7; border: 1px solid #E5E6EB; border-radius: 58px; padding: 4px 12px; height: 26px;"><span style="font-size: 12px; color: #1D2129;">展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 16px 12px;">
+      <span style="font-size: 12px; font-weight: 500; color: #7C8492;">2单6件</span>
+      <div style="display: inline-flex; align-items: center; justify-content: center; height: 32px; background: #00AAA6; border-radius: 4px; padding: 6px 8px;"><span style="font-size: 14px; color: #FFFFFF;">扫码到库</span></div>
+    </div>
+  </div>
+
+  <!-- 运单卡片 2 -->
+  <div class="waybill-card">
+    <div style="padding: 12px 16px 8px;">
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+        <span style="display: inline-flex; align-items: center; padding: 0 4px; height: 20px; border: 1px solid #FF7D00; border-radius: 2px; font-size: 12px; font-weight: 500; color: #FF7D00; flex-shrink: 0;">收货点</span>
+        <span style="font-size: 14px; font-weight: 500; color: #1D2129; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">济南海信物流园</span>
+      </div>
+      <div style="font-size: 12px; color: #1D2129; line-height: 18px; margin-bottom: 6px;">[ H3851 ] 济南城区仓</div>
+      <div style="display: inline-flex; align-items: center; background: #F3F5F7; border-radius: 4px; padding: 0 4px; height: 18px;"><span style="font-size: 10px; color: #7C8492;">热水器×8，燃气灶×12，油烟机×6</span></div>
+    </div>
+    <div style="height: 0.5px; background: #E5E6EB;"></div>
+    <div style="padding: 10px 16px 0;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+        <span style="font-size: 12px; font-weight: 500; color: #1D2129;">鲁B8K92F [ D22110100385 ]</span>
+        <span style="font-size: 10px; color: #7C8492;">12-08 10:15</span>
+      </div>
+      <div style="display: inline-flex; align-items: center; background: #F3F5F7; border-radius: 4px; padding: 0 4px; height: 18px;"><span style="font-size: 10px; color: #7C8492;">海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; padding: 8px 0;"><div style="display: inline-flex; align-items: center; gap: 4px; background: #F3F5F7; border: 1px solid #E5E6EB; border-radius: 58px; padding: 4px 12px; height: 26px;"><span style="font-size: 12px; color: #1D2129;">展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 16px 12px;">
+      <span style="font-size: 12px; font-weight: 500; color: #7C8492;">3单8件</span>
+      <div style="display: flex; gap: 8px;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; height: 32px; background: #E8F8F7; border-radius: 4px; padding: 6px 8px;"><span style="font-size: 14px; color: #00AAA6;">批量预约</span></div>
+        <div style="display: inline-flex; align-items: center; justify-content: center; height: 32px; background: #00AAA6; border-radius: 4px; padding: 6px 8px;"><span style="font-size: 14px; color: #FFFFFF;">派送</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="floating-btn">
+  <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+  <span>顶部</span>
+</div>
+
+</body>
+</html>
