@@ -19,6 +19,7 @@ hx_design_system/
 - **`AGENTS.md`** — 通用铁律：值只从 token 取、组件复用、消费顺序、demo/交付分支、产物落位、通用自查。任何产品无关规则都在这里。
 - **`design-system/<产品>/`** — 单套设计系统的全部源文件（`Design.md` / `tokens.json` / `css.json` / `ui.css` / `ui.js` / `components/` / `preview/` / `examples/` / `assets/`）。`Design.md` 是该产品唯一的规范文档（品牌速览 + 速查表 + 完整规范 + 落地细则）。产品身份由目录层级表达，目录内文件名不带产品前缀。
 - **`prototypes/`、`docs/`** — 交付产物专区，与设计系统源文件隔离，不写入 `design-system/`。
+- **`CONTRIBUTING.md`、`CHANGELOG.md`** — 协作治理：贡献前先读 `CONTRIBUTING.md`（上下文对齐、改动顺序、入库边界、分支提交）；变更记录在 `CHANGELOG.md`。
 
 ## 已接入的设计系统
 
