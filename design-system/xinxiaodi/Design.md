@@ -337,6 +337,19 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
   - **标题**：始终存在，按当前页面命名（如「首页」「待到库」）；登录页标题为「信小递」。**标题始终相对整栏（375px）水平居中，不管左右两侧按钮功能增减都保持居中**（绝对定位居中实现）。
   - **胶囊按钮**：小程序平台始终提供，固定在右侧，距右 6px，宽度自适应（87×32）。
 
+### Demo 手机框：固定定位浮层收敛（375px）
+
+原型 demo 里页面被约束在 375px 手机框（`#app { width:375px; margin:0 auto; position:relative; overflow:hidden }`），但设计系统中用 `position:fixed` 的浮层（弹窗蒙层 `.dialog-overlay`、浮动按钮 `.fab`）是相对**视口**定位的，在宽屏浏览器里会溢出到手机框之外（蒙层铺满整屏、浮动按钮贴在浏览器右下角）。
+
+规则：demo/原型里，凡 `position:fixed` 的浮层都要收敛到手机框内——在 `#app`（已是 `position:relative`）作用域下把它们改成 `position:absolute`，让其定位相对手机框而非视口：
+
+```css
+#app .dialog-overlay { position: absolute; }
+#app .fab { position: absolute; }
+```
+
+自定义浮层（吐司、照片查看器等）同理，直接用 `position:absolute; inset:0`（相对 `#app`），不要用 `fixed`。此规则仅针对 demo 预览；交付到小程序/App 时顶部与浮层由系统或真实容器承载，无需此覆盖。
+
 ## 形状
 
 圆角保持克制，并提供组件级语义 token：`radius-tag 2px`（标签）、`radius-control 4px`（按钮/输入框/Tab/搜索框）、`radius-card 10px`（卡片）、`radius-icon-bg 12px`（图标背景）、`radius-dialog 8px`（弹窗）、`radius-circle 50%`（头像/浮窗按钮）、`radius-pill 999px`（展开/收起等胶囊，真胶囊、与高度无关——旧值 58px 已废弃）。一个视图内保持统一的圆角家族，不混用。
@@ -709,6 +722,7 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 - [ ] 卡片内嵌区域用 color-fill-2(#F2F3F5，旧 bg-1)，不用白色；color-fill-3(#E5E6EB，旧 bg-2) 仅用于预改约底部。
 - [ ] 搜索框高 36px，查询按钮 28px 高 #00AAA6 背景白字。
 - [ ] Tab 选中态 #00AAA6 背景白字，未选中白底黑字。
+- [ ] Demo 里 `position:fixed` 浮层（弹窗蒙层 `.dialog-overlay`、浮动按钮 `.fab`）已在 `#app` 作用域改为 `position:absolute`，收敛到 375px 手机框内，不溢出到浏览器视口。
 
 ### 常见错误
 
@@ -718,6 +732,7 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 ❌ 搜索框 placeholder 用 #86909C → ✅ 用 #C9CDD4(color-text-4)
 ❌ 标签颜色随意选 → ✅ 蓝/橙/紫各有固定业务含义
 ❌ 浮动按钮放页面中间 → ✅ 只放右下角固定定位
+❌ demo 里弹窗蒙层/浮动按钮用 position:fixed 溢出到浏览器视口 → ✅ 在 #app 作用域改 position:absolute，收敛到 375px 手机框
 ❌ 卡片内嵌区用白色底 → ✅ 用 color-fill-2(#F2F3F5) 区分层级
 ❌ 用奇数间距(3px/7px/13px) → ✅ 只用 4 的倍数
 ❌ 圆角混用无规律 → ✅ 用组件级 radius token，同一视图统一圆角家族
