@@ -26,23 +26,23 @@ colors:
   gray-8: "#4E5969"
   gray-9: "#272E3B"
   gray-10: "#1D2129"
-  # 语义文字 Text（对齐 Pangea color-text-1..4）
-  color-text-1: "#1D2129"  # 主文字/标题（旧 text-3）
-  color-text-2: "#4E5969"  # 次强调正文
-  color-text-3: "#86909C"  # 辅助/次要信息（旧 text-2 近似）
-  color-text-4: "#C9CDD4"  # 占位符/置灰（旧 text-1 近似）
-  # 语义线条 Border（对齐 Pangea color-border-1..4）
-  color-border-1: "#F2F3F5"  # 浅
-  color-border-2: "#E5E6EB"  # 一般（旧 border-1）
-  color-border-3: "#C9CDD4"  # 深（旧 border-2 近似）
-  color-border-4: "#86909C"  # 重/按钮描边
-  # 语义填充 Fill（对齐 Pangea color-fill-1..5）
-  color-fill-white: "#FFFFFF"  # 卡片/输入框表面
-  color-fill-1: "#F7F8FA"      # 浅/禁用底
-  color-fill-2: "#F2F3F5"      # 页面背景/卡片内嵌区（旧 bg-1）
-  color-fill-3: "#E5E6EB"      # 预改约底部等特定区域（旧 bg-2）
-  color-fill-4: "#C9CDD4"      # 清除按钮底
-  color-fill-5: "#4E5969"      # 强调/图标
+  # 语义文字 Text（对齐 Pangea color-text-1..4）——值全部取自中性灰 Gray，不单独维护 hex
+  color-text-1: "{gray-10}"  # #1D2129 主文字/标题（旧 text-3）
+  color-text-2: "{gray-8}"   # #4E5969 次强调正文
+  color-text-3: "{gray-6}"   # #86909C 辅助/次要信息（旧 text-2 近似）
+  color-text-4: "{gray-4}"   # #C9CDD4 占位符/置灰（旧 text-1 近似）
+  # 语义线条 Border（对齐 Pangea color-border-1..4）——取自中性灰 Gray
+  color-border-1: "{gray-2}"  # #F2F3F5 浅
+  color-border-2: "{gray-3}"  # #E5E6EB 一般（旧 border-1）
+  color-border-3: "{gray-4}"  # #C9CDD4 深（旧 border-2 近似）
+  color-border-4: "{gray-6}"  # #86909C 重/按钮描边
+  # 语义填充 Fill（对齐 Pangea color-fill-1..5）——white 为纯白，其余取自中性灰 Gray
+  color-fill-white: "#FFFFFF"  # 卡片/输入框表面（非灰阶）
+  color-fill-1: "{gray-1}"     # #F7F8FA 浅/禁用底
+  color-fill-2: "{gray-2}"     # #F2F3F5 页面背景/卡片内嵌区（旧 bg-1）
+  color-fill-3: "{gray-3}"     # #E5E6EB 预改约底部等特定区域（旧 bg-2）
+  color-fill-4: "{gray-4}"     # #C9CDD4 清除按钮底
+  color-fill-5: "{gray-8}"     # #4E5969 强调/图标
   # 功能状态色 Functional（default=6 级，bg=1 级）
   success: "#00B42A"     # 成功；success-bg #E8FFEA
   warning: "#FF7D00"     # 警告；warning-bg #FFF7E8
