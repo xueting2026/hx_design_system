@@ -78,5 +78,21 @@
     "自定义颜色标签——必须用预定义的 5 种色",
     "带图标的标签",
     "可关闭/可删除标签"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "运单状态标签(蓝)", "variant": "blue-提货点 / blue-整单甩单", "when": "提货点、运单状态、整单甩单、2B 场景用蓝色标签" },
+    { "scenario": "2C/收货点标签(橙)", "variant": "orange-2C", "when": "2C、收货点、约定时间场景用橙色标签" },
+    { "scenario": "电商补货标签(紫)", "variant": "purple-电商补货", "when": "电商补货场景用紫色标签" },
+    { "scenario": "直发标签(绿)", "variant": "green-直发", "when": "直发场景用绿色标签" },
+    { "scenario": "紧急/异常标签(红)", "variant": "red", "when": "紧急、异常场景用红色标签" }
+  ],
+  "states": [
+    { "state": "blue", "trigger": "提货点/运单状态/整单甩单/2B", "class": "tag tag--blue" },
+    { "state": "orange", "trigger": "2C/收货点/约定时间", "class": "tag tag--orange" },
+    { "state": "purple", "trigger": "电商补货", "class": "tag tag--purple" },
+    { "state": "green", "trigger": "直发", "class": "tag tag--green" },
+    { "state": "red", "trigger": "紧急/异常", "class": "tag tag--red" }
+  ],
+  "cssClasses": ["tag", "tag--blue", "tag--orange", "tag--purple", "tag--green", "tag--red"],
+  "exampleRefs": ["examples/demo-list.html", "preview/component-card.html"]
 }

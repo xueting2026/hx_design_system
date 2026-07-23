@@ -75,41 +75,6 @@ body {
 }
 .tab-item.active { background: #00AAA6; color: #FFFFFF; }
 
-.card-list { padding: 12px 16px; padding-bottom: 60px; }
-
-.waybill-card {
-  background: #FFFFFF; border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px; overflow: hidden;
-}
-.card-header { padding: 12px 16px 8px; }
-.card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-.card-header-row .tag {
-  display: inline-flex; align-items: center; padding: 0 4px; height: 20px;
-  border: 1px solid #3491FA; border-radius: 2px;
-  font-size: 12px; font-weight: 500; color: #3491FA; flex-shrink: 0;
-}
-.card-header-row .addr {
-  font-size: 14px; font-weight: 500; color: #1D2129;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
-}
-.warehouse-row { font-size: 12px; color: #1D2129; line-height: 18px; margin-bottom: 6px; }
-.cargo-box { background: #F3F5F7; border-radius: 4px; padding: 2px 4px; display: inline-flex; }
-.cargo-box span { font-size: 10px; color: #7C8492; line-height: 14px; }
-.card-divider { height: 0.5px; background: #E5E6EB; }
-.dispatch-group { padding: 10px 16px 0; }
-.dispatch-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-.dispatch-row .left { font-size: 12px; font-weight: 500; color: #1D2129; }
-.dispatch-row .right { font-size: 10px; color: #7C8492; }
-.expand-btn { display: flex; align-items: center; justify-content: center; padding: 8px 0; }
-.expand-btn .pill {
-  display: inline-flex; align-items: center; gap: 2px;
-  background: #F3F5F7; border: 1px solid #E5E6EB; border-radius: 58px;
-  padding: 4px 12px; height: 26px; cursor: pointer;
-}
-.expand-btn .pill span { font-size: 12px; color: #1D2129; }
-.card-footer { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px 12px; }
-.card-footer .count { font-size: 12px; font-weight: 500; color: #7C8492; }
-.card-footer .actions { display: flex; gap: 8px; }
 .btn-primary {
   padding: 6px 8px; background: #00AAA6; border: none; border-radius: 4px;
   font-size: 14px; color: #FFFFFF; cursor: pointer; font-family: 'PingFang SC', sans-serif;
@@ -182,65 +147,65 @@ body {
 <!-- 运单卡片列表 -->
 <div class="card-list">
 
-  <div class="waybill-card">
-    <div class="card-header">
-      <div class="card-header-row"><span class="tag">提货点</span><span class="addr">江苏省淮安市淮阴区新渡口</span></div>
-      <div class="warehouse-row">[ H2532 ] 智动精工平度仓</div>
-      <div class="cargo-box"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
+  <div class="card">
+    <div class="card__location">
+      <div class="card__location-row"><span class="tag tag--blue">提货点</span><span class="card__addr">江苏省淮安市淮阴区新渡口</span></div>
+      <div class="card__warehouse">[ H2532 ] 智动精工平度仓</div>
+      <div class="card__cargo"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
     </div>
-    <div class="card-divider"></div>
-    <div class="dispatch-group">
-      <div class="dispatch-row"><span class="left">鲁UN521E [ D22110100291 ]</span><span class="right">下达时间：2022/11/16 18:00</span></div>
-      <div class="cargo-box"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row"><span class="card__dispatch-plate">鲁UN521E [ D22110100291 ]</span><span class="card__dispatch-time">下达时间：2022/11/16 18:00</span></div>
+      <div class="card__cargo"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
     </div>
-    <div class="dispatch-group">
-      <div class="dispatch-row"><span class="left">鲁UN521E [ D22110100292 ]</span><span class="right">下达时间：2022/11/16 19:30</span></div>
-      <div class="cargo-box"><span>海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row"><span class="card__dispatch-plate">鲁UN521E [ D22110100292 ]</span><span class="card__dispatch-time">下达时间：2022/11/16 19:30</span></div>
+      <div class="card__cargo"><span>海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
     </div>
-    <div class="expand-btn"><div class="pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
-    <div class="card-footer">
-      <span class="count">2单6件</span>
-      <div class="actions"><button class="btn-primary">批量预约</button><button class="btn-primary">到库登记</button></div>
-    </div>
-  </div>
-
-  <div class="waybill-card">
-    <div class="card-header">
-      <div class="card-header-row"><span class="tag">提货点</span><span class="addr">扬州冰箱CDC厂区</span></div>
-      <div class="warehouse-row">[ H2532 ] 扬州冰箱CDC厂区</div>
-      <div class="cargo-box"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
-    </div>
-    <div class="card-divider"></div>
-    <div class="dispatch-group">
-      <div class="dispatch-row"><span class="left">鲁UN521E [ D22110100291 ]</span><span class="right">下达时间：2022/11/16 18:00</span></div>
-      <div class="cargo-box"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
-    </div>
-    <div class="expand-btn"><div class="pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
-    <div class="card-footer">
-      <span class="count">2单6件</span>
-      <div class="actions"><button class="btn-primary">批量预约</button><button class="btn-primary">扫码到库</button></div>
+    <div class="card__toggle"><div class="card__toggle-pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">2单6件</span>
+      <div class="card__actions"><button class="btn-primary">批量预约</button><button class="btn-primary">到库登记</button></div>
     </div>
   </div>
 
-  <div class="waybill-card">
-    <div class="card-header">
-      <div class="card-header-row"><span class="tag">提货点</span><span class="addr">江苏省淮安市淮阴区新渡口</span></div>
-      <div class="warehouse-row">[ H2532 ] 智动精工平度仓</div>
-      <div class="cargo-box"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
+  <div class="card">
+    <div class="card__location">
+      <div class="card__location-row"><span class="tag tag--blue">提货点</span><span class="card__addr">扬州冰箱CDC厂区</span></div>
+      <div class="card__warehouse">[ H2532 ] 扬州冰箱CDC厂区</div>
+      <div class="card__cargo"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
     </div>
-    <div class="card-divider"></div>
-    <div class="dispatch-group">
-      <div class="dispatch-row"><span class="left">鲁UN521E [ D22110100291 ]</span><span class="right">下达时间：2022/11/16 18:00</span></div>
-      <div class="cargo-box"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row"><span class="card__dispatch-plate">鲁UN521E [ D22110100291 ]</span><span class="card__dispatch-time">下达时间：2022/11/16 18:00</span></div>
+      <div class="card__cargo"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
     </div>
-    <div class="dispatch-group">
-      <div class="dispatch-row"><span class="left">鲁UN521E [ D22110100291 ]</span><span class="right">下达时间：2022/11/16 18:00</span></div>
-      <div class="cargo-box"><span>海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
+    <div class="card__toggle"><div class="card__toggle-pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">2单6件</span>
+      <div class="card__actions"><button class="btn-primary">批量预约</button><button class="btn-primary">扫码到库</button></div>
     </div>
-    <div class="expand-btn"><div class="pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
-    <div class="card-footer">
-      <span class="count">2单6件</span>
-      <div class="actions"><button class="btn-primary">批量预约</button><button class="btn-primary">扫码运抵</button></div>
+  </div>
+
+  <div class="card">
+    <div class="card__location">
+      <div class="card__location-row"><span class="tag tag--blue">提货点</span><span class="card__addr">江苏省淮安市淮阴区新渡口</span></div>
+      <div class="card__warehouse">[ H2532 ] 智动精工平度仓</div>
+      <div class="card__cargo"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
+    </div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row"><span class="card__dispatch-plate">鲁UN521E [ D22110100291 ]</span><span class="card__dispatch-time">下达时间：2022/11/16 18:00</span></div>
+      <div class="card__cargo"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
+    </div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row"><span class="card__dispatch-plate">鲁UN521E [ D22110100291 ]</span><span class="card__dispatch-time">下达时间：2022/11/16 18:00</span></div>
+      <div class="card__cargo"><span>海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
+    </div>
+    <div class="card__toggle"><div class="card__toggle-pill"><span>展开</span><svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg></div></div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">2单6件</span>
+      <div class="card__actions"><button class="btn-primary">批量预约</button><button class="btn-primary">扫码运抵</button></div>
     </div>
   </div>
 

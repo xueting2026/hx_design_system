@@ -117,5 +117,18 @@
     "底部 Tab 导航（小程序有自带）",
     "面包屑导航",
     "定位栏内添加搜索功能"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "定位筛选", "variant": "location-bar", "when": "列表页顶部（标题栏下方）展示当前定位地址 + 最新/切换/筛选操作" },
+    { "scenario": "扫码接单入口", "variant": "scan-entry-扫码接单(绿)", "when": "待到库/待办中心列表页，扫码领取配送任务（副标题「扫码领取配送任务」）" },
+    { "scenario": "退出扫码", "variant": "scan-entry-退出扫码(橙)", "when": "已进入扫码模式时提供退出入口（无副标题）" }
+  ],
+  "states": [
+    { "state": "location-off", "trigger": "定位栏筛选未选中", "class": "location-bar__action（箭头向下，无白底）" },
+    { "state": "location-on", "trigger": "定位栏筛选选中", "class": "location-bar__action--active（白底高亮，箭头向上）" },
+    { "state": "scan-green", "trigger": "扫码接单入口", "class": "scan-entry scan-entry--green（配合 .scan-entry__icon--green）" },
+    { "state": "scan-orange", "trigger": "退出扫码入口", "class": "scan-entry scan-entry--orange（配合 .scan-entry__icon--orange）" }
+  ],
+  "cssClasses": ["location-bar", "location-bar__icon", "location-bar__address", "location-bar__action", "location-bar__action--active", "location-bar__action-text", "scan-entry", "scan-entry--green", "scan-entry--orange", "scan-entry__icon", "scan-entry__icon--green", "scan-entry__icon--orange", "scan-entry__content", "scan-entry__title", "scan-entry__subtitle", "scan-entry__arrow"],
+  "exampleRefs": ["examples/demo-home.html", "examples/demo-list.html", "preview/component-navigation.html"]
 }

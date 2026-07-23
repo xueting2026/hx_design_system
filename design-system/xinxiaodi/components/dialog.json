@@ -150,5 +150,18 @@
     "无关闭按钮的弹窗",
     "超过 320px 宽的弹窗",
     "按钮顺序反转（深色在左）"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "二次确认", "variant": "基础双按钮-扫码失败", "when": "需要确认或取消的操作（如扫码失败重试），浅色在左深色在右" },
+    { "scenario": "单按钮提示", "variant": "单按钮-确认返回", "when": "仅需用户确认知晓，单个全宽主按钮" },
+    { "scenario": "仅标题确认", "variant": "仅标题-确认提交", "when": "简短确认无需描述文字" },
+    { "scenario": "表单填写", "variant": "表单-运单发运", "when": "轻量表单录入（≤2步），必填项填完后主按钮激活" }
+  ],
+  "states": [
+    { "state": "hidden", "trigger": "默认关闭", "class": "dialog-overlay（opacity 0，dialog scale 0.9）" },
+    { "state": "visible", "trigger": "打开弹窗", "class": "dialog-overlay--visible（opacity 1，dialog scale 1）" },
+    { "state": "field-filled", "trigger": "表单必填项已填", "class": "dialog__field-select--filled（边框 vi-2，提交按钮激活）" }
+  ],
+  "cssClasses": ["dialog-overlay", "dialog-overlay--visible", "dialog", "dialog__close", "dialog__title", "dialog__desc", "dialog__buttons", "dialog__field", "dialog__field-label", "dialog__field-required", "dialog__field-select", "dialog__field-select--filled"],
+  "exampleRefs": ["examples/demo-interaction.html", "preview/component-dialog.html"]
 }

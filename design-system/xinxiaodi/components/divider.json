@@ -65,5 +65,16 @@
     "彩色分割线",
     "虚线分割线（虚线用于上传区边框，不用于分隔）",
     "带阴影的分割线"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "卡片内分隔", "variant": "center / left", "when": "卡片内部区块分隔，用两端或左侧缩进变体" },
+    { "scenario": "页面区块分隔", "variant": "full", "when": "页面级区块之间用满宽分割线" },
+    { "scenario": "分组/加载更多", "variant": "with-text", "when": "列表分组或加载更多提示，带文字+两侧线" }
+  ],
+  "states": [
+    { "state": "line", "trigger": "默认静态", "class": "divider（配合 .divider--full / .divider--center / .divider--left）" },
+    { "state": "with-text", "trigger": "带文字分隔", "class": "divider-text（配合 .divider-text__line / .divider-text__label）" }
+  ],
+  "cssClasses": ["divider", "divider--full", "divider--center", "divider--left", "divider-text", "divider-text__line", "divider-text__label"],
+  "exampleRefs": ["examples/demo-list.html", "preview/component-card.html"]
 }

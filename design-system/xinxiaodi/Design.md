@@ -1,29 +1,60 @@
 ---
-version: 1.0
+version: 1.1
 name: 信小递司机端
-description: 信小递司机端微信小程序设计系统，基于 Figma 设计稿整理，设计宽度 375px（iPhone X）。
+description: 信小递司机端微信小程序设计系统，基于 Figma 设计稿整理，色彩体系对齐 Pangea Design，Token 分 primitive/semantic/component 三层，设计宽度 375px（iPhone X）。
 colors:
-  # 主色 Primary
-  vi-1: "#E6F7F6"       # 浅色按钮背景
-  vi-2: "#00AAA6"       # 品牌主色、按钮、链接、图标
-  vi-3: "#009093"       # 按钮 hover/active 态
-  # 文字 Text
-  text-1: "#BFC5CC"     # placeholder 暗提示、搜索框提示文字
-  text-2: "#7C8492"     # 辅助文字、次要信息
-  text-3: "#1D2129"     # 主文字、标题、已输入内容
-  # 线条 Border
-  border-1: "#E5E6EB"   # 分割线、卡片分隔
-  border-2: "#BFC5CC"   # 辅助线条、虚线框、搜索框分割线
-  # 背景色 BG
-  bg-1: "#F3F5F7"       # 页面背景、卡片内容区
-  bg-2: "#EBEDF0"       # 预改约底部区域
-  white: "#FFFFFF"      # 卡片背景、输入框背景
-  # 辅助色 Subcolor
-  blue: "#3491FA"       # 蓝色标签（提货点/运单状态）
-  orange: "#FF7D00"     # 橙色标签（2C/收货点）、约定时间
-  # 警告色 Danger
-  danger-1: "#EE0A24"   # 错误提示、告警文字、必传提醒
-  danger-bg: "#FDE7E9"  # 告警提示条背景色
+  # === 色彩体系对齐 Pangea：色板 1→10 由浅到深，主色/常规态 = 6 级 ===
+  # 品牌色 Primary（青绿）
+  primary-1: "#E8FFFB"   # 浅色/白色悬浮
+  primary-2: "#ADEEE4"   # 文字禁用
+  primary-3: "#79DDD1"   # 一般禁用
+  primary-4: "#4ACCC1"   # 特殊场景
+  primary-5: "#22BBB3"   # 悬浮 (brand-hover)
+  primary-6: "#00AAA6"   # 常规主色 (brand)
+  primary-7: "#009093"   # 点击 (brand-active)
+  primary-8: "#00757B"
+  primary-9: "#005C64"
+  primary-10: "#00444D"
+  # 中性灰 Gray（文字/线条/填充来源）
+  gray-1: "#F7F8FA"
+  gray-2: "#F2F3F5"
+  gray-3: "#E5E6EB"
+  gray-4: "#C9CDD4"
+  gray-5: "#A9AEB8"
+  gray-6: "#86909C"
+  gray-7: "#6B7785"
+  gray-8: "#4E5969"
+  gray-9: "#272E3B"
+  gray-10: "#1D2129"
+  # 语义文字 Text（对齐 Pangea color-text-1..4）
+  color-text-1: "#1D2129"  # 主文字/标题（旧 text-3）
+  color-text-2: "#4E5969"  # 次强调正文
+  color-text-3: "#86909C"  # 辅助/次要信息（旧 text-2 近似）
+  color-text-4: "#C9CDD4"  # 占位符/置灰（旧 text-1 近似）
+  # 语义线条 Border（对齐 Pangea color-border-1..4）
+  color-border-1: "#F2F3F5"  # 浅
+  color-border-2: "#E5E6EB"  # 一般（旧 border-1）
+  color-border-3: "#C9CDD4"  # 深（旧 border-2 近似）
+  color-border-4: "#86909C"  # 重/按钮描边
+  # 语义填充 Fill（对齐 Pangea color-fill-1..5）
+  color-fill-white: "#FFFFFF"  # 卡片/输入框表面
+  color-fill-1: "#F7F8FA"      # 浅/禁用底
+  color-fill-2: "#F2F3F5"      # 页面背景/卡片内嵌区（旧 bg-1）
+  color-fill-3: "#E5E6EB"      # 预改约底部等特定区域（旧 bg-2）
+  color-fill-4: "#C9CDD4"      # 清除按钮底
+  color-fill-5: "#4E5969"      # 强调/图标
+  # 功能状态色 Functional（default=6 级，bg=1 级）
+  success: "#00B42A"     # 成功；success-bg #E8FFEA
+  warning: "#FF7D00"     # 警告；warning-bg #FFF7E8
+  danger: "#F53F3F"      # 危险/错误/必传（旧 danger-1 #EE0A24）；danger-bg #FFECE8
+  info: "#165DFF"        # 信息
+  # 业务标签色 Subcolor（承载语义，不可替换）
+  blue: "#165DFF"        # 蓝色标签（提货点/运单状态）
+  orange: "#FF7D00"      # 橙色标签（2C/收货点）、约定时间
+  purple: "#722ED1"      # 紫色标签（电商补货）
+  # 旧命名保留为兼容别名（指向新值）：vi-1→primary-1, vi-2→primary-6, vi-3→primary-7,
+  # text-3→color-text-1, text-2→color-text-3, text-1→color-text-4,
+  # border-1→color-border-2, bg-1→color-fill-2, bg-2→color-fill-3, danger-1→danger
   # 中性色 Neutral
   gray-4: "#C9CDD4"     # 清除按钮背景、禁用文字
   gray-5: "#C8C9CC"     # checkbox/radio 未选中边框
@@ -63,6 +94,12 @@ typography:
     fontSize: 16px
     fontWeight: 400
     lineHeight: 22px
+    color: "{colors.color-text-1}(深底反白时为白)"
+  button-medium:
+    fontFamily: PingFang SC
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 20px
   button-small:
     fontFamily: PingFang SC
     fontSize: 14px
@@ -73,29 +110,50 @@ typography:
     fontSize: 10px
     fontWeight: 400
     lineHeight: 14px
+  number:
+    fontFamily: Nunito Sans
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 20px
+    fontVariantNumeric: tabular-nums   # 等宽数字：运单号/重量/时间竖排对齐
 spacing:
-  1: 4px    # 紧凑行距
-  2: 8px    # 标准行距、图标与文字
-  3: 12px   # 卡片间距
-  4: 16px   # 页面边距、卡片内边距
-  6: 24px   # 区块间距
-  8: 32px   # 大区间距
+  # 基础刻度（4px 栅格，补齐 20/28/40/48）
   base: 4px
+  1: 4px
+  2: 8px
+  3: 12px
+  4: 16px
+  5: 20px
+  6: 24px
+  7: 28px
+  8: 32px
+  10: 40px
+  12: 48px
+  # 语义间距（每个用途对应唯一刻度，消除歧义）
+  inset: { xs: 8px, sm: 12px, md: 16px, lg: 24px }   # 组件内边距
+  stack: { xs: 4px, sm: 8px, md: 12px, lg: 16px, xl: 24px }  # 纵向堆叠
+  inline: { xs: 4px, sm: 8px, md: 12px }             # 横向并排
+  gap-list: 12px       # 卡片列表间距（唯一用途）
+  gap-section: 24px    # 页面区块之间
+  page-margin: 16px    # 页面左右边距（唯一用途）
 rounded:
-  xs: 2px    # 标签
-  sm: 4px    # 按钮、输入框、Tab
-  md: 10px   # 卡片
-  lg: 12px   # 图标背景
-  full: 50%  # 头像、浮窗按钮
+  # 基础刻度
+  xs: 2px          # 标签 (radius-tag)
+  sm: 4px          # 按钮、输入框、Tab、搜索框 (radius-control)
+  md: 10px         # 卡片 (radius-card)
+  lg: 12px         # 图标背景 (radius-icon-bg)
+  dialog: 8px      # 弹窗 (radius-dialog)
+  pill: 999px      # 真胶囊，与高度无关（旧值 58px 已废弃）
+  full: 50%        # 头像、浮窗按钮 (radius-circle)
 components:
   button-primary-large:
-    backgroundColor: "{colors.vi-2}"
-    textColor: "{colors.white}"
+    backgroundColor: "{colors.primary-6}"
+    textColor: "{colors.color-fill-white}"
     typography: "{typography.button-large}"
     rounded: "{rounded.sm}"
-    padding: "0 119px"
     height: 40px
-    width: 303px
+    widthMode: block   # 默认整行 width:100%（旧 width:303px + padding:0 119px 已废弃）
+    paddingX: 16px
   button-primary-large-hover:
     backgroundColor: "{colors.vi-3}"
     textColor: "{colors.white}"
@@ -142,15 +200,15 @@ components:
     padding: "6px 8px"
     height: 32px
   input-register:
-    backgroundColor: "{colors.white}"
-    textColor: "{colors.text-3}"
-    placeholderColor: "{colors.gray-4}"
+    backgroundColor: "{colors.color-fill-white}"
+    textColor: "{colors.color-text-1}"
+    placeholderColor: "{colors.color-text-4}"
     typography: "{typography.body-emphasis}"
     rounded: "{rounded.sm}"
     padding: "0 12px"
     height: 48px
-    width: 303px
-    borderColor: "{colors.border-1}"
+    widthMode: block   # width:100%（旧 width:303px 已废弃）
+    borderColor: "{colors.color-border-2}"
   searchbox:
     backgroundColor: "{colors.white}"
     textColor: "{colors.text-3}"
@@ -160,11 +218,12 @@ components:
     padding: "0 8px 0 4px"
     height: 36px
   card:
-    backgroundColor: "{colors.white}"
+    backgroundColor: "{colors.color-fill-white}"
     rounded: "{rounded.md}"
     shadow: "0px 4px 12px rgba(0,0,0,0.05)"
     padding: "12px 16px"
-    width: 343px
+    widthMode: block       # width:100% + max-width:343px（旧 width:343px 已废弃）
+    maxWidth: 343px
   tag-status:
     borderWidth: 1px
     rounded: "{rounded.xs}"
@@ -210,16 +269,23 @@ components:
 
 ## 颜色
 
-色彩体系分为主色、文字、线条、背景色、辅助色与警告色六组：
+色彩体系对齐 Pangea Design：每个色系都是 **1→10 由浅到深的 10 级色板**，主色/常规态固定在第 6 级。Token 分三层，业务代码只用 semantic / 组件层，不直接写 primitive 或 hex。
 
-- **主色 vi-1/vi-2/vi-3** 构成品牌梯度：`vi-1` 用于浅色按钮背景，`vi-2` 是品牌主色用于按钮、链接、选中态图标，`vi-3` 用于 hover/active 状态。
-- **文字 text-1/text-2/text-3** 编码信息层级：`text-1` 仅用于 placeholder 暗提示，`text-2` 用于辅助说明，`text-3` 用于标题与正文。
-- **线条 border-1/border-2**：`border-1` 用于分割线与卡片分隔，`border-2` 用于搜索框内分割线与虚线框。
-- **背景色 bg-1/bg-2/white**：`bg-1` 是页面级灰底与卡片内容区，`bg-2` 用于预改约底部区域，`white` 为卡片与输入框表面。
-- **辅助色 blue/orange** 承载业务含义：`blue` 用于提货点/运单状态标签，`orange` 用于 2C 标签与约定时间。
-- **警告色 danger-1/danger-bg**：`danger-1` 用于错误文字与必传提醒，`danger-bg` 用于告警提示条背景。
+**色板（primitive，第 1 层）**
 
-各处应使用 token 名称引用，不要直接硬编码 hex 值。
+- **品牌色 primary-1…10**：`primary-6 #00AAA6` 是品牌主色，`primary-5` 悬浮、`primary-7` 点击、`primary-1` 浅底。
+- **中性灰 gray-1…10**、**危险 red**、**警告 orange**、**成功 green**、**信息 arcoblue（含蓝色标签）**、**紫色 purple** 各 10 级。
+
+**语义层（semantic，第 2 层，按用途命名）**
+
+- **文字** `color-text-1…4`：`1 #1D2129` 主文字 → `2 #4E5969` 次强调 → `3 #86909C` 辅助/次要 → `4 #C9CDD4` 占位/置灰。
+- **线条** `color-border-1…4`：`1 #F2F3F5` 浅 → `2 #E5E6EB` 一般（分割线/输入框边框）→ `3 #C9CDD4` 深 → `4 #86909C` 重/描边。
+- **填充** `color-fill-white/1…5`：白面 → `fill-2 #F2F3F5` 页面背景/卡片内嵌区 → `fill-3 #E5E6EB` 预改约底部等特定区域。
+- **品牌交互** `brand`(默认) / `brand-hover` / `brand-active` / `brand-bg`(浅底) / `brand-bg-subtle`(半透明底)。
+- **功能状态** `success #00B42A` / `warning #FF7D00` / `danger #F53F3F` / `info #165DFF`，各带 `-bg` 浅底。`danger` 用于错误文字与必传提醒。
+- **业务标签** `blue #165DFF`（提货点/运单状态）、`orange #FF7D00`（2C/收货点/约定时间）、`purple #722ED1`（电商补货）——颜色承载业务含义，不可替换。
+
+> 旧命名（`vi-1/2/3`、`text-1/2/3`、`border-1/2`、`bg-1/2`、`danger-1`）仍作为**兼容别名**保留，指向上述新值。新代码请优先使用语义命名，不要硬编码 hex。
 
 ## 排版
 
@@ -231,15 +297,20 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 - `body`（12px/Medium）用于一般正文内容。
 - `secondary`（12px/Regular）用于辅助说明，搭配 `text-2` 色值。
 - `caption`（10px/Regular）用于次要信息、时间、标签文字。
-- `button-large`（16px/Regular）用于大按钮文字。
-- `button-small`（14px/Regular）用于小按钮与搜索框内文字。
+- `button-large`（16px/Regular）用于大按钮文字，`button-medium`（14px/Regular）用于中按钮，`button-small`（14px/Regular）用于小按钮与搜索框内文字。按钮文字统一 Regular(400)，深底时反白。
 - `tag`（10px/Regular）用于标签组件。
+- `number`（Nunito Sans / tabular-nums）用于运单号、重量、时间等数字，等宽让竖排数字对齐。对应工具类 `.text-number`。
 
-`body` 与 `secondary` 覆盖大多数文字场景。不要在这些 token 之外自行设定字号或字重。
+`body` 与 `secondary` 覆盖大多数文字场景。字号来自原始刻度（10/12/13/14/16/18/20/24），字重仅 Regular(400)/Medium(500)/Semibold(600) 三档，不要在这些 token 之外自行设定字号或字重。
 
 ## 布局
 
-间距遵循 4px 基础刻度：4、8、12、16、24、32px。保持三级节奏：行内元素间 4–8px，同组元素间 12px，区块之间 16–24px。卡片使用 16px 内边距，页面左右边距 16px，卡片列表间距 12px。内容区域限定在 343px 宽度（375px 减去左右各 16px 边距）。
+间距遵循 4px 基础刻度，完整档位：4、8、12、16、20、24、28、32、40、48px（全部 4 的倍数）。为消除"一个数管多个用途"的歧义，间距分两层使用：
+
+- **基础刻度**给出可用的像素值；
+- **语义间距**把用途固定到唯一刻度：`inset`（组件内边距：xs 8 / sm 12 / md 16 / lg 24）、`stack`（纵向堆叠：4/8/12/16/24）、`inline`（横向并排：4/8/12）、`gap-list`=12（卡片列表间距，唯一用途）、`gap-section`=24（区块之间）、`page-margin`=16（页面左右边距，唯一用途）。
+
+卡片内边距 12px（竖）/16px（横），页面左右边距 16px，卡片列表间距 12px。内容区域限定在 343px 宽度（375px 减去左右各 16px 边距）。
 
 页面结构自上而下：
 ```
@@ -268,7 +339,7 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 
 ## 形状
 
-圆角保持克制：`2px` 用于标签，`4px` 用于按钮、输入框和 Tab，`10px` 用于卡片，`12px` 用于图标背景，`50%` 仅用于头像与浮窗按钮。一个视图内保持统一的圆角家族，不混用。
+圆角保持克制，并提供组件级语义 token：`radius-tag 2px`（标签）、`radius-control 4px`（按钮/输入框/Tab/搜索框）、`radius-card 10px`（卡片）、`radius-icon-bg 12px`（图标背景）、`radius-dialog 8px`（弹窗）、`radius-circle 50%`（头像/浮窗按钮）、`radius-pill 999px`（展开/收起等胶囊，真胶囊、与高度无关——旧值 58px 已废弃）。一个视图内保持统一的圆角家族，不混用。
 
 ## 层级与深度
 
@@ -278,7 +349,8 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 
 上文 `components` token 给出各元素的即用值：
 
-- **大按钮（button-primary-large）**：实心 `vi-2` 填充，白色文字，303×40px，用于页面级主操作（登录、提交）。hover 态切换为 `vi-3`，禁用态文字降低为 40% 透明度。
+- **大按钮（button-primary-large）**：实心品牌色填充，白色文字，高 40px，**默认整行（width:100%，`.btn--lg`）**，用于页面级主操作（登录、提交）。旧的 `width:303px` + `padding:0 119px` 硬编码已废弃，改为左右内边距 16px + 文字居中，宽度随内容区自适应。hover 切换为 `brand-active`，禁用态文字降 40% 透明度。
+- **中按钮（button-medium，`.btn--md`）**：高 36px，内容自适应宽度（`width:auto`，左右内边距 12px），介于页面级大按钮与卡片内小按钮之间；需要整行时加 `.btn--block`。
 - **浅色大按钮（button-light-large）**：`rgba(0,170,166,0.1)` 半透明填充，`vi-2` 文字，用于次要操作。
 - **清除大按钮（button-clear-large）**：`bg-2` 填充，`text-3` 文字，用于取消/重置。
 - **小按钮（button-primary-small）**：32px 高，`vi-2` 填充，用于卡片内操作（扫码到库、分单、审核）。
@@ -286,7 +358,14 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 - **文字小按钮（button-text-small）**：透明填充，`vi-2` 文字，无底色，用于低强调操作（更多）。
 - **输入框（input-register）**：白色填充，`border-1` 边框，48px 高，用于注册/登录页。
 - **搜索框（searchbox）**：白色填充，36px 高，含搜索图标 + 输入区 + 查询按钮（28px 高，`vi-2` 背景）。可附加筛选下拉（12px `vi-2` 文字 + 分割线）或排序/筛选图标按钮（36×36px）。
-- **卡片（card）**：白色填充，10px 圆角，343px 宽，低阴影。
+- **卡片（card）**：白色填充，10px 圆角，343px 宽，低阴影。**运单卡片 = `.card` 容器 + `.card__*` 原子类拼装**（值全部取自 tokens，定义见 `ui.css` 第 8 节，勿在示例/原型里写私有卡片类）。按三层结构拼装：
+  - 列表容器：`.card-list`（提供 12px 卡片间距）
+  - 提货/收货信息（地点头）：`.card__location` / `.card__location-row` / `.card__addr` / `.card__warehouse` / `.card__cargo`
+  - 全宽分割线：`.card__divider.card__divider--full`
+  - 运单信息（调度单分组）：`.card__dispatch` / `.card__dispatch-row` / `.card__dispatch-plate` / `.card__dispatch-time`
+  - 展开/收起：`.card__toggle` / `.card__toggle-pill`（展开态 `.card__toggle-pill--open`）
+  - 订单信息（展开区）：`.card__orders`（`.card__orders--visible` 显隐）/ `.card__order` / `.card__order-top` / `.card__order-sap` / `.card__order-body` / `.card__field`（`.card__field-label` + `.card__field-value`）/ `.card__product` / `.card__order-footer` / `.card__order-contact` / `.card__order-appoint`
+  - 底部按钮区：`.card__footer.card__footer--between` / `.card__stats` / `.card__actions`
 - **标签（tag-status）**：1px 边框，2px 圆角，20px 高。颜色按业务含义：蓝色（运单状态）、橙色（2C）、紫色（电商补货）。
 - **多选框（checkbox）**：16px 方形，2px 圆角。未选中 `gray-5` 边框，选中 `vi-2` 填充+白色勾，禁用 `bg-2` 填充。半选态 `vi-2` 填充+白色横线。
 - **单选框（radio）**：16px 圆形，1.5px `border-2` 边框。选中 `vi-2` 填充+白色勾。
@@ -482,7 +561,7 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 - 标签颜色承载业务含义（蓝=运单状态，橙=2C/收货点），不要随意替换。
 - 不要在按钮内使用 Medium 或 Semibold 字重，按钮统一使用 Regular。
 - 不要将 `bg-2` 用作通用背景，它仅用于预改约底部等特定区域。
-- 搜索框 placeholder 使用 `text-1`（#BFC5CC），不要使用 `text-2`。
+- 搜索框 placeholder 使用 `color-text-4`（#C9CDD4，旧 text-1），不要使用更深的 `color-text-3`。
 - 浮动按钮仅放置在右下角固定定位，不要用于页面内嵌。
 
 ---
@@ -499,23 +578,66 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 
 ### 颜色使用规则
 
-| 用途 | Token | 值 |
-|------|-------|------|
-| 深色按钮背景 | vi-2 | #00AAA6 |
-| 深色按钮 hover | vi-3 | #009093 |
-| 浅色按钮背景 | vi-1 | #E6F7F6 |
-| 半透明浅色按钮 | — | rgba(0,170,166,0.1) |
-| 页面背景 | bg-1 | #F3F5F7 |
-| 卡片背景 | white | #FFFFFF |
-| 主文字 | text-3 | #1D2129 |
-| 辅助文字 | text-2 | #7C8492 |
-| 占位符 | text-1 | #BFC5CC |
-| 分割线 / 输入框边框 | border-1 | #E5E6EB |
-| 输入框 focus 边框 | vi-2 | #00AAA6 |
-| 错误 / 必填 | danger-1 | #EE0A24 |
-| 蓝色标签（运单/提货） | blue | #3491FA |
-| 橙色标签（2C/收货） | orange | #FF7D00 |
-| 紫色标签（电商补货） | purple | #722ED1 |
+| 用途 | Token（新命名） | 值 | 旧别名 |
+|------|-------|------|------|
+| 深色按钮背景 | brand / primary-6 | #00AAA6 | vi-2 |
+| 深色按钮 hover/点击 | brand-active / primary-7 | #009093 | vi-3 |
+| 深色按钮悬浮 | brand-hover / primary-5 | #22BBB3 | — |
+| 浅色实底按钮背景 | brand-bg / primary-1 | #E8FFFB | vi-1 |
+| 半透明浅色按钮 | brand-bg-subtle | rgba(0,170,166,0.1) | — |
+| 页面背景 / 卡片内嵌区 | color-fill-2 | #F2F3F5 | bg-1 |
+| 预改约底部等特定区域 | color-fill-3 | #E5E6EB | bg-2 |
+| 卡片背景 | color-fill-white | #FFFFFF | white |
+| 主文字 | color-text-1 | #1D2129 | text-3 |
+| 次强调正文 | color-text-2 | #4E5969 | — |
+| 辅助/次要文字 | color-text-3 | #86909C | text-2 |
+| 占位符 / 置灰 | color-text-4 | #C9CDD4 | text-1 |
+| 分割线 / 输入框边框 | color-border-2 | #E5E6EB | border-1 |
+| 输入框 focus 边框 | brand | #00AAA6 | vi-2 |
+| 错误 / 必填 | danger | #F53F3F | danger-1(旧#EE0A24) |
+| 成功 | success | #00B42A | — |
+| 警告 | warning | #FF7D00 | — |
+| 信息 | info | #165DFF | — |
+| 蓝色标签（运单/提货） | blue / arcoblue-6 | #165DFF | blue(旧#3491FA) |
+| 橙色标签（2C/收货） | orange / orange-6 | #FF7D00 | orange |
+| 紫色标签（电商补货） | purple / purple-6 | #722ED1 | purple |
+
+### 旧 Figma 稿迁移对照（v1.0 → v1.1）
+
+> **何时用这张表**：拿到仍用旧命名（`vi-1`、`text-3` 等）或写死旧色值/旧尺寸的 Figma 稿实现组件时，按"旧稿写的"这一列反查，落地时**统一改写成新命名**。旧别名在 `ui.css` 里仍可用（不会报错），但新代码请写新名。方向与上面《颜色使用规则》相反：那张按"用途"正向查，这张按"旧稿标注"反向查，且覆盖颜色 + 字体 + 间距 + 圆角 + 宽度。
+
+**颜色（注意 text 编号是反的）**
+
+| 旧稿写的 | 落地改写为 | 值 | 备注 |
+|------|-----------|------|------|
+| vi-1 | primary-1 | #E8FFFB | 浅底（旧 #E6F7F6 微调） |
+| vi-2 | brand（= primary-6） | #00AAA6 | 品牌主色，值不变 |
+| vi-3 | brand-active（= primary-7） | #009093 | 点击/hover，值不变 |
+| text-3 | color-text-1 | #1D2129 | 主文字（编号反转！） |
+| text-2 | color-text-3 | #86909C | 辅助/次要（旧 #7C8492） |
+| text-1 | color-text-4 | #C9CDD4 | 占位/置灰（旧 #BFC5CC） |
+| border-1 | color-border-2 | #E5E6EB | 分割线/输入框边框，值不变 |
+| border-2 | color-border-3 | #C9CDD4 | 辅助线（旧 #BFC5CC） |
+| bg-1 | color-fill-2 | #F2F3F5 | 页面背景/卡片内嵌（旧 #F3F5F7） |
+| bg-2 | color-fill-3 | #E5E6EB | 预改约底部（旧 #EBEDF0） |
+| white | color-fill-white | #FFFFFF | 卡片/输入框面 |
+| 蓝 #3491FA | blue（= arcoblue-6） | #165DFF | 运单/提货标签 |
+| 橙 #FF7D00 | orange（= orange-6） | #FF7D00 | 2C/收货，值不变 |
+| 紫 #722ED1 | purple（= purple-6） | #722ED1 | 电商补货，值不变 |
+| danger-1 #EE0A24 | danger（= red-6） | #F53F3F | 错误/必填 |
+| danger-bg #FDE7E9 | danger-bg（= red-1） | #FFECE8 | 告警底 |
+
+**字体 / 间距 / 圆角 / 宽度**
+
+| 旧稿写的 | 落地改写为 |
+|------|-----------|
+| 大按钮 `width:303px` + `padding:0 119px` | `.btn--lg`（整行 `width:100%` + 左右内边距 16px），去掉写死宽 |
+| 输入框/卡片 `width:303px` / `343px` | 输入框整行 `width:100%`；卡片 `width:100%` + `max-width:343px` |
+| 圆角 `pill:58px` | `radius-pill`（999px，真胶囊） |
+| 只有大/小两档按钮 | 需要中间态用新增的中按钮 `.btn--md`（36px） |
+| 运单号/重量/时间用普通字体 | 用 `.text-number`（Nunito Sans + tabular-nums，等宽对齐） |
+
+**规则**：旧稿标注的具体色值若 Pangea 有对应（如上表），直接换成新值；若旧稿某色 Pangea 没有对应、且明显是特意选的，先停下来跟你确认，不擅自替换。
 
 ### 字体规格速查
 
@@ -528,21 +650,26 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 | 辅助信息 | 12px | Regular(400) | 18px |
 | 次要/时间 | 10px | Regular(400) | 14px |
 | 大按钮 | 16px | Regular(400) | 22px |
+| 中按钮 | 14px | Regular(400) | 20px |
 | 小按钮 | 14px | Regular(400) | 20px |
+| 数字(运单号/重量/时间) | 14px | Medium(500) | 20px |（Nunito Sans, tabular-nums）
 
 ### 组件尺寸速查
 
 | 组件 | 高度 | 宽度 | 圆角 |
 |------|------|------|------|
-| 大按钮 | 40px | 303px | 4px |
-| 小按钮 | 32px | auto | 4px |
-| 输入框（注册） | 48px | 303px | 4px |
-| 搜索框 | 36px | full | 4px |
-| 卡片 | auto | 343px | 10px |
+| 大按钮 | 40px | block（100%，左右内边距 16px） | 4px |
+| 中按钮 | 36px | auto（左右内边距 12px） | 4px |
+| 小按钮 | 32px | auto（左右内边距 8px） | 4px |
+| 输入框（注册） | 48px | block（100%） | 4px |
+| 搜索框 | 36px | block（100%） | 4px |
+| 卡片 | auto | block（100%，max-width 343px） | 10px |
 | Tab 项 | 30px | auto | 4px |
 | 浮动按钮 | 60px | 60px | 50% |
-| 弹窗 | auto | 320px | — |
-| 定位栏 | 48px | 375px | — |
+| 弹窗 | auto | 320px | 8px |
+| 定位栏 | 48px | 100% | — |
+
+> 宽度不再写死像素：大按钮/输入框/搜索框默认整行（`width:100%`），卡片 `width:100%` + `max-width:343px`，由父容器（内容区 343px）控制上限。需要内容自适应宽度用中/小按钮（`width:auto`）。
 
 ### 图标引用
 
@@ -572,23 +699,79 @@ PingFang SC 为唯一字体家族。上文 `typography` token 携带 `fontFamily
 
 - [ ] 页面宽度：demo 用 375px 固定宽；交付开发用 `100% + max-width: 750px`（px×2=rpx）。
 - [ ] 内容宽度 343px（两侧各 16px）。
-- [ ] 间距全部是 4 的倍数（4/8/12/16/24/32）。
-- [ ] 圆角只用 2/4/10/12/50% 这几档，同一视图不混用。
+- [ ] 间距全部是 4 的倍数（4/8/12/16/20/24/28/32/40/48）。
+- [ ] 圆角只用 2/4/8/10/12/50%/pill(999) 这几档，同一视图不混用。
+- [ ] 大按钮/输入框/搜索框默认整行（width:100%），不写死像素宽（不再用 303px/119px）。
 - [ ] 按钮文字 Regular(400)，不用 Medium/Semibold。
-- [ ] 标签颜色：蓝=运单/提货，橙=2C/收货，紫=电商补货——不可随意替换。
+- [ ] 标签颜色：蓝(#165DFF)=运单/提货，橙(#FF7D00)=2C/收货，紫(#722ED1)=电商补货——不可随意替换。
 - [ ] 禁用态：只降文字 opacity 40%，不改背景色。
-- [ ] placeholder 用 text-1(#BFC5CC)，不用 text-2。
-- [ ] 卡片内嵌区域用 bg-1(#F3F5F7)，不用白色；`bg-2(#EBEDF0)` 仅用于预改约底部。
+- [ ] placeholder 用 color-text-4(#C9CDD4)，不用 color-text-3。
+- [ ] 卡片内嵌区域用 color-fill-2(#F2F3F5，旧 bg-1)，不用白色；color-fill-3(#E5E6EB，旧 bg-2) 仅用于预改约底部。
 - [ ] 搜索框高 36px，查询按钮 28px 高 #00AAA6 背景白字。
 - [ ] Tab 选中态 #00AAA6 背景白字，未选中白底黑字。
 
 ### 常见错误
 
-❌ 把 `bg-2(#EBEDF0)` 当通用背景 → ✅ 只用于预改约底部
+❌ 把 color-fill-3(#E5E6EB，旧 bg-2) 当通用背景 → ✅ 只用于预改约底部
 ❌ 按钮用 Medium/Semibold 字重 → ✅ 按钮统一 Regular(400)
-❌ 搜索框 placeholder 用 #7C8492 → ✅ 用 #BFC5CC(text-1)
+❌ 给按钮/输入框写死 width:303px 或 padding:0 119px → ✅ 用整行(width:100%) + 内边距 token
+❌ 搜索框 placeholder 用 #86909C → ✅ 用 #C9CDD4(color-text-4)
 ❌ 标签颜色随意选 → ✅ 蓝/橙/紫各有固定业务含义
 ❌ 浮动按钮放页面中间 → ✅ 只放右下角固定定位
-❌ 卡片内嵌区用白色底 → ✅ 用 bg-1(#F3F5F7) 区分层级
+❌ 卡片内嵌区用白色底 → ✅ 用 color-fill-2(#F2F3F5) 区分层级
 ❌ 用奇数间距(3px/7px/13px) → ✅ 只用 4 的倍数
-❌ 圆角混用(6px/8px/10px) → ✅ 同一视图统一圆角家族
+❌ 圆角混用无规律 → ✅ 用组件级 radius token，同一视图统一圆角家族
+
+---
+
+## 场景匹配评估流程（生成任何 HTML 前必做）
+
+在产出任何原型 HTML 之前，必须先做「场景匹配评估」，依据机读文件 `scenario-map.json`，**逐屏**（不是整个需求一次性）判断，并把评估结论**在对话里向用户汇报**——**不要写进 HTML**（产品经理看到的原型要保持干净，无过程注释）。
+
+步骤：
+
+1. 拆解 PRD，列出要做的每一屏，判断其页型（对照 `scenario-map.json` 的 `pageTypes`）。
+2. 对每一屏，与 `scenario-map.json` 的 `examplePages` / `components` 比对，落到三档之一：
+
+| 档位 | 判据 | 路由 |
+|------|------|------|
+| **高重合** | 命中某 examplePage 页型，且其核心区块覆盖 ≥ 70% | 以该 examplePage 为底板**复制微调** |
+| **低重合** | 无现成成品页，但所需区块都能在 components 找到组件 | 用 components 组件 + `ui.css` class **逐块拼装** |
+| **零重合** | 页型无成品页，且核心区块在 components 也无对应组件 | **停止生成**，走缺口流程 |
+
+3. **高重合的"微调"允许范围**：替换数据/文案/图标；**隐藏或删除组件里当前场景用不到的子元素**（例如卡片某字段为空就整段不渲染）；增减列表项；复用组件已有状态类（collapsed/expanded/checkbox）。**禁止**：改组件 DOM 骨架、重写组件样式、加规范外装饰。
+4. **低重合**：每一区块都要能追溯到某个组件 slug；禁止自造组件、禁止引用 examples 里未回收的页面私有 class。
+5. **零重合**：立即停止该屏生成，先输出《缺口报告》（缺哪些组件/页型/图标/token，分别属于哪屏哪块），再询问用户二选一——(A) 人类补齐缺失项后再生成；(B) 同意先自由发挥（产出标记为非规范）。**未得到答复不得擅自发挥。**
+
+评估示例（在对话里汇报的格式）：
+
+> 场景匹配评估：
+> - 首页 → 高重合（demo-home，复制微调；隐藏公告条）
+> - 提柜列表 → 高重合（demo-list，复制微调）
+> - 提柜操作页 → 低重合（用 card + input + button + selector 拼装）
+> - XX 特殊页 → 零重合 → 见《缺口报告》，请选择 A/B
+
+### 首页功能入口的歧义确认（必问）
+
+当 PRD / 需求描述**没有说清**一个新功能在首页如何接入时，**必须先停下来向人类确认**，二选一：
+
+1. **在首页金刚区新增功能球**（新增模块）？
+2. **在现有某个功能球里改**（复用已有入口）？
+
+确认后按对应方式处理，两种情况**首页都直接引用示例首页 `examples/demo-home.html`，绝不整块重画首页**：
+
+- **新增功能球** → 引用 demo-home，在金刚区（function-grid）里**加一个新图标**（真实 SVG，来自 `assets/shortcuts/icon/home/driver/`；如需角标则叠加），点击进入该功能的功能选择页或列表页。首页其余内容（渐变头部、快捷卡、其余金刚区图标、待办任务、浮动按钮）保持 demo-home 原样。
+- **在现有功能球里改** → 同样引用 demo-home，**不新增图标**，点击对应的现有功能球直接进入该功能的列表页；首页其余内容保持不变。
+
+> 反例（禁止）：把首页金刚区改成 emoji、把待办任务换成自造九宫格、去掉渐变头部——这些都属于"整块重画首页"，违反本规则。
+
+## 产出后强制校验（机械自检，非声明）
+
+原型产出后，必须逐条**实际核对**（不是口头声明"已复用"）。任一未过即为交付失败，必须返工：
+
+1. **权威源**：原型引用的样式必须指向 `design-system/xinxiaodi/ui.css`；**禁止**引用旧目录 `xinxiaodi-design-system/`。
+2. **class 白名单**：抽取原型里所有 `class="..."` 的类名，逐个在 `ui.css` 与各组件 JSON 的 `cssClasses` 里查；**凡查不到的一律视为"疑似自造"**，必须改用组件类，或在零重合流程里显式报备。
+3. **图标**：所有 `<img src>` 必须落在 `assets/` 下，不使用自创内联 SVG 图标。
+4. **不留过程注释**：HTML 里不写场景评估、路由决策等过程性注释；这些只在对话中向用户汇报。
+
+> 上述校验可由 `scripts/verify-prototype.mjs` 自动执行（后续接入）。

@@ -27,9 +27,11 @@
   "specs": {
     "container": {
       "height": "48px",
-      "width": "303px",
-      "radius": "4px",
+      "widthMode": "block",
+      "widthNote": "width:100%，由父容器（内容区 343px）控制上限，不写死像素宽（1.0.0 的 width:303px 已废弃）",
+      "radius": "var(--radius-control) / 4px",
       "border": "1px solid #E5E6EB",
+      "borderToken": "color-border-2",
       "backgroundColor": "#FFFFFF",
       "padding": "0 12px"
     },
@@ -94,5 +96,19 @@
     "彩色边框输入框(focus 除外)",
     "填充色/深色背景输入框",
     "多行 textarea(当前设计系统无此组件)"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "手机号/验证码登录", "variant": "验证码-可点击 / 验证码-倒计时", "when": "登录页录入手机号并获取验证码，点击后进入 60s 倒计时" },
+    { "scenario": "区号前缀输入", "variant": "区号-empty", "when": "需要区号前缀的手机号输入，前缀用灰底区分" },
+    { "scenario": "基础文本录入", "variant": "基础-empty / 基础-filled", "when": "注册/登录页普通文本字段" }
+  ],
+  "states": [
+    { "state": "empty", "trigger": "默认未输入", "class": "input（placeholder #C9CDD4）" },
+    { "state": "focus", "trigger": "聚焦", "class": "input（:focus 边框 vi-2 + 外发光 rgba(0,170,166,0.1)）" },
+    { "state": "error", "trigger": "校验失败", "class": "input--error（配合 .input-error-msg）" },
+    { "state": "disabled", "trigger": "禁用", "class": "input--disabled" },
+    { "state": "countdown", "trigger": "验证码倒计时中", "class": "input-group__suffix--disabled（cursor not-allowed，文字 #7C8492）" }
+  ],
+  "cssClasses": ["input", "input--error", "input--disabled", "input-error-msg", "input-group", "input-group__prefix", "input-group__suffix", "input-group__suffix--disabled"],
+  "exampleRefs": ["examples/login.html", "preview/component-input.html"]
 }

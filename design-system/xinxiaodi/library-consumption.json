@@ -50,7 +50,10 @@
     "contentWidth": "343px",
     "fontFamily": "PingFang SC",
     "brandColor": "#00AAA6",
+    "colorSystem": "对齐 Pangea：primary/gray/red/orange/green/arcoblue/purple 各 10 级 + 语义层 color-text/border/fill；三层 token（primitive/semantic/component）",
     "spacingBase": "4px",
-    "radiusSet": ["2px", "4px", "10px", "12px", "50%"]
+    "spacingScale": ["4px", "8px", "12px", "16px", "20px", "24px", "28px", "32px", "40px", "48px"],
+    "radiusSet": ["2px", "4px", "8px", "10px", "12px", "50%", "999px(pill)"],
+    "widthRule": "按钮/输入框/搜索框默认整行(width:100%)，卡片 width:100%+max-width:343px，不写死像素宽"
   }
 }

@@ -130,5 +130,17 @@
     "搜索框内的品牌色背景",
     "将排序/筛选按钮放在搜索框左侧",
     "不带查询按钮的搜索框"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "搜索框", "variant": "default-empty / default-filled", "when": "列表页关键词搜索运单，搜索图标+输入+查询按钮" },
+    { "scenario": "查询项筛选下拉", "variant": "with-filter-empty", "when": "搜索前先选筛选维度（左侧筛选下拉 + 分割线 + 输入）" },
+    { "scenario": "排序/筛选图标按钮", "variant": "with-sort-filter-empty", "when": "需要排序和多维筛选时，右侧「排序」「筛选」图标按钮" }
+  ],
+  "states": [
+    { "state": "empty", "trigger": "默认无输入", "class": "searchbox（.searchbox__clear 隐藏）" },
+    { "state": "filled", "trigger": "有输入内容", "class": "searchbox__clear--visible（清除按钮显示）" },
+    { "state": "filter-open", "trigger": "点击筛选下拉", "class": "searchbox__filter-menu--open（下拉菜单展开）" }
+  ],
+  "cssClasses": ["searchbox", "searchbox__icon", "searchbox__input", "searchbox__clear", "searchbox__clear--visible", "searchbox__query", "searchbox__query-text", "searchbox__filter", "searchbox__filter-trigger", "searchbox__filter-label", "searchbox__filter-divider", "searchbox__filter-menu", "searchbox__filter-menu--open", "searchbox__filter-item", "searchbox__action", "searchbox__action-icon", "searchbox__action-label"],
+  "exampleRefs": ["examples/demo-list.html", "examples/demo-pending-arrival.html", "preview/component-searchbox.html"]
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>信小递设计系统 v1.0</title>
+  <title>信小递设计系统 v1.1</title>
   <link rel="stylesheet" href="ui.css">
   <style>
     /* ===== Page Layout ===== */
@@ -438,6 +438,32 @@
       color: #7C8492;
       margin-top: 4px;
     }
+
+    /* ===== Color Scale Strip (10 级色板) ===== */
+    .scale { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 8px; border-radius: 6px; overflow: hidden; }
+    .scale__chip { flex: 1 1 9%; min-width: 62px; height: 56px; display: flex; flex-direction: column; justify-content: flex-end; padding: 4px 5px; box-sizing: border-box; }
+    .scale__chip span { font-size: 9px; line-height: 12px; font-family: monospace; }
+    .scale__label { display: flex; align-items: center; gap: 6px; margin: 14px 0 6px; }
+    .scale__label b { font-size: 12px; color: #1D2129; font-weight: 600; }
+    .scale__label em { font-size: 10px; color: #7C8492; font-style: normal; }
+    .scale__main { outline: 2px solid #1D2129; outline-offset: -2px; }
+    /* ===== 三层结构说明条 ===== */
+    .tier-note { background: #F0FBFA; border: 1px solid #B7EDE9; border-radius: 8px; padding: 12px 14px; font-size: 12px; color: #1D2129; line-height: 1.7; margin-bottom: 16px; }
+    .tier-note code { background: #fff; border: 1px solid #B7EDE9; border-radius: 3px; padding: 0 4px; font-size: 11px; color: #009093; }
+    /* ===== 状态矩阵 State Matrix ===== */
+    .matrix { border: 1px solid #E5E6EB; border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+    .matrix__head, .matrix__row { display: grid; grid-template-columns: 120px repeat(4, 1fr); align-items: center; }
+    .matrix__head { background: #F3F5F7; }
+    .matrix__head > div { padding: 8px 10px; font-size: 11px; color: #7C8492; font-weight: 500; border-bottom: 1px solid #E5E6EB; }
+    .matrix__row { border-bottom: 1px solid #F2F3F5; }
+    .matrix__row:last-child { border-bottom: none; }
+    .matrix__row > div { padding: 12px 10px; display: flex; align-items: center; justify-content: center; min-height: 56px; }
+    .matrix__row > .matrix__cellname { justify-content: flex-start; font-size: 12px; color: #1D2129; font-weight: 500; }
+    .matrix__cellname small { color: #7C8492; font-weight: 400; }
+    .scenario-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .scenario-item { border: 1px solid #E5E6EB; border-radius: 8px; padding: 10px 12px; }
+    .scenario-item__variant { font-size: 11px; font-family: monospace; color: #009093; margin-bottom: 4px; }
+    .scenario-item__when { font-size: 12px; color: #1D2129; line-height: 1.5; }
   
     /* ===== 组件目录卡片（缩略图 → 点击跳转组件预览页）===== */
     .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
@@ -462,12 +488,13 @@
 <aside class="sidebar">
   <div class="sidebar__brand">
     <div class="sidebar__brand-name">信小递设计系统</div>
-    <div class="sidebar__brand-ver">v1.0.0 · 司机端</div>
+    <div class="sidebar__brand-ver">v1.1.0 · 司机端 · 对齐 Pangea</div>
   </div>
   <ul class="sidebar__nav">
     <li><a href="#colors">色彩 Color</a></li>
     <li><a href="#typography">字体 Typography</a></li>
     <li><a href="#spacing">间距与圆角</a></li>
+    <li><a href="#button-states">按钮状态矩阵</a></li>
     <li><a href="#components">组件 Components</a></li>
     <li><a href="#button-group">按钮组规范</a></li>
     <li><a href="#icons">图标 Icons</a></li>
@@ -483,52 +510,170 @@
   <!-- Header -->
   <header class="main__header">
     <h1>信小递司机端设计系统</h1>
-    <p>海信集团物流司机端微信小程序 · 版本 1.0 · 设计宽度 375px · PingFang SC</p>
+    <p>海信集团物流司机端微信小程序 · 版本 1.1 · 色彩对齐 Pangea · Token 三层（primitive / semantic / component） · 设计宽度 375px · PingFang SC</p>
   </header>
 
   <!-- ===== Colors ===== -->
   <section class="section" id="colors">
     <h2 class="section__title">色彩 Color Palette</h2>
 
-    <p class="section__subtitle">主色 Primary</p>
-    <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#E6F7F6;"></div><div class="swatch__info"><div class="swatch__name">vi-1</div><div class="swatch__hex">#E6F7F6</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#00AAA6;"></div><div class="swatch__info"><div class="swatch__name">vi-2 品牌主色</div><div class="swatch__hex">#00AAA6</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#009093;"></div><div class="swatch__info"><div class="swatch__name">vi-3 hover/active</div><div class="swatch__hex">#009093</div></div></div>
+    <div class="tier-note">
+      色彩体系对齐 <b>Pangea Design</b>：每个色系为 <b>1→10 由浅到深</b> 的 10 级色板，主色/常规态固定在 <b>第 6 级</b>（黑框标注）。<br>
+      Token 分三层，业务代码只用 semantic / component 层：<code>primitive</code>（原始色板）→ <code>semantic</code>（按用途命名）→ <code>component</code>（组件专属）。旧命名 <code>vi-2</code>/<code>text-3</code> 等保留为兼容别名。
     </div>
+
+    <h3 class="section__subtitle" style="font-size:14px;color:#1D2129;">① Primitive 色板（10 级）</h3>
+
+    <div class="scale__label"><b>Primary 品牌色（青绿）</b><em>primary-6 = 品牌主色 #00AAA6</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#E8FFFB;color:#1D2129;"><span>1</span><span>#E8FFFB</span></div>
+      <div class="scale__chip" style="background:#ADEEE4;color:#1D2129;"><span>2</span><span>#ADEEE4</span></div>
+      <div class="scale__chip" style="background:#79DDD1;color:#1D2129;"><span>3</span><span>#79DDD1</span></div>
+      <div class="scale__chip" style="background:#4ACCC1;color:#1D2129;"><span>4</span><span>#4ACCC1</span></div>
+      <div class="scale__chip" style="background:#22BBB3;color:#fff;"><span>5</span><span>#22BBB3</span></div>
+      <div class="scale__chip scale__main" style="background:#00AAA6;color:#fff;"><span>6 主色</span><span>#00AAA6</span></div>
+      <div class="scale__chip" style="background:#009093;color:#fff;"><span>7 点击</span><span>#009093</span></div>
+      <div class="scale__chip" style="background:#00757B;color:#fff;"><span>8</span><span>#00757B</span></div>
+      <div class="scale__chip" style="background:#005C64;color:#fff;"><span>9</span><span>#005C64</span></div>
+      <div class="scale__chip" style="background:#00444D;color:#fff;"><span>10</span><span>#00444D</span></div>
+    </div>
+
+    <div class="scale__label"><b>Gray 中性灰</b><em>文字/线条/填充的来源</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#F7F8FA;color:#1D2129;"><span>1</span><span>#F7F8FA</span></div>
+      <div class="scale__chip" style="background:#F2F3F5;color:#1D2129;"><span>2</span><span>#F2F3F5</span></div>
+      <div class="scale__chip" style="background:#E5E6EB;color:#1D2129;"><span>3</span><span>#E5E6EB</span></div>
+      <div class="scale__chip" style="background:#C9CDD4;color:#1D2129;"><span>4</span><span>#C9CDD4</span></div>
+      <div class="scale__chip" style="background:#A9AEB8;color:#fff;"><span>5</span><span>#A9AEB8</span></div>
+      <div class="scale__chip scale__main" style="background:#86909C;color:#fff;"><span>6</span><span>#86909C</span></div>
+      <div class="scale__chip" style="background:#6B7785;color:#fff;"><span>7</span><span>#6B7785</span></div>
+      <div class="scale__chip" style="background:#4E5969;color:#fff;"><span>8</span><span>#4E5969</span></div>
+      <div class="scale__chip" style="background:#272E3B;color:#fff;"><span>9</span><span>#272E3B</span></div>
+      <div class="scale__chip" style="background:#1D2129;color:#fff;"><span>10</span><span>#1D2129</span></div>
+    </div>
+
+    <div class="scale__label"><b>Red 危险</b><em>danger = red-6 #F53F3F</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#FFECE8;color:#1D2129;"><span>1</span><span>#FFECE8</span></div>
+      <div class="scale__chip" style="background:#FDCDC5;color:#1D2129;"><span>2</span><span>#FDCDC5</span></div>
+      <div class="scale__chip" style="background:#FBACA3;color:#1D2129;"><span>3</span><span>#FBACA3</span></div>
+      <div class="scale__chip" style="background:#F98981;color:#1D2129;"><span>4</span><span>#F98981</span></div>
+      <div class="scale__chip" style="background:#F76560;color:#fff;"><span>5</span><span>#F76560</span></div>
+      <div class="scale__chip scale__main" style="background:#F53F3F;color:#fff;"><span>6</span><span>#F53F3F</span></div>
+      <div class="scale__chip" style="background:#CB272D;color:#fff;"><span>7</span><span>#CB272D</span></div>
+      <div class="scale__chip" style="background:#A1151E;color:#fff;"><span>8</span><span>#A1151E</span></div>
+      <div class="scale__chip" style="background:#770813;color:#fff;"><span>9</span><span>#770813</span></div>
+      <div class="scale__chip" style="background:#4D000A;color:#fff;"><span>10</span><span>#4D000A</span></div>
+    </div>
+
+    <div class="scale__label"><b>Orange 警告</b><em>warning = orange-6 #FF7D00（同橙色标签）</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#FFF7E8;color:#1D2129;"><span>1</span><span>#FFF7E8</span></div>
+      <div class="scale__chip" style="background:#FFE4BA;color:#1D2129;"><span>2</span><span>#FFE4BA</span></div>
+      <div class="scale__chip" style="background:#FFCF8B;color:#1D2129;"><span>3</span><span>#FFCF8B</span></div>
+      <div class="scale__chip" style="background:#FFB65D;color:#1D2129;"><span>4</span><span>#FFB65D</span></div>
+      <div class="scale__chip" style="background:#FF9A2E;color:#fff;"><span>5</span><span>#FF9A2E</span></div>
+      <div class="scale__chip scale__main" style="background:#FF7D00;color:#fff;"><span>6</span><span>#FF7D00</span></div>
+      <div class="scale__chip" style="background:#D25F00;color:#fff;"><span>7</span><span>#D25F00</span></div>
+      <div class="scale__chip" style="background:#A64500;color:#fff;"><span>8</span><span>#A64500</span></div>
+      <div class="scale__chip" style="background:#792E00;color:#fff;"><span>9</span><span>#792E00</span></div>
+      <div class="scale__chip" style="background:#4D1B00;color:#fff;"><span>10</span><span>#4D1B00</span></div>
+    </div>
+
+    <div class="scale__label"><b>Green 成功</b><em>success = green-6 #00B42A</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#E8FFEA;color:#1D2129;"><span>1</span><span>#E8FFEA</span></div>
+      <div class="scale__chip" style="background:#AFF0B5;color:#1D2129;"><span>2</span><span>#AFF0B5</span></div>
+      <div class="scale__chip" style="background:#7BE188;color:#1D2129;"><span>3</span><span>#7BE188</span></div>
+      <div class="scale__chip" style="background:#4CD263;color:#1D2129;"><span>4</span><span>#4CD263</span></div>
+      <div class="scale__chip" style="background:#23C343;color:#fff;"><span>5</span><span>#23C343</span></div>
+      <div class="scale__chip scale__main" style="background:#00B42A;color:#fff;"><span>6</span><span>#00B42A</span></div>
+      <div class="scale__chip" style="background:#009A29;color:#fff;"><span>7</span><span>#009A29</span></div>
+      <div class="scale__chip" style="background:#008026;color:#fff;"><span>8</span><span>#008026</span></div>
+      <div class="scale__chip" style="background:#006622;color:#fff;"><span>9</span><span>#006622</span></div>
+      <div class="scale__chip" style="background:#004D1C;color:#fff;"><span>10</span><span>#004D1C</span></div>
+    </div>
+
+    <div class="scale__label"><b>ArcoBlue 信息</b><em>info = arcoblue-6 #165DFF（同蓝色标签）</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#E8F3FF;color:#1D2129;"><span>1</span><span>#E8F3FF</span></div>
+      <div class="scale__chip" style="background:#BEDAFF;color:#1D2129;"><span>2</span><span>#BEDAFF</span></div>
+      <div class="scale__chip" style="background:#94BFFF;color:#1D2129;"><span>3</span><span>#94BFFF</span></div>
+      <div class="scale__chip" style="background:#6AA1FF;color:#fff;"><span>4</span><span>#6AA1FF</span></div>
+      <div class="scale__chip" style="background:#4080FF;color:#fff;"><span>5</span><span>#4080FF</span></div>
+      <div class="scale__chip scale__main" style="background:#165DFF;color:#fff;"><span>6</span><span>#165DFF</span></div>
+      <div class="scale__chip" style="background:#0E42D2;color:#fff;"><span>7</span><span>#0E42D2</span></div>
+      <div class="scale__chip" style="background:#072CA6;color:#fff;"><span>8</span><span>#072CA6</span></div>
+      <div class="scale__chip" style="background:#031A79;color:#fff;"><span>9</span><span>#031A79</span></div>
+      <div class="scale__chip" style="background:#000D4D;color:#fff;"><span>10</span><span>#000D4D</span></div>
+    </div>
+
+    <div class="scale__label"><b>Purple 紫色</b><em>电商补货标签 = purple-6 #722ED1</em></div>
+    <div class="scale">
+      <div class="scale__chip" style="background:#F5E8FF;color:#1D2129;"><span>1</span><span>#F5E8FF</span></div>
+      <div class="scale__chip" style="background:#DDBEF6;color:#1D2129;"><span>2</span><span>#DDBEF6</span></div>
+      <div class="scale__chip" style="background:#C396ED;color:#1D2129;"><span>3</span><span>#C396ED</span></div>
+      <div class="scale__chip" style="background:#A871E3;color:#fff;"><span>4</span><span>#A871E3</span></div>
+      <div class="scale__chip" style="background:#8D4EDA;color:#fff;"><span>5</span><span>#8D4EDA</span></div>
+      <div class="scale__chip scale__main" style="background:#722ED1;color:#fff;"><span>6</span><span>#722ED1</span></div>
+      <div class="scale__chip" style="background:#551DB0;color:#fff;"><span>7</span><span>#551DB0</span></div>
+      <div class="scale__chip" style="background:#3C108F;color:#fff;"><span>8</span><span>#3C108F</span></div>
+      <div class="scale__chip" style="background:#27066E;color:#fff;"><span>9</span><span>#27066E</span></div>
+      <div class="scale__chip" style="background:#16004D;color:#fff;"><span>10</span><span>#16004D</span></div>
+    </div>
+
+    <h3 class="section__subtitle" style="font-size:14px;color:#1D2129;margin-top:24px;">② Semantic 语义层（组件优先消费）</h3>
 
     <p class="section__subtitle">文字 Text</p>
     <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#BFC5CC;"></div><div class="swatch__info"><div class="swatch__name">text-1 placeholder</div><div class="swatch__hex">#BFC5CC</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#7C8492;"></div><div class="swatch__info"><div class="swatch__name">text-2 辅助文字</div><div class="swatch__hex">#7C8492</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#1D2129;"></div><div class="swatch__info"><div class="swatch__name">text-3 主文字</div><div class="swatch__hex">#1D2129</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#1D2129;"></div><div class="swatch__info"><div class="swatch__name">color-text-1 主文字</div><div class="swatch__hex">#1D2129</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#4E5969;"></div><div class="swatch__info"><div class="swatch__name">color-text-2 次强调</div><div class="swatch__hex">#4E5969</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#86909C;"></div><div class="swatch__info"><div class="swatch__name">color-text-3 辅助</div><div class="swatch__hex">#86909C</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#C9CDD4;"></div><div class="swatch__info"><div class="swatch__name">color-text-4 占位/置灰</div><div class="swatch__hex">#C9CDD4</div></div></div>
     </div>
 
     <p class="section__subtitle">线条 Border</p>
     <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">border-1</div><div class="swatch__hex">#E5E6EB</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#BFC5CC;"></div><div class="swatch__info"><div class="swatch__name">border-2</div><div class="swatch__hex">#BFC5CC</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#F2F3F5;"></div><div class="swatch__info"><div class="swatch__name">color-border-1 浅</div><div class="swatch__hex">#F2F3F5</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">color-border-2 一般</div><div class="swatch__hex">#E5E6EB</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#C9CDD4;"></div><div class="swatch__info"><div class="swatch__name">color-border-3 深</div><div class="swatch__hex">#C9CDD4</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#86909C;"></div><div class="swatch__info"><div class="swatch__name">color-border-4 重</div><div class="swatch__hex">#86909C</div></div></div>
     </div>
 
-    <p class="section__subtitle">背景色 Background</p>
+    <p class="section__subtitle">填充 Fill（背景）</p>
     <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#F3F5F7;"></div><div class="swatch__info"><div class="swatch__name">bg-1 页面背景</div><div class="swatch__hex">#F3F5F7</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#EBEDF0;"></div><div class="swatch__info"><div class="swatch__name">bg-2</div><div class="swatch__hex">#EBEDF0</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#FFFFFF; border: 1px solid #E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">white 卡片背景</div><div class="swatch__hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FFFFFF; border:1px solid #E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">fill-white 卡片面</div><div class="swatch__hex">#FFFFFF</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#F7F8FA;"></div><div class="swatch__info"><div class="swatch__name">color-fill-1 浅/禁用</div><div class="swatch__hex">#F7F8FA</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#F2F3F5;"></div><div class="swatch__info"><div class="swatch__name">color-fill-2 页面/内嵌</div><div class="swatch__hex">#F2F3F5</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#E5E6EB;"></div><div class="swatch__info"><div class="swatch__name">color-fill-3 预改约底</div><div class="swatch__hex">#E5E6EB</div></div></div>
     </div>
 
-    <p class="section__subtitle">辅助色 Subcolor（承载业务含义）</p>
+    <p class="section__subtitle">品牌交互 Brand</p>
     <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#3491FA;"></div><div class="swatch__info"><div class="swatch__name">blue 运单/提货</div><div class="swatch__hex">#3491FA</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#00AAA6;"></div><div class="swatch__info"><div class="swatch__name">brand 默认</div><div class="swatch__hex">#00AAA6</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#22BBB3;"></div><div class="swatch__info"><div class="swatch__name">brand-hover 悬浮</div><div class="swatch__hex">#22BBB3</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#009093;"></div><div class="swatch__info"><div class="swatch__name">brand-active 点击</div><div class="swatch__hex">#009093</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#E8FFFB;"></div><div class="swatch__info"><div class="swatch__name">brand-bg 浅底</div><div class="swatch__hex">#E8FFFB</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(0,170,166,0.1);"></div><div class="swatch__info"><div class="swatch__name">brand-bg-subtle</div><div class="swatch__hex">rgba .1</div></div></div>
+    </div>
+
+    <p class="section__subtitle">功能状态 Status</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#00B42A;"></div><div class="swatch__info"><div class="swatch__name">success 成功</div><div class="swatch__hex">#00B42A</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FF7D00;"></div><div class="swatch__info"><div class="swatch__name">warning 警告</div><div class="swatch__hex">#FF7D00</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#F53F3F;"></div><div class="swatch__info"><div class="swatch__name">danger 危险/必填</div><div class="swatch__hex">#F53F3F</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#165DFF;"></div><div class="swatch__info"><div class="swatch__name">info 信息</div><div class="swatch__hex">#165DFF</div></div></div>
+    </div>
+
+    <p class="section__subtitle">业务标签 Subcolor（颜色承载业务含义，不可替换）</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__color" style="background:#165DFF;"></div><div class="swatch__info"><div class="swatch__name">blue 运单/提货</div><div class="swatch__hex">#165DFF</div></div></div>
       <div class="swatch"><div class="swatch__color" style="background:#FF7D00;"></div><div class="swatch__info"><div class="swatch__name">orange 2C/收货</div><div class="swatch__hex">#FF7D00</div></div></div>
       <div class="swatch"><div class="swatch__color" style="background:#722ED1;"></div><div class="swatch__info"><div class="swatch__name">purple 电商补货</div><div class="swatch__hex">#722ED1</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#00AAA6;"></div><div class="swatch__info"><div class="swatch__name">green 直发/品牌</div><div class="swatch__hex">#00AAA6</div></div></div>
     </div>
 
-    <p class="section__subtitle">警告色 Danger</p>
-    <div class="swatches">
-      <div class="swatch"><div class="swatch__color" style="background:#EE0A24;"></div><div class="swatch__info"><div class="swatch__name">danger-1</div><div class="swatch__hex">#EE0A24</div></div></div>
-      <div class="swatch"><div class="swatch__color" style="background:#FDE7E9;"></div><div class="swatch__info"><div class="swatch__name">danger-bg</div><div class="swatch__hex">#FDE7E9</div></div></div>
-    </div>
+    <p class="note">旧命名 vi-1/2/3、text-1/2/3、border-1/2、bg-1/2、danger-1 仍作为兼容别名保留（指向以上新值），存量原型无需改动即可继续使用。</p>
   </section>
 
   <!-- ===== Typography ===== -->
@@ -572,6 +717,11 @@
       <span class="type-row__meta">16/22 w400</span>
     </div>
     <div class="type-row">
+      <span class="type-row__label">button-medium</span>
+      <span class="type-row__sample" style="font-size:14px;font-weight:400;line-height:20px;">中按钮文字 14px Regular</span>
+      <span class="type-row__meta">14/20 w400 · 新增</span>
+    </div>
+    <div class="type-row">
       <span class="type-row__label">button-small</span>
       <span class="type-row__sample text-button-sm">小按钮文字 14px Regular</span>
       <span class="type-row__meta">14/20 w400</span>
@@ -581,30 +731,122 @@
       <span class="type-row__sample text-tag">标签文字 10px Regular</span>
       <span class="type-row__meta">10/14 w400</span>
     </div>
+    <div class="type-row">
+      <span class="type-row__label">number</span>
+      <span class="type-row__sample text-number">运单号 YD24061200001 · 12.5kg · 09:41</span>
+      <span class="type-row__meta">Nunito Sans · tabular-nums · 新增</span>
+    </div>
+    <p class="note">字号原始刻度：10 / 12 / 13 / 14 / 16 / 18 / 20 / 24px；字重仅 Regular(400) / Medium(500) / Semibold(600) 三档。按钮文字统一 Regular，深底反白。</p>
   </section>
 
   <!-- ===== Spacing & Radius ===== -->
   <section class="section" id="spacing">
     <h2 class="section__title">间距与圆角 Spacing & Radius</h2>
 
-    <p class="section__subtitle">间距 Spacing（4px 基础刻度）</p>
+    <p class="section__subtitle">间距 Spacing（4px 基础刻度，补齐 20/28/40/48）</p>
     <div class="spacing-demo">
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:4px;"></div><div class="spacing-item__label">4px</div></div>
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:8px;"></div><div class="spacing-item__label">8px</div></div>
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:12px;"></div><div class="spacing-item__label">12px</div></div>
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:16px;"></div><div class="spacing-item__label">16px</div></div>
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:24px;"></div><div class="spacing-item__label">24px</div></div>
-      <div class="spacing-item"><div class="spacing-item__bar" style="height:32px;"></div><div class="spacing-item__label">32px</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:4px;"></div><div class="spacing-item__label">4</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:8px;"></div><div class="spacing-item__label">8</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:12px;"></div><div class="spacing-item__label">12</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:16px;"></div><div class="spacing-item__label">16</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:20px;"></div><div class="spacing-item__label">20</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:24px;"></div><div class="spacing-item__label">24</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:28px;"></div><div class="spacing-item__label">28</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:32px;"></div><div class="spacing-item__label">32</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:40px;"></div><div class="spacing-item__label">40</div></div>
+      <div class="spacing-item"><div class="spacing-item__bar" style="height:48px;"></div><div class="spacing-item__label">48</div></div>
     </div>
 
-    <p class="section__subtitle">圆角 Radius</p>
+    <p class="section__subtitle">语义间距 Semantic Spacing（每个用途对应唯一刻度）</p>
+    <table class="ds-table">
+      <thead><tr><th>语义 Token</th><th>值</th><th>用途</th></tr></thead>
+      <tbody>
+        <tr><td>inset-xs / sm / md / lg</td><td>8 / 12 / 16 / 24</td><td>组件内边距（卡片竖 12 / 横 16、弹窗 24）</td></tr>
+        <tr><td>stack-xs … xl</td><td>4 / 8 / 12 / 16 / 24</td><td>纵向堆叠间距</td></tr>
+        <tr><td>inline-xs / sm / md</td><td>4 / 8 / 12</td><td>横向并排（按钮/Tab 之间 8）</td></tr>
+        <tr><td>gap-list</td><td>12</td><td>卡片列表间距（唯一用途）</td></tr>
+        <tr><td>gap-section</td><td>24</td><td>页面区块之间</td></tr>
+        <tr><td>page-margin</td><td>16</td><td>页面左右边距（唯一用途）</td></tr>
+      </tbody>
+    </table>
+
+    <p class="section__subtitle">圆角 Radius（组件级语义 token）</p>
     <div class="radius-demo">
       <div class="radius-item"><div class="radius-item__box" style="border-radius:2px;"></div><div class="radius-item__label">2px 标签</div></div>
       <div class="radius-item"><div class="radius-item__box" style="border-radius:4px;"></div><div class="radius-item__label">4px 按钮/输入</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:8px;"></div><div class="radius-item__label">8px 弹窗</div></div>
       <div class="radius-item"><div class="radius-item__box" style="border-radius:10px;"></div><div class="radius-item__label">10px 卡片</div></div>
       <div class="radius-item"><div class="radius-item__box" style="border-radius:12px;"></div><div class="radius-item__label">12px 图标背景</div></div>
       <div class="radius-item"><div class="radius-item__box" style="border-radius:50%;"></div><div class="radius-item__label">50% 头像/浮窗</div></div>
-      <div class="radius-item"><div class="radius-item__box" style="border-radius:58px; width:80px;"></div><div class="radius-item__label">58px pill</div></div>
+      <div class="radius-item"><div class="radius-item__box" style="border-radius:999px; width:80px;"></div><div class="radius-item__label">999px 胶囊</div></div>
+    </div>
+    <p class="note">pill 由旧的 58px 改为 999px（真胶囊，与高度无关）。同一视图内保持统一圆角家族，不混用。</p>
+  </section>
+
+  <!-- ===== 按钮状态矩阵 Button State Matrix ===== -->
+  <section class="section" id="button-states">
+    <h2 class="section__title">按钮状态矩阵 Button States</h2>
+    <p style="font-size:12px;color:#7C8492;margin-bottom:16px;">风格 × 状态（默认 / 悬浮 / 按下 / 禁用）全览。尺寸与宽度解耦：大按钮默认整行，中/小按钮内容自适应。</p>
+
+    <div class="matrix">
+      <div class="matrix__head">
+        <div>风格 \ 状态</div><div>默认 default</div><div>悬浮 hover</div><div>按下 active</div><div>禁用 disabled</div>
+      </div>
+      <div class="matrix__row">
+        <div class="matrix__cellname">深色 primary<br><small>主操作</small></div>
+        <div><button class="btn btn--sm btn--primary">确认</button></div>
+        <div><button class="btn btn--sm btn--primary" style="background:var(--brand-active);">确认</button></div>
+        <div><button class="btn btn--sm btn--primary" style="background:var(--brand-active);transform:scale(0.97);">确认</button></div>
+        <div><button class="btn btn--sm btn--primary btn--disabled"><span>确认</span></button></div>
+      </div>
+      <div class="matrix__row">
+        <div class="matrix__cellname">浅色实底 light-solid<br><small>次要操作</small></div>
+        <div><button class="btn btn--sm btn--light-solid">批量预约</button></div>
+        <div><button class="btn btn--sm btn--light-solid" style="background:#D4F2F1;">批量预约</button></div>
+        <div><button class="btn btn--sm btn--light-solid" style="background:#D4F2F1;transform:scale(0.97);">批量预约</button></div>
+        <div><button class="btn btn--sm btn--light-solid btn--disabled"><span>批量预约</span></button></div>
+      </div>
+      <div class="matrix__row">
+        <div class="matrix__cellname">浅色半透明 light<br><small>弹窗次按钮</small></div>
+        <div><button class="btn btn--sm btn--light">取消</button></div>
+        <div><button class="btn btn--sm btn--light" style="background:rgba(0,170,166,0.18);">取消</button></div>
+        <div><button class="btn btn--sm btn--light" style="background:rgba(0,170,166,0.18);transform:scale(0.97);">取消</button></div>
+        <div><button class="btn btn--sm btn--light btn--disabled"><span>取消</span></button></div>
+      </div>
+      <div class="matrix__row">
+        <div class="matrix__cellname">清除 clear<br><small>重置/取消</small></div>
+        <div><button class="btn btn--sm btn--clear">重置</button></div>
+        <div><button class="btn btn--sm btn--clear" style="background:#E0E2E5;">重置</button></div>
+        <div><button class="btn btn--sm btn--clear" style="background:#E0E2E5;transform:scale(0.97);">重置</button></div>
+        <div><button class="btn btn--sm btn--clear btn--disabled"><span>重置</span></button></div>
+      </div>
+      <div class="matrix__row">
+        <div class="matrix__cellname">文字 text<br><small>「更多」等弱操作</small></div>
+        <div><button class="btn btn--sm btn--text">更多</button></div>
+        <div><button class="btn btn--sm btn--text" style="color:var(--brand-active);">更多</button></div>
+        <div><button class="btn btn--sm btn--text" style="color:var(--brand-active);transform:scale(0.97);">更多</button></div>
+        <div><button class="btn btn--sm btn--text btn--disabled"><span>更多</span></button></div>
+      </div>
+    </div>
+    <p class="note" style="margin-bottom:20px;">禁用态统一：填充色不变，仅文字/图标降到 40% 透明度（<span class="inline-code">--disabled-opacity</span>）。悬浮/按下为交互态，此处用静态样式示意。</p>
+
+    <p class="section__subtitle">尺寸 Size（宽度已与尺寸解耦，不再写死像素宽）</p>
+    <div class="mobile-frame mobile-frame--white" style="padding:16px;">
+      <div style="margin-bottom:12px;"><button class="btn btn--lg btn--primary">大按钮 40px · 默认整行（.btn--lg）</button></div>
+      <div class="demo-row">
+        <button class="btn btn--md btn--primary">中按钮 36px（.btn--md）</button>
+        <button class="btn btn--sm btn--primary">小按钮 32px（.btn--sm）</button>
+      </div>
+      <div class="note">大按钮 <span class="inline-code">width:100%</span> 撑满内容区（343px），去掉了旧的 <span class="inline-code">width:303px</span> / <span class="inline-code">padding:0 119px</span>；中/小按钮 <span class="inline-code">width:auto</span> 内容自适应。</div>
+    </div>
+
+    <p class="section__subtitle">场景 Scenarios（哪个变体用在什么场面）</p>
+    <div class="scenario-list">
+      <div class="scenario-item"><div class="scenario-item__variant">large · 深色 · block</div><div class="scenario-item__when">页面级主操作：登录、提交、底部固定操作栏</div></div>
+      <div class="scenario-item"><div class="scenario-item__variant">small · 深色</div><div class="scenario-item__when">卡片内操作：扫码到库、分单、审核</div></div>
+      <div class="scenario-item"><div class="scenario-item__variant">浅色 light / light-solid</div><div class="scenario-item__when">与主按钮并列的次级操作</div></div>
+      <div class="scenario-item"><div class="scenario-item__variant">清除 clear</div><div class="scenario-item__when">重置 / 取消类操作</div></div>
+      <div class="scenario-item"><div class="scenario-item__variant">文字 text</div><div class="scenario-item__when">「更多」等低强调弱操作（无底色）</div></div>
     </div>
   </section>
 
@@ -875,7 +1117,7 @@
 
   <!-- Footer -->
   <footer style="text-align:center;padding:24px 0;font-size:11px;color:#7C8492;">
-    信小递司机端设计系统 v1.0 · 海信集团物流 · 品牌色 #00AAA6 · PingFang SC · 375px 移动端
+    信小递司机端设计系统 v1.1 · 海信集团物流 · 色彩对齐 Pangea · 品牌色 #00AAA6 · PingFang SC · 375px 移动端
   </footer>
 
 </div><!-- /.main -->

@@ -163,9 +163,11 @@
   },
   "specs": {
     "container": {
-      "width": "343px",
+      "widthMode": "block",
+      "maxWidth": "343px",
+      "widthNote": "width:100% + max-width:343px（内容宽度），响应式安全，不写死 343px；在 375px 内容区内视觉等同旧值",
       "backgroundColor": "#FFFFFF",
-      "radius": "10px",
+      "radius": "var(--radius-card) / 10px",
       "shadow": "0px 4px 12px rgba(0,0,0,0.05)",
       "border": "1px solid #F2F3F5",
       "overflow": "hidden"
@@ -189,18 +191,66 @@
     "默认收起状态，仅展示提货/收货信息 + 运单信息 + 按钮组",
     "展开后显示每个运单下的订单详情",
     "卡片列表间距 12px",
-    "卡片内嵌内容区(订单body)用 bg-1(#F3F5F7) 底色",
-    "预改约区域(订单footer)用 bg-2(#EBEDF0) 底色",
+    "卡片内嵌内容区(订单body)用 bg-1/color-fill-2(#F2F3F5) 底色",
+    "预改约区域(订单footer)用 bg-2/color-fill-3(#E5E6EB) 底色",
     "多选模式下checkbox出现在三个层级: 提货点标签旁、车牌号旁、订单顶部",
-    "标签颜色: 提货点=蓝(#3491FA), 收货点=橙(#FF7D00), 2C=橙, 直发=绿"
+    "标签颜色: 提货点=蓝(#165DFF), 收货点=橙(#FF7D00), 2C=橙, 直发=绿(#00AAA6)"
   ],
   "doNotInvent": [
     "无圆角卡片",
     "有深色阴影的卡片",
     "选中态用蓝色（应用绿色 checkbox）",
-    "宽度不是 343px 的卡片",
+    "宽度超过内容宽度(max-width:343px)的卡片",
     "卡片内嵌白色底内容区（应用 bg-1）",
     "预改约区域用 bg-1（应用 bg-2 #EBEDF0）",
     "展开/收起按钮放在卡片外部"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "运单卡片列表", "variant": "运单卡片-collapsed", "when": "列表页每行展示一个运单，默认收起，仅显示提货/收货信息+运单信息+按钮组" },
+    { "scenario": "运单详情展开", "variant": "运单卡片-expanded", "when": "点击展开/收起 pill 后显示订单信息详情" },
+    { "scenario": "批量多选", "variant": "运单卡片-checkbox", "when": "多选模式下勾选多条运单批量操作（checkbox 出现在提货点/车牌/订单三级）" },
+    { "scenario": "签收管理卡片", "variant": "签收管理卡片-collapsed / 签收管理卡片-expanded", "when": "签收相关列表/操作" },
+    { "scenario": "物流信息卡片", "variant": "物流信息卡片-default", "when": "展示物流轨迹/信息概要" }
+  ],
+  "states": [
+    { "state": "collapsed", "trigger": "默认", "class": "card（订单信息隐藏）" },
+    { "state": "expanded", "trigger": "点击展开/收起 pill", "class": "card（配合 .card__toggle / .card__toggle-pill 切换，.card__orders--visible 显隐订单信息）" },
+    { "state": "checkbox", "trigger": "多选模式", "class": "card（配合 .checkbox 三级选择）" }
+  ],
+  "cssClasses": ["card", "card-list", "card__top", "card__alert", "card__body", "card__info-box", "card__divider", "card__divider--full", "card__footer", "card__footer--between", "card__expand", "card__expand-pill", "card__location", "card__location-row", "card__addr", "card__warehouse", "card__cargo", "card__dispatch", "card__dispatch-row", "card__dispatch-plate", "card__dispatch-time", "card__toggle", "card__toggle-pill", "card__toggle-pill--open", "card__orders", "card__orders--visible", "card__order", "card__order-top", "card__order-sap", "card__order-body", "card__field", "card__field-label", "card__field-value", "card__product", "card__order-footer", "card__order-contact", "card__order-appoint", "card__stats", "card__actions"],
+  "structureClasses": {
+    "$description": "运单卡片 = .card 容器 + 下列 .card__* 原子类拼装（值全部来自 tokens.json，定义见 ui.css 第8节）。",
+    "容器": ".card（列表页外层用 .card-list 提供 12px 卡片间距）",
+    "1-提货收货信息(地点头)": {
+      "分组容器": ".card__location",
+      "标签+地址行": ".card__location-row（内含 .tag/.tag--blue|--orange + .card__addr）",
+      "仓库编号行": ".card__warehouse",
+      "货品数量摘要": ".card__cargo"
+    },
+    "分割线": ".card__divider.card__divider--full（全宽贴边）",
+    "2-运单信息(调度单分组)": {
+      "分组容器": ".card__dispatch",
+      "车牌运单+时间行": ".card__dispatch-row（.card__dispatch-plate 左 / .card__dispatch-time 右）",
+      "货品数量摘要": ".card__cargo"
+    },
+    "3-订单信息(展开区)": {
+      "展开容器": ".card__orders（默认隐藏，展开加 .card__orders--visible）",
+      "订单块": ".card__order",
+      "订单头(绿底)": ".card__order-top + .card__order-sap + .tag",
+      "订单体(灰底)": ".card__order-body",
+      "字段行": ".card__field（.card__field-label + .card__field-value）",
+      "品类型号数量行": ".card__product（.col-type / .col-model / .col-qty）",
+      "订单底(预改约)": ".card__order-footer + .card__order-contact + .card__order-appoint"
+    },
+    "4-展开收起": {
+      "居中容器": ".card__toggle",
+      "pill按钮": ".card__toggle-pill（展开态加 .card__toggle-pill--open，箭头旋转180deg）"
+    },
+    "5-底部按钮区": {
+      "两端对齐容器": ".card__footer.card__footer--between",
+      "统计文字": ".card__stats",
+      "按钮组": ".card__actions（内含 .btn 系列，见 button-group.json）"
+    }
+  },
+  "exampleRefs": ["examples/demo-list.html", "examples/demo-pending-arrival.html", "preview/component-card.html"]
 }

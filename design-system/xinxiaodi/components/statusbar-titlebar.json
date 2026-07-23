@@ -195,5 +195,20 @@
     "底色为品牌色的状态栏（状态栏只有白底或透明两种）",
     "标题栏高度不为 44px 的变体",
     "状态栏中添加自定义内容（仅系统时间和图标）"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "常规内页顶部", "variant": "statusbar-dark + titlebar-solid", "when": "白底列表页/操作页/功能选择页，dark 状态栏 + solid 标题栏" },
+    { "scenario": "渐变头部页顶部", "variant": "statusbar-light + titlebar-transparent", "when": "首页/详情页带品牌色渐变背景，light 状态栏 + transparent 标题栏" },
+    { "scenario": "返回导航", "variant": "titlebar-有标题（含返回）", "when": "二级及以下页面显示返回按钮点击返回上一级；一级页面（首页/登录页）无返回" },
+    { "scenario": "小程序胶囊", "variant": "titlebar__capsule", "when": "小程序平台自动提供的胶囊按钮，固定标题栏右侧距右 6px" }
+  ],
+  "states": [
+    { "state": "statusbar-dark", "trigger": "白底页面", "class": "statusbar statusbar--dark（深色文字/图标）" },
+    { "state": "statusbar-light", "trigger": "渐变头部页面", "class": "statusbar statusbar--light（白色文字/图标）" },
+    { "state": "titlebar-solid", "trigger": "常规内页", "class": "titlebar titlebar--solid（白底 + 下边线 + 深色标题）" },
+    { "state": "titlebar-transparent", "trigger": "渐变头部页", "class": "titlebar titlebar--transparent（透明 + 白色标题）" },
+    { "state": "topbar-hidden", "trigger": "开发环境隐藏顶部", "class": "demo-topbar--hidden（整组顶部一次性隐藏）" }
+  ],
+  "cssClasses": ["statusbar", "statusbar__time", "statusbar__icons", "statusbar--dark", "statusbar--light", "titlebar", "titlebar__back", "titlebar__title", "titlebar__right", "titlebar--solid", "titlebar--transparent", "titlebar__capsule", "demo-topbar", "demo-topbar--hidden"],
+  "exampleRefs": ["examples/demo-home.html", "examples/demo-list.html", "preview/component-statusbar-titlebar.html"]
 }

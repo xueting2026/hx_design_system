@@ -88,10 +88,9 @@ body > * {
 
 .section-title { font-size: 14px; font-weight: 600; color: #1D2129; margin-bottom: 12px; }
 
-.waybill-card {
-  background: #FFFFFF; border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.05); margin-bottom: 12px; overflow: hidden;
-}
+/* 运单卡片容器统一用组件库 .card 类；首页任务区内嵌于 .content，
+   卡片间距 12px 由 .content > .card 提供 */
+.content > .card { margin-bottom: 12px; }
 
 /* 浮动按钮使用组件库 .fab 类（返回顶部），样式见 ui.css */
 </style>
@@ -181,7 +180,7 @@ body > * {
   <div class="section-title">待办任务</div>
 
   <!-- 运单卡片 1 -->
-  <div class="waybill-card">
+  <div class="card">
     <div style="padding: 12px 16px 8px;">
       <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
         <span style="display: inline-flex; align-items: center; padding: 0 4px; height: 20px; border: 1px solid #3491FA; border-radius: 2px; font-size: 12px; font-weight: 500; color: #3491FA; flex-shrink: 0;">提货点</span>
@@ -206,7 +205,7 @@ body > * {
   </div>
 
   <!-- 运单卡片 2 -->
-  <div class="waybill-card">
+  <div class="card">
     <div style="padding: 12px 16px 8px;">
       <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
         <span style="display: inline-flex; align-items: center; padding: 0 4px; height: 20px; border: 1px solid #FF7D00; border-radius: 2px; font-size: 12px; font-weight: 500; color: #FF7D00; flex-shrink: 0;">收货点</span>

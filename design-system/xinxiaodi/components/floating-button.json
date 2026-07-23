@@ -68,5 +68,16 @@
     "非渐变色浮动按钮",
     "多个浮动按钮同时出现",
     "浮动按钮上的角标/徽标"
-  ]
+  ],
+  "usageScenarios": [
+    { "scenario": "返回顶部", "variant": "large-返回顶部", "when": "首页查看待办中心任务后，点击回到首页第一屏" },
+    { "scenario": "辅助浮动操作", "variant": "small", "when": "辅助场景的右下角浮动操作，一个页面最多一个" }
+  ],
+  "states": [
+    { "state": "default", "trigger": "默认", "class": "fab（大号加 .fab--lg，小号加 .fab--sm）" },
+    { "state": "hover", "trigger": "悬停", "class": "fab（:hover transform scale(1.05)）" },
+    { "state": "active", "trigger": "按下", "class": "fab（:active transform scale(0.95)）" }
+  ],
+  "cssClasses": ["fab", "fab--lg", "fab--sm", "fab__icon", "fab__label"],
+  "exampleRefs": ["examples/demo-home.html", "preview/component-navigation.html"]
 }
