@@ -1,108 +1,23 @@
-# AGENTS.md — 多设计系统统一铁律（跨所有产品）
+# AGENTS.md — 信小递设计系统（skill 仓库）
 
-**你是 AI agent，要用本工程的任意一套设计系统做界面原型？先读完这页再动手。**
+**本仓库的设计系统规范是一个 skill。做信小递司机端界面/原型前，先加载它。**
 
-本工程是**机读优先的企业级多设计系统库**。每套产品设计系统收敛在 `design-system/<产品>/` 下（如 `design-system/xinxiaodi/`）。工程头等职责是——**产出可交付给开发的 HTML 原型**。你的工作是**执行规范，不是自由发挥**。
+- **单一事实源（skill）**：[`skills/xinxiaodi-design/SKILL.md`](skills/xinxiaodi-design/SKILL.md)
+- 支持 skill 机制的工具：直接加载该 skill，按其 `SKILL.md` 执行。
+- **不支持 skill 的工具**（只读 AGENTS.md）：把下面三样喂进上下文即可工作——
+  1. `skills/xinxiaodi-design/SKILL.md`（执行铁律 + 消费顺序 + 两个行为闸门 + 场景匹配 + 强制校验 + 索引）
+  2. `skills/xinxiaodi-design/references/tokens.json`（单一事实源：颜色/字体/间距/圆角/组件尺寸）
+  3. `skills/xinxiaodi-design/references/Design.md`（信小递唯一规范文档）
 
-本页只规定**跨所有设计系统通用**的铁律与流程；任何**产品专属**的色值、尺寸、图标路径、页型细节，一律去对应产品的 `Design.md` 与 `tokens.json` 查。
+## 一条铁律（详见 SKILL.md）
 
----
+值只从 `references/tokens.json` 取；颜色只用语义 token；间距/圆角/字号/控件尺寸只用既定档位；**所有原型必须引用 `references/ui.css` 并复用其 class 构建组件**——绝不裸写像素、绝不自造色、绝不自造组件、绝不加规范外装饰。产物写入**用户当前工作目录**，不写进 skill 目录。产出后跑 `node skills/xinxiaodi-design/scripts/verify-prototype.mjs <原型HTML绝对路径>` 机械自检，0 ERROR 方可交付。
 
-## 一条铁律
+## 仓库其它文件
 
-**值只从对应产品的 `tokens.json` 取；颜色只用语义 token；间距 / 圆角 / 字号 / 控件尺寸只用该产品既定的档位——绝不自创值、绝不自造组件、绝不加规范外的装饰。**
+- `README.md` — 仓库总览、skill 用法、迭代流程、治理导航。
+- `CONTRIBUTING.md` — 协作治理：单一事实源约定、改动顺序、入库边界、分支提交。
+- `CHANGELOG.md` — 变更记录。
+- `_planning/PROJECT_CONTEXT.md` — 跨会话上下文台账（不入库）。
 
-## 🚨 组件复用铁律（最高优先级）
-
-**所有页面必须引用对应产品的 `ui.css` 并使用其中定义的 CSS class 来构建组件。**
-
-- `preview/` 和 `examples/` 中的组件是经过精心调教的标准实现。
-- 生成 demo 或页面时，**禁止用纯内联 style 重新实现任何已有组件**。
-- 如果某个 UI 元素在产品的 `ui.css` 中有对应 class，必须使用该 class。
-- 仅对组件 JSON 中定义的「card 内部结构」等页面特定布局可用内联样式补充。
-- **不确定用什么组件 → 必须询问用户，不允许自行发挥。**
-
-违反此规则 = 交付失败，必须返工。
-
----
-
-## 选用哪套设计系统
-
-1. 用户显式指定产品（如「画信小递页面」）→ 用 `design-system/<该产品>/`。
-2. 用户只说产品名/业务但未指定系统 → 在 `design-system/` 下按产品名匹配目录。
-3. 匹配不到或有歧义 → **询问用户**，不要擅自选一套或混用多套。
-
-一次任务只用一套设计系统，不跨系统混用组件与 token。
-
----
-
-## 通用消费顺序（对任意产品）
-
-1. **取值** → `design-system/<产品>/tokens.json`：单一事实源（颜色/字体/间距/圆角/组件尺寸/页型）。**直接引用，不改不近似。**
-2. **取规则** → `design-system/<产品>/Design.md`：该产品唯一的规范文档——品牌速览 + 速查表 + 完整设计规范 + 落地细则（颜色表、图标引用、按钮组、页型模板、自查项、常见错误）。**先读它。**
-3. **看组件** → `design-system/<产品>/preview/`：组件视觉与交互。
-4. **取素材** → `design-system/<产品>/assets/`：SVG 图标、Logo 等，按该产品命名规则引用。
-5. **看成品** → `design-system/<产品>/examples/`：页型模板示例。
-
----
-
-## 生成页面前必须先问
-
-在生成任何 demo / 页面之前，**必须先询问用户**：
-
-> “这个页面是做 demo 演示用，还是直接交付开发？”
-
-- **demo 演示** → 使用该产品 `tokens.json` 里 `layout.designWidth` 的固定宽度，保持现有 CSS 不变。
-- **交付开发** → 改为响应式写法：宽度 `100% + max-width`（取该产品 layout 定义），内容区用 `calc(100% - 2×页边距)`，其余高度/间距保持 px（小程序场景 `px×2=rpx`，以产品 tokens 的 `layout.rpxConversion` 为准）。
-
-## 产物落位约定（不要写进设计系统源目录）
-
-- **原型 HTML** → `prototypes/<产品>/<需求名>/`（如 `prototypes/xinxiaodi/待到库列表/index.html`）。
-- **文档产物（PRD 等）** → `docs/<产品>/<需求名>.md`。
-- **禁止**把产物写入 `design-system/` 内的任何目录；`design-system/` 只放设计系统源文件。
-- 原型引用设计系统资源时用相对路径回指 `../../../design-system/<产品>/ui.css` 等（按实际层级计算），或按团队约定复制所需资源。
-
----
-
-## 产出前自查清单（通用项，最常违反）
-
-### 🚨 硬规则（出现即失败，必须修正后才能交付）
-
-- [ ] **引用了产品 `ui.css`** — 未引用即失败。
-- [ ] **组件用 CSS class 实现** — 不允许纯内联样式重写已有组件。
-- [ ] **未自创组件** — 所有组件复用产品 `ui.css` 已定义的 class；不确定就问用户。
-- [ ] **图标引用素材文件** — 使用产品 `assets/` 下的 SVG，不自创内联 SVG；缺图标时告知用户。
-- [ ] **颜色来自 token** — 全部来自该产品调色板 / CSS 变量，无裸 HEX 值。
-- [ ] **间距 / 圆角 / 字号 / 控件尺寸** — 只用该产品 tokens 的既定档位，无规范外数值。
-- [ ] **一组操作只突出一个主操作**。
-- [ ] **禁用态按产品规范** — 不擅自改背景/配色逻辑。
-- [ ] **交付模式已响应式** — demo 用固定设计宽，交付开发改响应式。
-- [ ] **产物放对目录** — 原型进 `prototypes/<产品>/`，文档进 `docs/<产品>/`，不落 `design-system/`。
-
-> 产品专属自查项（具体 px / hex / 标签语义 / placeholder 色等）见对应产品 `Design.md` 的「Agent 消费速查」章节。
-
----
-
-## 工程文件结构
-
-```
-hx_design_system/
-├── AGENTS.md                 # 本文件：跨所有设计系统的统一铁律
-├── README.md                 # 工程总览 + 导航 + 如何新增设计系统
-├── design-system/            # 所有产品设计系统
-│   └── <产品>/               # 如 xinxiaodi/
-│       ├── Design.md         # 该产品唯一规范文档（品牌速览+速查+完整规范+落地细则）
-│       ├── tokens.json       # 单一事实源
-│       ├── css.json / library-consumption.json
-│       ├── ui.css / ui.js    # 可运行样式与交互
-│       ├── index.html        # 组件总览
-│       ├── components/ preview/ examples/ assets/
-├── prototypes/               # 原型产物（可交付开发的 HTML）
-│   └── <产品>/<需求>/
-└── docs/                     # 文档产物（PRD 等）
-    └── <产品>/
-```
-
----
-
-**拿不准就回到对应产品的 `tokens.json` 和 `Design.md`，不要猜。你的工作是执行这套规范，不是设计。**
+> 拿不准就回到 `skills/xinxiaodi-design/references/tokens.json` 和 `references/Design.md`，不要猜。你的工作是执行这套规范，不是设计。

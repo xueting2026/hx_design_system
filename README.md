@@ -1,58 +1,52 @@
-# HX Design Systems
+# 信小递设计系统 Skill
 
-海信（HX）企业级**多设计系统工程**。每套产品设计系统机读优先、自洽收敛在 `design-system/<产品>/` 下，供 AI agent 消费产出界面。
+海信物流**司机端微信小程序「信小递」**的机读设计系统，打包为一个自洽 **skill**，供 AI agent 消费产出**可交付开发的移动端 HTML 原型**。
 
-**工程头等职责：产出可交付给开发的 HTML 原型。**
+品牌绿 `#00AAA6`，设计宽度 375px（内容宽 343px），字体 PingFang SC，简洁实用、操作效率优先。
 
 ## 顶层结构
 
 ```
 hx_design_system/
-├── AGENTS.md          # 跨所有设计系统的统一执行铁律（AI 先读）
-├── README.md          # 本文件：工程总览与导航
-├── design-system/     # 各产品设计系统（按产品分子目录）
-│   └── xinxiaodi/     # 信小递司机端
-├── prototypes/        # 原型产物（可交付开发的 HTML），按 <产品>/<需求>/ 分组
-└── docs/              # 文档产物（PRD 等），按 <产品>/ 分组
+├── AGENTS.md          # 薄指针 → skill（兼容只读 AGENTS.md 的工具）
+├── README.md          # 本文件：仓库总览与导航
+├── CONTRIBUTING.md    # 协作治理（单一事实源约定 / 改动顺序 / 入库边界 / 分支提交）
+├── CHANGELOG.md       # 变更日志
+└── skills/
+    └── xinxiaodi-design/          # ★唯一资产（单一事实源）
+        ├── SKILL.md               # skill 入口：执行铁律 + 消费顺序 + 两个行为闸门 + 场景匹配 + 强制校验 + 索引
+        ├── references/            # 设计系统全部源文件
+        │   ├── tokens.json        # 单一事实源（颜色/字体/间距/圆角/组件尺寸）
+        │   ├── Design.md          # 唯一规范文档（品牌速览 + 速查表 + 完整规范 + Agent 落地细则）
+        │   ├── css.json / library-consumption.json / scenario-map.json
+        │   ├── ui.css / ui.js     # 可运行样式 class 与交互
+        │   ├── components/*.json  # 13 个组件元数据（cssClasses 白名单 / usageScenarios）
+        │   ├── preview/*.html     # 组件预览页
+        │   ├── examples/*.html    # 页型成品底板（demo-home / demo-list / demo-pending-arrival / demo-interaction / login）
+        │   └── assets/            # SVG 图标 + Logo
+        └── scripts/verify-prototype.mjs   # 产出后机械自检（0 依赖 Node，默认 --ds references）
 ```
-
-- **`AGENTS.md`** — 通用铁律：值只从 token 取、组件复用、消费顺序、demo/交付分支、产物落位、通用自查。任何产品无关规则都在这里。
-- **`design-system/<产品>/`** — 单套设计系统的全部源文件（`Design.md` / `tokens.json` / `css.json` / `ui.css` / `ui.js` / `components/` / `preview/` / `examples/` / `assets/`）。`Design.md` 是该产品唯一的规范文档（品牌速览 + 速查表 + 完整规范 + 落地细则）。产品身份由目录层级表达，目录内文件名不带产品前缀。
-- **`prototypes/`、`docs/`** — 交付产物专区，与设计系统源文件隔离，不写入 `design-system/`。
-- **`CONTRIBUTING.md`、`CHANGELOG.md`** — 协作治理：贡献前先读 `CONTRIBUTING.md`（上下文对齐、改动顺序、入库边界、分支提交）；变更记录在 `CHANGELOG.md`。
-
-## 已接入的设计系统
-
-| 产品 | 目录 | 简介 |
-|------|------|------|
-| 信小递司机端 | `design-system/xinxiaodi/` | 海信物流司机端微信小程序，品牌绿 `#00AAA6`，设计宽度 375px，简洁实用、操作效率优先 |
 
 ## 使用方式（AI agent）
 
-1. 先读根 `AGENTS.md` 建立统一约束。
-2. 按任务确定用哪套系统，进入 `design-system/<产品>/`，按 `tokens.json → Design.md → components/ → preview/ → examples/` 顺序消费。
-3. 生成原型前先问「demo 演示 or 交付开发」，产物写入 `prototypes/<产品>/<需求>/`（文档写入 `docs/<产品>/`）。
+1. **加载 skill**：支持 skill 机制的工具直接加载 `skills/xinxiaodi-design/`；不支持的工具按 `AGENTS.md` 把 `SKILL.md` + `references/tokens.json` + `references/Design.md` 喂进上下文。
+2. **按序消费**：`references/tokens.json → Design.md → components/ → preview/ → examples/`。
+3. **生成前必问两件事**：① demo 演示 or 交付开发；② 首页功能入口若有歧义先确认。
+4. **产物落用户工作区**（不写进 skill 目录）；产出后跑自检脚本：
+   ```bash
+   node skills/xinxiaodi-design/scripts/verify-prototype.mjs <原型HTML绝对路径>
+   ```
+   有任一 ERROR 即返工。
 
-## 作为 Skill 使用（信小递）
+## 如何迭代这套设计系统
 
-信小递设计系统已额外打包成一个**自洽 skill**，位于 `skills/xinxiaodi-design/`，供支持 skill 机制的 AI 工具直接加载：
+单一事实源已收敛在 `skills/xinxiaodi-design/references/`，**不再有第二份副本**。改动按顺序（详见 `CONTRIBUTING.md`）：
 
-```
-skills/xinxiaodi-design/
-├── SKILL.md          # skill 入口（执行铁律 + 消费顺序 + demo/交付与首页歧义两个闸门 + 场景匹配 + 强制校验 + 索引）
-├── references/       # = design-system/xinxiaodi 全量副本（tokens/Design.md/ui.css/components/preview/examples/assets…）
-└── scripts/verify-prototype.mjs   # 产出后机械自检（默认 --ds references）
-```
+1. 改 `references/tokens.json`（源头）。
+2. 同步 `references/css.json`、`references/ui.css` / `ui.js`。
+3. 同步 `references/Design.md`（数值/说明/速查表与 token 一致）。
+4. 同步涉及的 `references/components/*.json`、`preview/`、`examples/`。
+5. 自查：按 `SKILL.md` + `Design.md` 的产出前清单核对；必要时用 `scripts/verify-prototype.mjs` 对样例校验（0 裸 HEX、间距合档、组件复用、图标引用等）。
+6. 更新 `CHANGELOG.md`，并回写 `_planning/PROJECT_CONTEXT.md` 台账。
 
-- SKILL.md 保持"薄"，大文件走 `references/` 按需加载；产物写入**用户当前工作目录**，不写进 skill 目录。
-- 自检：`node skills/xinxiaodi-design/scripts/verify-prototype.mjs <原型HTML绝对路径>`。
-- ⚠️ `references/` 是 `design-system/xinxiaodi/` 的**拷贝**（双副本），改设计系统时两边需同步。
-
-## 如何新增一套设计系统
-
-1. 在 `design-system/` 下新建 `<产品>/` 目录。
-2. 按信小递的标准文件清单补齐：`Design.md`、`tokens.json`、`css.json`、`library-consumption.json`、`ui.css`、`ui.js`、`index.html`、`components/`、`preview/`、`examples/`、`assets/`。文件名一律不带产品前缀。
-3. 在本 README「已接入的设计系统」表中登记一行。
-4. 通用铁律沿用根 `AGENTS.md`，无需在产品目录内重复；产品专属细则写进该产品的 `Design.md`。
-
-> 内部工程优化 / 规划类文档放在 `_planning/`（已在 `.gitignore` 中排除，不作为最终产物）。
+> 内部规划 / 上下文台账放 `_planning/`（已在 `.gitignore` 排除，不作为最终产物）。

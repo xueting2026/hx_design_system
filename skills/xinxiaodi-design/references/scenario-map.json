@@ -115,7 +115,7 @@
     "componentsAreFor": "缺现成页面时的拼装单元（低重合时组合）",
     "examplePrivateClasses": "examples 里的页面私有 class（历史上如 .waybill-card）若属通用样式，应回收进 ui.css 成为正式组件类后再使用；未回收的私有 class 禁止在 prototypes 中引用",
     "authoritativeCssPath": "references/ui.css",
-    "deprecatedTrees": ["design-system/xinxiaodi/ (源工程目录，skill 内改用 references/)", "xinxiaodi-design-system/ (旧目录，禁止引用)"]
+    "deprecatedTrees": ["任何非 references/ui.css 的样式路径（含旧 design-system/*、xinxiaodi-design-system/*）均禁止引用"]
   },
 
   "knownGaps": [

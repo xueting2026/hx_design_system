@@ -6,6 +6,15 @@
 
 ## [Unreleased]
 
+### 变更
+- **收敛为单一事实源 = skill**（2026-07-24）：skill 在其它工具验证有效后，删除重复的源资产，仓库定位由「多设计系统工程」转为「信小递设计系统 skill 仓库」。
+  - **删除**：`design-system/xinxiaodi/`（与 `skills/xinxiaodi-design/references/` 重复）、根 `scripts/verify-prototype.mjs`（skill 内已有自洽副本）、废弃产物空目录 `prototypes/`、`docs/`（skill 模型下产物落用户工作区）。
+  - **AGENTS.md 瘦身**为薄指针：指向 `skills/xinxiaodi-design/SKILL.md`，并给出不支持 skill 的工具的三文件回退（SKILL.md + tokens.json + Design.md）。
+  - **README.md / CONTRIBUTING.md 重写**：去掉多产品/`design-system/<产品>/`/新增系统叙事，改为单一事实源（skill references）+ 迭代顺序（tokens→css/ui→Design→components/examples/scenario-map→自检）+ 入库边界（skills/** 入库，_planning/ 不入库）。
+  - **`.gitignore` 精简**：移除 `prototypes/`、`docs/` 规则，仅保留 `_planning/` 与 `.DS_Store`。
+  - **`scenario-map.json`** `deprecatedTrees` 更新：不再提及已删的 `design-system/`，统一表述为"非 `references/ui.css` 的样式路径均禁止引用"。
+  - 复核：skill 自洽（`verify-prototype.mjs` 对 `demo-list` 仍 0 ERROR），全仓无指向已删目录的残留引用。
+
 ### 新增
 - **信小递自洽 Skill**（`skills/xinxiaodi-design/`，2026-07-24）：把信小递设计系统打包成可被 AI skill 机制加载的自洽包，零效果损失。
   - `SKILL.md`：合并根 `AGENTS.md` 通用铁律 + `Design.md`「Agent 消费速查」+ 两个行为闸门（生成前必问 demo/交付、首页功能入口歧义必问）+ 场景匹配三档 + 产出后强制校验 + `references/` 索引；frontmatter `description` 承载触发词；**产物落用户工作区，不写进 skill 目录**。
