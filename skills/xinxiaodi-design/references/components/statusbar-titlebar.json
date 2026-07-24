@@ -1,0 +1,214 @@
+{
+  "slug": "statusbar-titlebar",
+  "name": "状态栏 & 标题栏 StatusBar & TitleBar",
+  "schemaVersion": 1,
+  "figmaNodes": {
+    "statusbar-dark": "4-470",
+    "statusbar-light": "4-444",
+    "titlebar-solid": "11-1095",
+    "titlebar-transparent": "11-1165"
+  },
+  "description": "iOS 系统状态栏与页面标题栏（导航栏）组件，每个都有两种配色变体（深色/浅色），搭配使用覆盖所有页型场景",
+  "subComponents": {
+    "statusbar": {
+      "description": "44px 高系统状态栏，显示时间和系统图标（信号/WiFi/电量）",
+      "figmaNodes": {
+        "dark": "4-470",
+        "light": "4-444"
+      },
+      "variantDimensions": [
+        {
+          "axis": "theme",
+          "values": ["dark(反黑-深色文字)", "light(反白-白色文字)"]
+        }
+      ],
+      "specs": {
+        "container": {
+          "width": "375px",
+          "height": "44px",
+          "display": "flex",
+          "alignItems": "flex-end",
+          "paddingBottom": "10px",
+          "paddingHorizontal": "16px"
+        },
+        "time": {
+          "fontSize": "14px",
+          "fontWeight": 600,
+          "lineHeight": "18px",
+          "position": "left"
+        },
+        "icons": {
+          "position": "right",
+          "gap": "6px",
+          "items": ["signal", "wifi", "battery"]
+        },
+        "variants": {
+          "dark": {
+            "background": "#FFFFFF",
+            "textColor": "#1D2129",
+            "iconColor": "#1D2129",
+            "usage": "常规白底页面（列表页/操作页/功能选择页）",
+            "class": "statusbar statusbar--dark"
+          },
+          "light": {
+            "background": "transparent",
+            "textColor": "#FFFFFF",
+            "iconColor": "#FFFFFF",
+            "usage": "渐变头部页面（首页/详情页带品牌色背景）",
+            "class": "statusbar statusbar--light"
+          }
+        }
+      }
+    },
+    "titlebar": {
+      "description": "44px 高标题栏/导航栏，含左侧返回按钮 + 居中标题 + 右侧操作区",
+      "figmaNodes": {
+        "solid": "11-1095",
+        "transparent": "11-1165"
+      },
+      "variantDimensions": [
+        {
+          "axis": "theme",
+          "values": ["solid(黑色-实底)", "transparent(透明)"]
+        },
+        {
+          "axis": "content",
+          "values": ["有标题", "无标题(仅返回)", "有标题+右侧操作"]
+        }
+      ],
+      "specs": {
+        "container": {
+          "width": "375px",
+          "height": "44px",
+          "display": "flex",
+          "alignItems": "center",
+          "paddingHorizontal": "6px"
+        },
+        "back-button": {
+          "width": "44px",
+          "height": "44px",
+          "iconSize": "24px",
+          "strokeWidth": "1.5px",
+          "linecap": "round",
+          "linejoin": "round",
+          "path": "M15 6L9 12L15 18"
+        },
+        "title": {
+          "fontSize": "16px",
+          "fontWeight": 500,
+          "lineHeight": "22px",
+          "textAlign": "center",
+          "position": "absolute",
+          "centering": "绝对定位居中（left:50% + translateX(-50%)），始终相对整栏 375px 水平居中，不受左右按钮功能增减影响",
+          "maxWidth": "calc(100% - 192px)，预留左右控件空间避免重叠，超出省略号"
+        },
+        "right-area": {
+          "width": "44px",
+          "height": "44px",
+          "marginLeft": "auto（始终贴右，无论左侧有无返回按钮）",
+          "purpose": "右侧操作/小程序胶囊区域"
+        },
+        "variants": {
+          "solid": {
+            "background": "#FFFFFF",
+            "borderBottom": "0.5px solid #E5E6EB",
+            "titleColor": "#000000",
+            "iconStroke": "#1D2129",
+            "usage": "常规内页（列表页/操作页/功能选择页）",
+            "class": "titlebar titlebar--solid"
+          },
+          "transparent": {
+            "background": "transparent",
+            "borderBottom": "none",
+            "titleColor": "#FFFFFF",
+            "iconStroke": "#FFFFFF",
+            "usage": "渐变头部内页（首页/详情页带品牌色背景）",
+            "class": "titlebar titlebar--transparent"
+          }
+        }
+      }
+    }
+  },
+  "combinationPatterns": {
+    "常规内页": {
+      "statusbar": "dark",
+      "titlebar": "solid",
+      "totalHeight": "88px",
+      "description": "白底状态栏 + 白底标题栏，用于列表页、操作页等大部分页面"
+    },
+    "渐变头部页": {
+      "statusbar": "light",
+      "titlebar": "transparent",
+      "totalHeight": "88px",
+      "description": "透明状态栏 + 透明标题栏，叠加在品牌色渐变背景上"
+    }
+  },
+  "usageRules": {
+    "grouping": {
+      "title": "分组：状态栏 + 标题栏 打包为一组（Demo Top Bar）",
+      "wrapperClass": "demo-topbar",
+      "purpose": "仅用于 demo / 原型预览，还原真机顶部效果",
+      "devNote": "开发时系统（小程序/App）会自带顶部，无需实现。可通过 .demo-topbar { display:none } 或加 .demo-topbar--hidden 一次性整体隐藏，或直接删除整个 .demo-topbar 容器",
+      "structure": "<div class=\"demo-topbar\">{statusbar}{titlebar}</div>"
+    },
+    "statusbar": {
+      "rule": "demo 中状态栏始终存在",
+      "theme": "配色跟随页面：白底页用 dark，渐变头部页用 light"
+    },
+    "titlebar": {
+      "rule": "标题栏是否显示由当前页面决定；显示时由三部分组成",
+      "parts": {
+        "capsule": {
+          "name": "胶囊按钮",
+          "rule": "小程序平台始终存在，固定在右侧",
+          "class": "titlebar__capsule",
+          "note": "由平台自动提供，宽度自适应（87×32），距右侧 6px"
+        },
+        "title": {
+          "name": "标题",
+          "rule": "始终存在，按当前页面命名",
+          "examples": ["首页", "待到库", "订单管理", "运单详情"],
+          "loginPage": "登录页标题为「信小递」",
+          "centering": "标题始终相对整栏水平居中，不管左右两侧按钮功能增减都保持居中"
+        },
+        "back": {
+          "name": "返回按钮",
+          "rule": "仅二级及以下页面有，点击返回上一级",
+          "note": "一级页面（首页、登录页）无返回按钮"
+        }
+      }
+    }
+  },
+  "usageHints": [
+    "状态栏和标题栏用 .demo-topbar 容器打包，开发时可一次性隐藏",
+    "状态栏和标题栏始终为 375px 满屏宽度",
+    "两者组合总高度 88px（44+44），内容区从 88px 开始",
+    "常规内页使用 dark + solid 组合",
+    "首页/渐变头部页使用 light + transparent 组合",
+    "标题栏返回按钮热区为 44×44px，确保可点击范围足够",
+    "标题绝对定位居中，始终相对整栏 375px 居中，不受左右按钮增减影响",
+    "小程序胶囊按钮固定在标题栏右侧，距右 6px",
+    "登录页/首页为一级页面，无返回按钮；二级及以下页面有返回按钮"
+  ],
+  "doNotInvent": [
+    "中间放搜索框的标题栏（搜索框在标题栏下方独立区域）",
+    "底色为品牌色的状态栏（状态栏只有白底或透明两种）",
+    "标题栏高度不为 44px 的变体",
+    "状态栏中添加自定义内容（仅系统时间和图标）"
+  ],
+  "usageScenarios": [
+    { "scenario": "常规内页顶部", "variant": "statusbar-dark + titlebar-solid", "when": "白底列表页/操作页/功能选择页，dark 状态栏 + solid 标题栏" },
+    { "scenario": "渐变头部页顶部", "variant": "statusbar-light + titlebar-transparent", "when": "首页/详情页带品牌色渐变背景，light 状态栏 + transparent 标题栏" },
+    { "scenario": "返回导航", "variant": "titlebar-有标题（含返回）", "when": "二级及以下页面显示返回按钮点击返回上一级；一级页面（首页/登录页）无返回" },
+    { "scenario": "小程序胶囊", "variant": "titlebar__capsule", "when": "小程序平台自动提供的胶囊按钮，固定标题栏右侧距右 6px" }
+  ],
+  "states": [
+    { "state": "statusbar-dark", "trigger": "白底页面", "class": "statusbar statusbar--dark（深色文字/图标）" },
+    { "state": "statusbar-light", "trigger": "渐变头部页面", "class": "statusbar statusbar--light（白色文字/图标）" },
+    { "state": "titlebar-solid", "trigger": "常规内页", "class": "titlebar titlebar--solid（白底 + 下边线 + 深色标题）" },
+    { "state": "titlebar-transparent", "trigger": "渐变头部页", "class": "titlebar titlebar--transparent（透明 + 白色标题）" },
+    { "state": "topbar-hidden", "trigger": "开发环境隐藏顶部", "class": "demo-topbar--hidden（整组顶部一次性隐藏）" }
+  ],
+  "cssClasses": ["statusbar", "statusbar__time", "statusbar__icons", "statusbar--dark", "statusbar--light", "titlebar", "titlebar__back", "titlebar__title", "titlebar__right", "titlebar--solid", "titlebar--transparent", "titlebar__capsule", "demo-topbar", "demo-topbar--hidden"],
+  "exampleRefs": ["examples/demo-home.html", "examples/demo-list.html", "preview/component-statusbar-titlebar.html"]
+}

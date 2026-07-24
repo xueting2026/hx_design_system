@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>信小递 - 交互Demo</title>
+<link rel="stylesheet" href="../ui.css">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  background: #F3F5F7;
+  width: 375px;
+  height: 812px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Page containers */
+.page-container {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+}
+.page-container.active {
+  display: block;
+}
+.page-container iframe {
+  width: 375px;
+  height: 812px;
+  border: none;
+}
+
+/* 登录页直接嵌入（因为需要交互跳转） */
+#page-login {
+  background: #FFFFFF;
+  overflow: hidden;
+}
+#page-login .login-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 250px;
+  background: linear-gradient(90deg, #00B7AC 0%, #009B97 100%);
+  z-index: 0;
+}
+#page-login > *:not(.login-bg) {
+  position: relative;
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== LOGIN PAGE (直接嵌入，有交互) ==================== -->
+<div class="page-container active" id="page-login">
+  <div class="login-bg"></div>
+  
+  <!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+  <div class="demo-topbar">
+    <div class="statusbar statusbar--light">
+      <span class="statusbar__time">9:41</span>
+      <div class="statusbar__icons">
+        <img src="../assets/icons/bar_status_white.svg" height="12" alt="status icons" />
+      </div>
+    </div>
+    <!-- 一级页面（登录页）：无返回 + 标题「信小递」+ 胶囊 -->
+    <div class="titlebar titlebar--transparent">
+      <span class="titlebar__title">信小递</span>
+      <span class="titlebar__right titlebar__capsule">
+        <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_transparent.svg" height="32" alt="miniapp capsule" />
+      </span>
+    </div>
+  </div>
+  
+  <!-- Logo -->
+  <div style="height: 138px; display: flex; align-items: flex-end; justify-content: center;">
+    <img src="../assets/logo/xinxiaodi_driver_logo_full_white.svg" style="width: 240px; height: 60px;" onerror="this.outerHTML='<div style=&quot;font-size:28px;color:#FFF;font-weight:700;&quot;>信小递</div>';" />
+  </div>
+  
+  <!-- Tab Switch -->
+  <div style="display: flex; align-items: center; justify-content: center; padding: 40px 0 24px; gap: 12px;">
+    <span id="ltab-driver" onclick="switchLoginTab('driver')" style="font-size: 16px; font-weight: 500; color: #1D2129; line-height: 22px; height: 40px; display: flex; align-items: center; cursor: pointer;">驾驶员</span>
+    <div style="width: 1px; height: 12px; background: #E5E6EB;"></div>
+    <span id="ltab-tms" onclick="switchLoginTab('tms')" style="font-size: 16px; font-weight: 400; color: #BFC5CC; line-height: 22px; height: 40px; display: flex; align-items: center; cursor: pointer;">TMS账号</span>
+  </div>
+  
+  <!-- Driver Content -->
+  <div id="lcontent-driver" style="padding: 0 36px;">
+    <div onclick="navigateTo('page-home')" style="height: 40px; background: #00AAA6; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+      <span style="font-size: 16px; color: #FFFFFF;">微信一键登录</span>
+    </div>
+  </div>
+  
+  <!-- TMS Content -->
+  <div id="lcontent-tms" style="display: none; padding: 0 36px;">
+    <div style="height: 48px; border-bottom: 1px solid #E5E6EB; display: flex; align-items: center; margin-bottom: 16px;">
+      <input type="text" placeholder="请输入TMS账号" style="border: none; outline: none; font-size: 14px; color: #1D2129; width: 100%; background: transparent;" />
+    </div>
+    <div style="height: 48px; border-bottom: 1px solid #E5E6EB; display: flex; align-items: center;">
+      <input type="password" placeholder="请输入密码" style="border: none; outline: none; font-size: 14px; color: #1D2129; flex: 1; background: transparent;" />
+    </div>
+    <div style="margin-top: 48px;">
+      <div onclick="navigateTo('page-home')" style="height: 40px; background: #00AAA6; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <span style="font-size: 16px; color: #FFFFFF;">登录</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Privacy -->
+  <div style="padding: 16px 36px 0; display: flex; align-items: flex-start; gap: 8px;">
+    <div id="privacy-radio" onclick="togglePrivacy()" style="width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #C8C9CC; background: #FFFFFF; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 3px;"></div>
+    <span style="font-size: 12px; color: #7C8492; line-height: 22px;">已阅读并同意<span style="color: #00AAA6;">《用户信息隐私政策须知》</span></span>
+  </div>
+  
+  <!-- ICP -->
+  <div style="position: absolute; bottom: 60px; left: 0; right: 0; text-align: center;">
+    <span style="font-size: 10px; color: #7C8492;">ICP备案号信息 鲁ICP备2021046572号-2X</span>
+  </div>
+  <div style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; background: #1D2129; border-radius: 3px;"></div>
+</div>
+
+<!-- ==================== HOME PAGE (iframe 加载页型模板) ==================== -->
+<div class="page-container" id="page-home">
+  <iframe src="demo-home.html" id="iframe-home"></iframe>
+</div>
+
+<!-- ==================== LIST PAGE (iframe 加载页型模板) ==================== -->
+<div class="page-container" id="page-list">
+  <iframe src="demo-list.html" id="iframe-list"></iframe>
+</div>
+
+<script>
+// 页面导航
+function navigateTo(pageId) {
+  document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+}
+
+// 登录页 tab 切换
+function switchLoginTab(tab) {
+  const d = document.getElementById('ltab-driver');
+  const t = document.getElementById('ltab-tms');
+  const dc = document.getElementById('lcontent-driver');
+  const tc = document.getElementById('lcontent-tms');
+  if (tab === 'driver') {
+    d.style.color = '#1D2129'; d.style.fontWeight = '500';
+    t.style.color = '#BFC5CC'; t.style.fontWeight = '400';
+    dc.style.display = 'block'; tc.style.display = 'none';
+  } else {
+    t.style.color = '#1D2129'; t.style.fontWeight = '500';
+    d.style.color = '#BFC5CC'; d.style.fontWeight = '400';
+    dc.style.display = 'none'; tc.style.display = 'block';
+  }
+}
+
+// 隐私协议勾选
+function togglePrivacy() {
+  const cb = document.getElementById('privacy-radio');
+  const isChecked = cb.getAttribute('data-checked') === '1';
+  if (isChecked) {
+    cb.setAttribute('data-checked', '0');
+    cb.style.background = '#FFFFFF'; cb.style.borderColor = '#C8C9CC';
+    cb.innerHTML = '';
+  } else {
+    cb.setAttribute('data-checked', '1');
+    cb.style.background = '#00AAA6'; cb.style.borderColor = '#00AAA6';
+    cb.innerHTML = '<div style="width:6px;height:6px;border-radius:50%;background:#FFF;"></div>';
+  }
+}
+
+// 监听 iframe 内部的导航消息
+window.addEventListener('message', function(e) {
+  if (e.data && e.data.action === 'navigate') {
+    navigateTo(e.data.target);
+  }
+});
+</script>
+
+</body>
+</html>

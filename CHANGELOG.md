@@ -7,6 +7,13 @@
 ## [Unreleased]
 
 ### 新增
+- **信小递自洽 Skill**（`skills/xinxiaodi-design/`，2026-07-24）：把信小递设计系统打包成可被 AI skill 机制加载的自洽包，零效果损失。
+  - `SKILL.md`：合并根 `AGENTS.md` 通用铁律 + `Design.md`「Agent 消费速查」+ 两个行为闸门（生成前必问 demo/交付、首页功能入口歧义必问）+ 场景匹配三档 + 产出后强制校验 + `references/` 索引；frontmatter `description` 承载触发词；**产物落用户工作区，不写进 skill 目录**。
+  - `references/`：`design-system/xinxiaodi/` 全量副本（`tokens.json`/`Design.md`/`css.json`/`library-consumption.json`/`scenario-map.json`/`ui.css`/`ui.js`/`components/`(13+index)/`preview/`/`examples/`/`assets/`(114 图标)）。
+  - `scripts/verify-prototype.mjs`：搬入并改造——`--ds` 默认 `references`；**权威源校验改为位置无关**（`fs.realpathSync` 比对 skill 权威 `references/ui.css`，去掉硬编码 `design-system/xinxiaodi` 子串与旧目录名判定）。冒烟对 `examples/demo-list.html` 校验 0 ERROR、退出 0。
+  - 校准 skill 内跨文件指针：`library-consumption.json`（`../../AGENTS.md`→`../SKILL.md`）、`scenario-map.json`（`authoritativeCssPath`→`references/ui.css`、`deprecatedTrees` 增源工程目录说明）、`Design.md`「产出后强制校验」权威源改指 `references/ui.css`、`index.html` 资源链接（AGENTS.md→SKILL.md）。
+  - 精简 examples（2026-07-24）：从 skill 移出「预览画廊外壳」B 组（`examples/index.html`、`home.html`、`list.html`、`interaction.html`、`patterns.html`——iframe 手机框包装 + 画廊目录 + 页型蓝图，仅人工浏览用、agent 不消费），skill 内 `references/examples/` 只保留成品底板 A 组（`demo-home`/`demo-list`/`demo-pending-arrival`/`demo-interaction`/`login`）。B 组在源工程 `design-system/xinxiaodi/examples/` 保留（相同副本，未丢失）。同步修复残留入站链接：`index.html` 页型卡片（home/list→`demo-*`、功能选择/操作页→`Design.md`）、7 个 `preview/component-*.html` 侧边返回（`../examples/index.html`→`../index.html`）、`scenario-map.json` examplePages 移除 `patterns` 条目（原注即「仅导航参考，不作复用底板」）。冒烟：无残留破链、JSON 合法、verify 0 ERROR。
+  - ⚠️ `references/` 与源 `design-system/xinxiaodi/` 为**双副本**，内容一致，改动需两边同步（后续可考虑同步脚本或单一源+生成）。
 - **信小递 Design Token 细化到 v1.1.0（色彩对齐 Pangea + 三层 token 结构）**（`design-system/xinxiaodi/`，2026-07-22）：
   - **三层结构**：`tokens.json` 重构为 `primitive`（原始色板/刻度）→ `semantic`（按用途命名的别名）→ `component`（组件专属）三层，业务代码只消费 semantic/component。
   - **色彩扩展**：品牌 `primary` 与 `red/orange/green/arcoblue/purple` 及中性 `gray` 均补齐为 10 级色板（主色/常规态 = 第 6 级），命名与色值对齐 Pangea；新增语义层 `color-text-1..4` / `color-border-1..4` / `color-fill-1..5`、品牌交互态（`brand`/`-hover`/`-active`/`-bg`/`-bg-subtle`）与功能状态色 `success`/`warning`/`danger`/`info`（各带 `-bg`）。

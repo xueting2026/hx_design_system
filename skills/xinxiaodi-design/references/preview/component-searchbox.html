@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信小递组件 - 搜索框 SearchBox</title>
+<link rel="stylesheet" href="../ui.css">
+<script>
+/* 嵌入模式：被 index.html 以 iframe 引用(?embed=1)时隐藏侧边栏并自适应高度，保证组件只维护一份 */
+(function () {
+  if (new URLSearchParams(location.search).get('embed') !== '1') return;
+  var s = document.createElement('style');
+  s.textContent = '.sidebar{display:none!important}.preview-page{padding-left:24px!important;max-width:none!important}body{background:#fff!important}';
+  (document.head || document.documentElement).appendChild(s);
+  function measure() { return Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0, document.body ? document.body.offsetHeight : 0); }
+  function post() { parent.postMessage({ type: 'previewHeight', height: measure() }, '*'); }
+  function start() {
+    post();
+    if (window.ResizeObserver) new ResizeObserver(post).observe(document.body);
+    [100, 300, 600, 1200].forEach(function (t) { setTimeout(post, t); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(post);
+    Array.prototype.forEach.call(document.images, function (img) { if (!img.complete) img.addEventListener('load', post); });
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+  window.addEventListener('resize', post);
+  // 鼠标在 iframe 空白处滚动时，把滚动转发给父页面（否则外层页面无法继续滚动）
+  window.addEventListener('wheel', function (e) {
+    parent.postMessage({ type: 'previewWheel', deltaY: e.deltaY, deltaX: e.deltaX }, '*');
+  }, { passive: true });
+})();
+</script>
+<style>
+  body { background: #F3F5F7; margin: 0; }
+  .preview-page { max-width: 555px; margin: 0 auto; padding: 24px 16px; padding-left: 140px; }
+  .preview-section { background: #FFFFFF; border-radius: 10px; padding: 24px; margin-bottom: 16px; max-width: 415px; }
+  .preview-title { font-size: 18px; font-weight: 600; color: #1D2129; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .preview-title::before { content: ''; width: 4px; height: 18px; background: #00AAA6; border-radius: 2px; }
+  .preview-desc { font-size: 12px; color: #7C8492; margin-bottom: 20px; }
+  .preview-group { margin-bottom: 24px; }
+  .preview-group-title { font-size: 14px; font-weight: 500; color: #1D2129; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #E5E6EB; }
+  .preview-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; }
+  .preview-label { font-size: 11px; color: #7C8492; margin-top: 6px; }
+  .preview-item { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .preview-spec { font-size: 11px; color: #86909C; background: #F7F8FA; padding: 8px 12px; border-radius: 6px; line-height: 1.8; margin-top: 8px; }
+  .sidebar { position: fixed; left: 0; top: 0; width: 130px; height: 100vh; background: #FFFFFF; border-right: 1px solid #E5E6EB; padding: 16px 0; overflow-y: auto; z-index: 50; }
+  .sidebar__back { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #00AAA6; padding: 6px 16px; margin-bottom: 8px; text-decoration: none; border-bottom: 1px solid #E5E6EB; padding-bottom: 12px; }
+  .sidebar__back:hover { opacity: 0.7; }
+  .sidebar__title { font-size: 12px; font-weight: 600; color: #1D2129; padding: 8px 16px; }
+  .sidebar__link { display: block; font-size: 11px; color: #7C8492; padding: 6px 16px; text-decoration: none; transition: all 0.15s; }
+  .sidebar__link:hover { color: #00AAA6; background: #E6F7F6; }
+  .demo-col { display: flex; flex-direction: column; gap: 16px; }
+  .searchbox { width: 100%; }
+  .search-demo-wrap { background: #F3F5F7; padding: 12px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <a class="sidebar__back" href="../index.html">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8L10 12" stroke="#00AAA6" stroke-width="1.5" stroke-linecap="round"/></svg>
+    返回目录
+  </a>
+  <div class="sidebar__title">搜索框 SearchBox</div>
+  <a class="sidebar__link" href="#sec-basic">默认搜索框</a>
+  <a class="sidebar__link" href="#sec-filter">有筛选搜索框</a>
+  <a class="sidebar__link" href="#sec-multi">多项筛选</a>
+  <a class="sidebar__link" href="#sec-clear">清除交互</a>
+  <a class="sidebar__link" href="#sec-dropdown">筛选下拉</a>
+  <a class="sidebar__link" href="#sec-spec">规格说明</a>
+</nav>
+
+<div class="preview-page">
+  <!-- 默认搜索框 -->
+  <section class="preview-section" id="sec-basic">
+    <div class="preview-title">默认搜索框（无筛选）</div>
+    <div class="preview-desc">高度 36px，白色背景，左侧搜索图标 + 输入区 + 搜索按钮</div>
+    <div class="preview-group">
+      <div class="search-demo-wrap">
+        <div class="searchbox">
+          <div class="searchbox__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#BFC5CC" stroke-width="1.5"/><path d="M16 16L20 20" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <input class="searchbox__input" type="text" placeholder="搜索运单号/手机号">
+          <div class="searchbox__clear">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1L7 7M7 1L1 7" stroke="#FFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="searchbox__query">
+            <span class="searchbox__query-text">搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">class: searchbox (宽度跟随容器)</div>
+    </div>
+  </section>
+
+  <!-- 有筛选的搜索框 -->
+  <section class="preview-section" id="sec-filter">
+    <div class="preview-title">有筛选的搜索框</div>
+    <div class="preview-desc">左侧带下拉筛选器，分隔线 + 搜索输入 + 搜索按钮</div>
+    <div class="preview-group">
+      <div class="search-demo-wrap">
+        <div class="searchbox">
+          <div class="searchbox__filter">
+            <div class="searchbox__filter-trigger">
+              <span class="searchbox__filter-label">全部</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5L6 8L9 5" stroke="#00AAA6" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="searchbox__filter-divider"></div>
+            <div class="searchbox__filter-menu">
+              <div class="searchbox__filter-item">全部</div>
+              <div class="searchbox__filter-item">运单号</div>
+              <div class="searchbox__filter-item">手机号</div>
+              <div class="searchbox__filter-item">姓名</div>
+            </div>
+          </div>
+          <input class="searchbox__input" type="text" placeholder="搜索运单号/手机号">
+          <div class="searchbox__clear">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1L7 7M7 1L1 7" stroke="#FFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="searchbox__query">
+            <span class="searchbox__query-text">搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">点击「全部」下拉切换筛选项</div>
+    </div>
+  </section>
+
+  <!-- 多项筛选搜索框 -->
+  <section class="preview-section" id="sec-multi">
+    <div class="preview-title">多项筛选搜索框</div>
+    <div class="preview-desc">右侧带排序 + 筛选操作按钮，搜索框内有查询按钮。总宽度与上方搜索框一致，搜索框 fill 自适应。</div>
+    <div class="preview-group">
+      <div class="search-demo-wrap">
+        <div style="display: flex; gap: 4px; align-items: center;">
+          <!-- Search Box (fill) -->
+          <div class="searchbox" style="flex: 1; min-width: 0;">
+            <div class="searchbox__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#BFC5CC" stroke-width="1.5"/><path d="M16 16L20 20" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <input class="searchbox__input" type="text" placeholder="请输入查询内容">
+            <div class="searchbox__clear">
+              <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1L7 7M7 1L1 7" stroke="#FFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="searchbox__query">
+              <span class="searchbox__query-text">查询</span>
+            </div>
+          </div>
+          <!-- Sort Button -->
+          <div class="searchbox__action">
+            <img class="searchbox__action-icon" src="../assets/icons/sort_white_20px.svg" width="20" height="20" style="filter: invert(50%) sepia(63%) saturate(1200%) hue-rotate(145deg) brightness(90%) contrast(101%);" />
+            <span class="searchbox__action-label">排序</span>
+          </div>
+          <!-- Filter Button -->
+          <div class="searchbox__action">
+            <img class="searchbox__action-icon" src="../assets/icons/screen_white_20px.svg" width="20" height="20" style="filter: invert(50%) sepia(63%) saturate(1200%) hue-rotate(145deg) brightness(90%) contrast(101%);" />
+            <span class="searchbox__action-label">筛选</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">总宽与上方一致 | 搜索框 flex:1 自适应 | icon 色值与文字同色: vi-2 #00AAA6</div>
+    </div>
+  </section>
+
+  <!-- 清除按钮交互 -->
+  <section class="preview-section" id="sec-clear">
+    <div class="preview-title">清除按钮交互</div>
+    <div class="preview-desc">输入内容后自动显示清除按钮（×），点击清空并聚焦</div>
+    <div class="preview-group">
+      <div class="preview-group-title">请在下方输入文字体验</div>
+      <div class="search-demo-wrap">
+        <div class="searchbox">
+          <div class="searchbox__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#BFC5CC" stroke-width="1.5"/><path d="M16 16L20 20" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <input class="searchbox__input" type="text" placeholder="输入内容后出现清除按钮 →">
+          <div class="searchbox__clear">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1L7 7M7 1L1 7" stroke="#FFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="searchbox__query">
+            <span class="searchbox__query-text">搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">清除按钮: 16px 圆形, bg #C9CDD4, 默认 display:none</div>
+    </div>
+  </section>
+
+  <!-- 筛选下拉交互 -->
+  <section class="preview-section" id="sec-dropdown">
+    <div class="preview-title">筛选下拉交互</div>
+    <div class="preview-desc">点击筛选触发器打开菜单，选择后关闭并更新文字</div>
+    <div class="preview-group">
+      <div class="preview-group-title">点击下方「运单号」触发下拉</div>
+      <div class="search-demo-wrap">
+        <div class="searchbox">
+          <div class="searchbox__filter">
+            <div class="searchbox__filter-trigger">
+              <span class="searchbox__filter-label">运单号</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5L6 8L9 5" stroke="#00AAA6" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="searchbox__filter-divider"></div>
+            <div class="searchbox__filter-menu">
+              <div class="searchbox__filter-item">全部</div>
+              <div class="searchbox__filter-item">运单号</div>
+              <div class="searchbox__filter-item">手机号</div>
+              <div class="searchbox__filter-item">收件人</div>
+              <div class="searchbox__filter-item">地址</div>
+            </div>
+          </div>
+          <input class="searchbox__input" type="text" placeholder="请输入搜索内容">
+          <div class="searchbox__clear">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 1L7 7M7 1L1 7" stroke="#FFF" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="searchbox__query">
+            <span class="searchbox__query-text">搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="preview-label">菜单: shadow 0 4px 16px rgba(0,0,0,0.12), radius 8px</div>
+    </div>
+  </section>
+
+  <!-- 规格说明 -->
+  <section class="preview-section" id="sec-spec">
+    <div class="preview-title">搜索框规格说明</div>
+    <div class="preview-desc">搜索框系统参数一览</div>
+    <div class="preview-spec">
+      <strong>搜索框 .searchbox</strong><br>
+      高度: 36px | 圆角: 4px | 背景: #FFFFFF<br>
+      内边距: left 8px, right 4px<br><br>
+      <strong>搜索图标 .searchbox__icon</strong><br>
+      尺寸: 24×24px | 颜色: #BFC5CC<br><br>
+      <strong>搜索按钮 .searchbox__query</strong><br>
+      高度: 28px | padding: 0 12px | bg: #00AAA6 | radius: 4px<br>
+      Hover: bg #009093<br><br>
+      <strong>清除按钮 .searchbox__clear</strong><br>
+      尺寸: 16px 圆形 | bg: #C9CDD4 | 默认隐藏<br>
+      输入内容 > 0 时添加 --visible 显示<br><br>
+      <strong>筛选下拉 .searchbox__filter</strong><br>
+      文字: 12px #00AAA6 | 分隔线: 1×16px #BFC5CC<br>
+      菜单: min-width 120px, shadow popover, padding 8px 0<br>
+      菜单项: padding 8px 16px, hover bg #E8F8F7
+    </div>
+  </section>
+</div>
+
+<script src="../ui.js"></script>
+</body>
+</html>

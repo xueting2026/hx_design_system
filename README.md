@@ -33,6 +33,21 @@ hx_design_system/
 2. 按任务确定用哪套系统，进入 `design-system/<产品>/`，按 `tokens.json → Design.md → components/ → preview/ → examples/` 顺序消费。
 3. 生成原型前先问「demo 演示 or 交付开发」，产物写入 `prototypes/<产品>/<需求>/`（文档写入 `docs/<产品>/`）。
 
+## 作为 Skill 使用（信小递）
+
+信小递设计系统已额外打包成一个**自洽 skill**，位于 `skills/xinxiaodi-design/`，供支持 skill 机制的 AI 工具直接加载：
+
+```
+skills/xinxiaodi-design/
+├── SKILL.md          # skill 入口（执行铁律 + 消费顺序 + demo/交付与首页歧义两个闸门 + 场景匹配 + 强制校验 + 索引）
+├── references/       # = design-system/xinxiaodi 全量副本（tokens/Design.md/ui.css/components/preview/examples/assets…）
+└── scripts/verify-prototype.mjs   # 产出后机械自检（默认 --ds references）
+```
+
+- SKILL.md 保持"薄"，大文件走 `references/` 按需加载；产物写入**用户当前工作目录**，不写进 skill 目录。
+- 自检：`node skills/xinxiaodi-design/scripts/verify-prototype.mjs <原型HTML绝对路径>`。
+- ⚠️ `references/` 是 `design-system/xinxiaodi/` 的**拷贝**（双副本），改设计系统时两边需同步。
+
 ## 如何新增一套设计系统
 
 1. 在 `design-system/` 下新建 `<产品>/` 目录。

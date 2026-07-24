@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>信小递 - 待到库列表页</title>
+<link rel="stylesheet" href="../ui.css">
+<style>
+body { width: 375px; margin: 0 auto; min-height: 100vh; overflow-x: hidden; }
+
+/* 页面特有样式 */
+.page-sticky { position: sticky; top: 0; z-index: 50; }
+
+/* 底部加载提示 */
+.load-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0 40px;
+}
+
+.load-hint__line { width: 16px; height: 0.5px; background: var(--text-1); }
+.load-hint__text { font-size: 12px; color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<!-- 顶部：状态栏 + 标题栏（demo-topbar，开发时可整体隐藏） -->
+<div class="demo-topbar page-sticky">
+  <!-- 状态栏 -->
+  <div class="statusbar statusbar--dark">
+    <span class="statusbar__time">9:41</span>
+    <div class="statusbar__icons">
+      <img src="../assets/icons/bar_status_black.svg" height="12" alt="status" />
+    </div>
+  </div>
+  <!-- 二级页面（待到库）：返回按钮 + 标题「待到库」+ 胶囊 -->
+  <div class="titlebar titlebar--solid">
+    <button class="titlebar__back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#1D2129" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <span class="titlebar__title">待到库</span>
+    <span class="titlebar__right titlebar__capsule">
+      <img src="../assets/icons/iPhoneX/miniapp/bar_navbar_black.svg" height="32" alt="miniapp" />
+    </span>
+  </div>
+</div>
+
+<!-- 定位栏 -->
+<div class="location-bar">
+  <img src="../assets/icons/position_green_16px.svg" class="location-bar__icon" width="16" height="16" />
+  <span class="location-bar__address" style="flex:1;">山东省青岛市市南区江西路11号</span>
+  <div class="location-bar__action">
+    <span class="location-bar__action-text">筛选</span>
+  </div>
+</div>
+
+<!-- 扫码接单入口 -->
+<div style="padding: 0 16px;">
+  <div class="scan-entry scan-entry--green">
+    <div class="scan-entry__icon scan-entry__icon--green">
+      <img src="../assets/icons/scan_delivery.svg" width="18" height="18" style="filter: brightness(0) invert(1);" />
+    </div>
+    <div class="scan-entry__content">
+      <span class="scan-entry__title">扫仓库码</span>
+      <span class="scan-entry__subtitle">扫码到库登记</span>
+    </div>
+    <svg class="scan-entry__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="#BFC5CC" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+</div>
+
+<!-- 搜索框 -->
+<div style="padding: 8px 16px;">
+  <div class="searchbox">
+    <svg class="searchbox__icon" viewBox="0 0 24 24" fill="none" stroke="#BFC5CC" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input class="searchbox__input" placeholder="请输入提货点/收货点地址" />
+    <div class="searchbox__query"><span class="searchbox__query-text">查询</span></div>
+  </div>
+</div>
+
+<!-- Tab 切换 -->
+<div class="tabs" style="padding: 8px 16px;">
+  <div class="tab-item tab-item--active">全部</div>
+  <div class="tab-item">待到库</div>
+  <div class="tab-item">待提货</div>
+  <div class="tab-item">待发运</div>
+  <div class="tab-item">待打卡</div>
+  <div class="tab-item">未预约</div>
+  <div class="tab-item">待派送</div>
+  <div class="tab-item">待运抵</div>
+  <div class="tab-item">待签收</div>
+</div>
+
+<!-- 运单卡片列表 -->
+<div class="card-list">
+
+  <!-- 卡片 1 -->
+  <div class="card" id="card1">
+    <div class="card__location">
+      <div class="card__location-row">
+        <span class="tag tag--blue">提货点</span>
+        <span class="card__addr">江苏省淮安市淮阴区新渡口</span>
+      </div>
+      <div class="card__warehouse">[ H2532 ] 智动精工平度仓</div>
+      <div class="card__cargo"><span>海信空调110件（13.0m³），电视99件（11.0m³）</span></div>
+    </div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row">
+        <span class="card__dispatch-plate">鲁UN521E [ D22110100291 ]</span>
+        <span class="card__dispatch-time">2024/06/12 18:00</span>
+      </div>
+      <div class="card__cargo"><span>海信空调30件（1.3m³），电视10件（1.2m³）</span></div>
+    </div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row">
+        <span class="card__dispatch-plate">鲁UN521E [ D22110100292 ]</span>
+        <span class="card__dispatch-time">2024/06/12 19:30</span>
+      </div>
+      <div class="card__cargo"><span>海信空调20件（1.3m³），电视12件（1.2m³）</span></div>
+    </div>
+
+    <!-- 展开后的订单信息 -->
+    <div class="card__orders" id="card1-orders">
+      <div class="card__order">
+        <div class="card__order-top">
+          <span class="card__order-sap">SAP单号 4002918371</span>
+          <span class="tag tag--orange">2C</span>
+        </div>
+        <div class="card__order-body">
+          <div class="card__field">
+            <span class="card__field-label">订单号</span>
+            <span class="card__field-value">XD2024061200001</span>
+          </div>
+          <div class="card__field">
+            <span class="card__field-label">收货地址</span>
+            <span class="card__field-value">江苏省淮安市淮阴区新渡口街道人民路166号</span>
+          </div>
+          <div class="divider divider--full" style="margin: 6px 0;"></div>
+          <div class="card__product">
+            <span class="col-type">空调</span>
+            <span class="col-model">KFR-35GW/E370-X3</span>
+            <span class="col-qty">5件</span>
+          </div>
+          <div class="card__product">
+            <span class="col-type">电视</span>
+            <span class="col-model">65E3H</span>
+            <span class="col-qty">2件</span>
+          </div>
+        </div>
+        <div class="card__order-footer">
+          <span class="card__order-contact">张三 <a href="tel:13800138001">138****8001</a></span>
+          <button class="card__order-appoint">预约</button>
+        </div>
+      </div>
+
+      <div class="card__order">
+        <div class="card__order-top">
+          <span class="card__order-sap">SAP单号 4002918372</span>
+          <span class="tag tag--blue">整单</span>
+        </div>
+        <div class="card__order-body">
+          <div class="card__field">
+            <span class="card__field-label">订单号</span>
+            <span class="card__field-value">XD2024061200002</span>
+          </div>
+          <div class="card__field">
+            <span class="card__field-label">收货地址</span>
+            <span class="card__field-value">江苏省淮安市清江浦区淮海北路52号</span>
+          </div>
+          <div class="divider divider--full" style="margin: 6px 0;"></div>
+          <div class="card__product">
+            <span class="col-type">空调</span>
+            <span class="col-model">KFR-50LW/E380-X3</span>
+            <span class="col-qty">3件</span>
+          </div>
+        </div>
+        <div class="card__order-footer">
+          <span class="card__order-contact">李四 <a href="tel:13900139002">139****9002</a></span>
+          <button class="card__order-appoint">预约</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card__toggle" onclick="toggleExpand('card1')">
+      <div class="card__toggle-pill" id="card1-pill">
+        <span id="card1-text">展开</span>
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg>
+      </div>
+    </div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">2单7件</span>
+      <div class="card__actions">
+        <button class="btn btn--sm btn--light-solid">批量预约</button>
+        <button class="btn btn--sm btn--primary">扫码到库</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 卡片 2 -->
+  <div class="card" id="card2">
+    <div class="card__location">
+      <div class="card__location-row">
+        <span class="tag tag--blue">提货点</span>
+        <span class="card__addr">扬州冰箱CDC厂区</span>
+      </div>
+      <div class="card__warehouse">[ H1088 ] 扬州冰箱CDC厂区</div>
+      <div class="card__cargo"><span>海信冰箱85件（9.5m³），洗衣机40件（5.2m³）</span></div>
+    </div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row">
+        <span class="card__dispatch-plate">苏AK892D [ D22110100305 ]</span>
+        <span class="card__dispatch-time">2024/06/12 16:00</span>
+      </div>
+      <div class="card__cargo"><span>海信冰箱45件（5.0m³），洗衣机20件（2.6m³）</span></div>
+    </div>
+
+    <div class="card__orders" id="card2-orders">
+      <div class="card__order">
+        <div class="card__order-top">
+          <span class="card__order-sap">SAP单号 4002918450</span>
+          <span class="tag tag--orange">2C</span>
+        </div>
+        <div class="card__order-body">
+          <div class="card__field">
+            <span class="card__field-label">订单号</span>
+            <span class="card__field-value">XD2024061200018</span>
+          </div>
+          <div class="card__field">
+            <span class="card__field-label">收货地址</span>
+            <span class="card__field-value">扬州市广陵区文昌中路168号</span>
+          </div>
+          <div class="divider divider--full" style="margin: 6px 0;"></div>
+          <div class="card__product">
+            <span class="col-type">冰箱</span>
+            <span class="col-model">BCD-502WMK1DPJ</span>
+            <span class="col-qty">2件</span>
+          </div>
+        </div>
+        <div class="card__order-footer">
+          <span class="card__order-contact">王五 <a href="tel:13700137005">137****7005</a></span>
+          <button class="card__order-appoint">预约</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card__toggle" onclick="toggleExpand('card2')">
+      <div class="card__toggle-pill" id="card2-pill">
+        <span id="card2-text">展开</span>
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg>
+      </div>
+    </div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">1单2件</span>
+      <div class="card__actions">
+        <button class="btn btn--sm btn--light-solid">批量预约</button>
+        <button class="btn btn--sm btn--primary">扫码到库</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 卡片 3 -->
+  <div class="card" id="card3">
+    <div class="card__location">
+      <div class="card__location-row">
+        <span class="tag tag--blue">提货点</span>
+        <span class="card__addr">青岛市崂山区海信研发中心B区</span>
+      </div>
+      <div class="card__warehouse">[ H3201 ] 崂山智能仓储中心</div>
+      <div class="card__cargo"><span>海信电视150件（18.0m³），商用显示器30件（4.5m³）</span></div>
+    </div>
+    <div class="card__divider card__divider--full"></div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row">
+        <span class="card__dispatch-plate">鲁BF315K [ D22110100310 ]</span>
+        <span class="card__dispatch-time">2024/06/12 14:30</span>
+      </div>
+      <div class="card__cargo"><span>海信电视80件（9.6m³），显示器15件（2.3m³）</span></div>
+    </div>
+    <div class="card__dispatch">
+      <div class="card__dispatch-row">
+        <span class="card__dispatch-plate">鲁BF315K [ D22110100311 ]</span>
+        <span class="card__dispatch-time">2024/06/12 15:00</span>
+      </div>
+      <div class="card__cargo"><span>海信电视70件（8.4m³），显示器15件（2.2m³）</span></div>
+    </div>
+
+    <div class="card__orders" id="card3-orders">
+      <div class="card__order">
+        <div class="card__order-top">
+          <span class="card__order-sap">SAP单号 4002918520</span>
+          <span class="tag tag--blue">整单</span>
+        </div>
+        <div class="card__order-body">
+          <div class="card__field">
+            <span class="card__field-label">订单号</span>
+            <span class="card__field-value">XD2024061200025</span>
+          </div>
+          <div class="card__field">
+            <span class="card__field-label">收货地址</span>
+            <span class="card__field-value">山东省济南市历下区经十路12688号</span>
+          </div>
+          <div class="divider divider--full" style="margin: 6px 0;"></div>
+          <div class="card__product">
+            <span class="col-type">电视</span>
+            <span class="col-model">75E7H</span>
+            <span class="col-qty">10件</span>
+          </div>
+          <div class="card__product">
+            <span class="col-type">显示器</span>
+            <span class="col-model">27N3G</span>
+            <span class="col-qty">5件</span>
+          </div>
+        </div>
+        <div class="card__order-footer">
+          <span class="card__order-contact">赵六 <a href="tel:15600156008">156****6008</a></span>
+          <button class="card__order-appoint">预约</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card__toggle" onclick="toggleExpand('card3')">
+      <div class="card__toggle-pill" id="card3-pill">
+        <span id="card3-text">展开</span>
+        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" fill="#1D2129"/></svg>
+      </div>
+    </div>
+    <div class="card__footer card__footer--between">
+      <span class="card__stats">2单15件</span>
+      <div class="card__actions">
+        <button class="btn btn--sm btn--light-solid">批量预约</button>
+        <button class="btn btn--sm btn--primary">扫码到库</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 底部加载提示 -->
+<div class="load-hint">
+  <div class="load-hint__line"></div>
+  <span class="load-hint__text">已加载90天内全部</span>
+  <div class="load-hint__line"></div>
+</div>
+
+<script>
+// Tab 切换
+document.querySelectorAll('.tab-item').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('tab-item--active'));
+    tab.classList.add('tab-item--active');
+  });
+});
+
+// 展开/收起
+function toggleExpand(cardId) {
+  const orders = document.getElementById(cardId + '-orders');
+  const pill = document.getElementById(cardId + '-pill');
+  const text = document.getElementById(cardId + '-text');
+  const isOpen = orders.classList.contains('card__orders--visible');
+
+  if (isOpen) {
+    orders.classList.remove('card__orders--visible');
+    pill.classList.remove('card__toggle-pill--open');
+    text.textContent = '展开';
+  } else {
+    orders.classList.add('card__orders--visible');
+    pill.classList.add('card__toggle-pill--open');
+    text.textContent = '收起';
+  }
+}
+</script>
+</body>
+</html>

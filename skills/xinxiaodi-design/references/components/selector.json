@@ -1,0 +1,100 @@
+{
+  "slug": "selector",
+  "name": "选择器 Selector",
+  "schemaVersion": 1,
+  "figmaNode": "800:22360 (checkbox), 454:8798 (radio)",
+  "description": "方形多选框(checkbox 16×16px)和圆形单选框(radio 16×16px)",
+  "variantDimensions": [
+    {
+      "axis": "type",
+      "values": ["checkbox(方形)", "radio(圆形)"]
+    },
+    {
+      "axis": "state",
+      "values": ["未选中(unchecked)", "选中(checked)", "禁用(disabled)", "半选(indeterminate)"]
+    }
+  ],
+  "representativeVariants": [
+    "checkbox-unchecked",
+    "checkbox-checked",
+    "checkbox-disabled",
+    "checkbox-indeterminate",
+    "radio-unchecked",
+    "radio-checked"
+  ],
+  "anatomy": {
+    "parts": ["container", "icon(checkmark/dot/line)"],
+    "required": ["container"]
+  },
+  "specs": {
+    "checkbox": {
+      "size": "16px",
+      "radius": "2px",
+      "unchecked": {
+        "border": "0.8px solid #C8C9CC",
+        "backgroundColor": "#FFFFFF"
+      },
+      "checked": {
+        "backgroundColor": "#00AAA6",
+        "border": "none",
+        "icon": "白色勾 (SVG path M1 4L3.5 6.5L9 1, stroke 1.5px)"
+      },
+      "disabled": {
+        "backgroundColor": "#EBEDF0",
+        "border": "0.8px solid #C8C9CC",
+        "icon": "灰色横线 (#C8C9CC)"
+      },
+      "indeterminate": {
+        "backgroundColor": "#00AAA6",
+        "border": "none",
+        "icon": "白色横线"
+      }
+    },
+    "radio": {
+      "size": "16px",
+      "radius": "50%",
+      "unchecked": {
+        "border": "1.5px solid #BFC5CC",
+        "backgroundColor": "#FFFFFF"
+      },
+      "checked": {
+        "backgroundColor": "#00AAA6",
+        "border": "none",
+        "icon": "白色勾 (SVG path M1 3L3 5.5L7 0.5, stroke 1.5px)"
+      }
+    }
+  },
+  "interaction": {
+    "click": "切换选中/未选中状态",
+    "transition": "all 0.15s ease",
+    "cursor": "pointer (非禁用)",
+    "disabled": "不响应点击"
+  },
+  "usageHints": [
+    "checkbox 用于卡片多选模式（批量操作场景）",
+    "radio 用于单选场景",
+    "选中填充使用品牌色 vi-2(#00AAA6)，不用蓝色",
+    "禁用态背景用 bg-2(#EBEDF0)，不降透明度"
+  ],
+  "doNotInvent": [
+    "大于 16px 的选择器",
+    "蓝色填充的选中态",
+    "带文字标签的选择器组件（标签属于上层容器）",
+    "圆角 checkbox（信小递用 2px 直角方形）"
+  ],
+  "usageScenarios": [
+    { "scenario": "卡片批量多选", "variant": "checkbox-checked", "when": "列表卡片多选模式下勾选运单批量操作" },
+    { "scenario": "父子联动多选", "variant": "checkbox-indeterminate", "when": "父级半选表示部分子项被选中（三级选择：提货点/调度单/订单）" },
+    { "scenario": "单选", "variant": "radio-checked", "when": "单选场景（枚举值二选一/多选一）" }
+  ],
+  "states": [
+    { "state": "unchecked", "trigger": "默认未选中", "class": "checkbox（0.8px 边框 #C8C9CC）" },
+    { "state": "checked", "trigger": "选中", "class": "checkbox--checked（vi-2 底 + 白勾）" },
+    { "state": "disabled", "trigger": "禁用", "class": "checkbox--disabled（bg-2 #EBEDF0 + 灰横线）" },
+    { "state": "indeterminate", "trigger": "半选", "class": "checkbox--indeterminate（vi-2 底 + 白横线）" },
+    { "state": "radio-unchecked", "trigger": "radio 默认", "class": "radio（1.5px 边框 #BFC5CC）" },
+    { "state": "radio-checked", "trigger": "radio 选中", "class": "radio--checked（vi-2 底 + 白勾）" }
+  ],
+  "cssClasses": ["checkbox", "checkbox--checked", "checkbox--disabled", "checkbox--indeterminate", "radio", "radio--checked"],
+  "exampleRefs": ["examples/demo-list.html", "preview/component-card.html"]
+}

@@ -1,0 +1,79 @@
+{
+  "slug": "tab",
+  "name": "Tab 切换",
+  "schemaVersion": 1,
+  "figmaNode": "1807:59076",
+  "description": "水平滑动 Tab 切换组件，30px 高，圆角 4px，选中态品牌绿底白字",
+  "variantDimensions": [
+    {
+      "axis": "state",
+      "values": ["active(选中)", "inactive(未选中)"]
+    }
+  ],
+  "representativeVariants": [
+    "全部-active",
+    "待到库-inactive",
+    "待提货-inactive"
+  ],
+  "anatomy": {
+    "parts": ["container(水平滑动容器)", "tab-item"],
+    "required": ["container", "tab-item"]
+  },
+  "specs": {
+    "container": {
+      "display": "flex",
+      "gap": "8px",
+      "overflowX": "auto",
+      "padding": "4px 0",
+      "backgroundColor": "#F3F5F7"
+    },
+    "tab-item": {
+      "height": "30px",
+      "radius": "4px",
+      "padding": "4px 8px",
+      "fontSize": "14px",
+      "fontWeight": 400,
+      "lineHeight": "22px",
+      "whiteSpace": "nowrap",
+      "cursor": "pointer",
+      "flexShrink": 0
+    },
+    "active": {
+      "backgroundColor": "#00AAA6",
+      "color": "#FFFFFF"
+    },
+    "inactive": {
+      "backgroundColor": "#FFFFFF",
+      "color": "#1D2129"
+    }
+  },
+  "interaction": {
+    "click": "切换选中态：当前项变绿底白字，其余恢复白底黑字",
+    "scroll": "容器支持横向滑动（overflow-x: auto）",
+    "transition": "none（即时切换，无过渡动画）"
+  },
+  "usageHints": [
+    "用于同类任务有多种状态分组时（如待提货/待发运）",
+    "Tab 项内容为业务状态名，不放图标",
+    "选中态只有一个，切换时联动下方列表数据",
+    "窄屏时可横向滑动查看更多 Tab",
+    "常用内容：全部/待到库/待提货/待发运/待打卡/未预约/待派送/待运抵/待签收"
+  ],
+  "doNotInvent": [
+    "下划线式 Tab（信小递用填充色 Tab）",
+    "pill 圆角 Tab（统一 4px）",
+    "带图标的 Tab 项",
+    "多行 Tab",
+    "选中态用蓝色"
+  ],
+  "usageScenarios": [
+    { "scenario": "同类任务状态分组切换", "variant": "全部-active / 待到库-inactive / 待提货-inactive", "when": "列表页按业务状态分组切换（全部/待到库/待提货/待发运/待签收等），联动下方列表" },
+    { "scenario": "多标签页切换", "variant": "active / inactive", "when": "多标签页面之间切换，选中态仅一个" }
+  ],
+  "states": [
+    { "state": "inactive", "trigger": "未选中", "class": "tab-item（白底黑字）" },
+    { "state": "active", "trigger": "选中", "class": "tab-item--active（vi-2 绿底白字）" }
+  ],
+  "cssClasses": ["tabs", "tab-item", "tab-item--active"],
+  "exampleRefs": ["examples/demo-list.html", "examples/demo-interaction.html", "preview/component-navigation.html"]
+}

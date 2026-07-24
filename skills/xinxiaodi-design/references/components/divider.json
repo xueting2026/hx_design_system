@@ -1,0 +1,80 @@
+{
+  "slug": "divider",
+  "name": "分割线 Divider",
+  "schemaVersion": 1,
+  "description": "0.5px 分割线，颜色 border-1(#E5E6EB)，支持四种对齐方式",
+  "variantDimensions": [
+    {
+      "axis": "type",
+      "values": ["full(满宽)", "center(两端缩进)", "left(左侧缩进)", "with-text(带展开收起文字)"]
+    }
+  ],
+  "representativeVariants": [
+    "full",
+    "center",
+    "left",
+    "with-text"
+  ],
+  "anatomy": {
+    "parts": ["line", "text(仅 with-text 变体)", "arrow(仅 with-text 变体)"],
+    "required": ["line"]
+  },
+  "specs": {
+    "line": {
+      "height": "0.5px",
+      "backgroundColor": "#E5E6EB"
+    },
+    "full": {
+      "width": "100%",
+      "margin": "0"
+    },
+    "center": {
+      "width": "calc(100% - 32px)",
+      "margin": "0 auto"
+    },
+    "left": {
+      "width": "calc(100% - 16px)",
+      "marginLeft": "16px"
+    },
+    "with-text": {
+      "display": "flex",
+      "alignItems": "center",
+      "gap": "8px",
+      "text": {
+        "fontSize": "10px",
+        "color": "#7C8492",
+        "flexShrink": 0,
+        "whiteSpace": "nowrap"
+      },
+      "arrow": {
+        "size": "10px",
+        "color": "#7C8492",
+        "stroke": "1.5px"
+      },
+      "lines": "flex:1 两侧等分"
+    }
+  },
+  "usageHints": [
+    "卡片内分隔用 center 或 left 变体",
+    "页面区块间用 full 变体",
+    "with-text 变体用于列表加载更多或卡片组分组",
+    "分割线是次要分隔手段——优先用间距分隔"
+  ],
+  "doNotInvent": [
+    "大于 0.5px 的分割线",
+    "彩色分割线",
+    "虚线分割线（虚线用于上传区边框，不用于分隔）",
+    "带阴影的分割线"
+  ],
+  "usageScenarios": [
+    { "scenario": "卡片内分隔", "variant": "center / left", "when": "卡片内部区块分隔，用两端或左侧缩进变体" },
+    { "scenario": "页面区块分隔", "variant": "full", "when": "页面级区块之间用满宽分割线" },
+    { "scenario": "分组/加载更多", "variant": "with-text", "when": "列表分组或加载更多提示，带文字+两侧线" }
+  ],
+  "states": [
+    { "state": "line", "trigger": "默认静态", "class": "divider（配合 .divider--full / .divider--center / .divider--left）" },
+    { "state": "with-text", "trigger": "带文字分隔", "class": "divider-text（配合 .divider-text__line / .divider-text__label）" }
+  ],
+  "cssClasses": ["divider", "divider--full", "divider--center", "divider--left", "divider-text", "divider-text__line", "divider-text__label"],
+  "exampleRefs": ["examples/demo-list.html", "preview/component-card.html"]
+}
